@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('template');
+});
+
+Route::get('fiche-medicale',function(){
+    return view('animateur/fiche_medicale');
 });
