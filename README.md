@@ -1,9 +1,11 @@
-<span style="font-size:30px; color:greenyellow;">Project MediFiches</span>
+# Project MediFiches
 
-<span style="font-size:25px;">Table of Content</span>
-- [Meet the development Team](#meet-the-development-team)
-- [Project Skeleton](#project-skeleton)
-- [Development State](#development-state)
+## Table of content :
+- [Project MediFiches](#project-medifiches)
+  - [Table of content :](#table-of-content-)
+  - [Meet the development Team](#meet-the-development-team)
+  - [Project Skeleton](#project-skeleton)
+  - [Development State](#development-state)
 
 
 This project consists on creating a website for animators and parents to see, modify and create medical reports for their children. It will help animators create and organise activites for their registered children.
