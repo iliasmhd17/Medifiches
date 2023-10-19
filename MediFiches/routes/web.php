@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ficheController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('template');
+    return view('animateur/accueil');
 });
 
-Route::get('fiche-medicale',function(){
-    return view('animateur/fiche_medicale');
-});
+Route::get('fiche-medicale',[ficheController::class, "display_record"]);

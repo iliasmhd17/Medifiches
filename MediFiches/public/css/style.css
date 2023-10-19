@@ -1991,3 +1991,10 @@ a {
 .pbteam-hover-border-pale-blue:hover {
     border-color: #e7ffff !important
 }
+
+#footer {
+    position: sticky;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
