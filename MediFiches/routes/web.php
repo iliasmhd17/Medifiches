@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PDFController;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
+Route::get('/form', [PDFController::class, 'showForm'])->name('form');
+
