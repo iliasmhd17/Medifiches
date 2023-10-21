@@ -5,31 +5,30 @@
     <title>MediFiches @yield('title')</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navbar (sit on top) -->
-    <div class="pbteam-top">
-        <div class="pbteam-bar pbteam-white pbteam-wide pbteam-padding pbteam-card">
-            <a href="/" class="pbteam-bar-item pbteam-button"><b>Medi</b>Fiches</a>
-            <!-- Float links to the right. Hide them on small screens -->
-            <div class="pbteam-right pbteam-hide-small">
-                <a href="/fiche-medicale" class="pbteam-bar-item pbteam-button">Fiche Médicale</a>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">MediFiches</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="fiche-medicale">Fiche Médicale</a>
+                </li>
         </div>
-    </div>
+    </nav>
 
-    <!-- Page content -->
-    <div class="pbteam-content pbteam-padding" style="max-width:1564px">
-        @yield('content') <!-- this is where we include the content -->
-        <!-- End page content -->
-    </div>
+    @yield('content')
 
-    <!-- Footer -->
-    <footer id="footer" class="pbteam-center pbteam-black pbteam-padding-16">
-        <p>Made by PBTeam</p>
-    </footer>
 </body>
 
 </html>
