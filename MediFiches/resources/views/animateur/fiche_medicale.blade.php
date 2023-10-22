@@ -1,8 +1,28 @@
 @extends('template')
 @section('title', " - Fiche Médicale")
 @section('content')
-<div class="container mt-4">
+<script type="text/javascript">
+        $(document).ready(function() {
+            let width = screen.width
+            if (width <= 800) {
+                $("#banner").attr("src", "{{ asset('images/medi-banner-vertical.png') }}");
+            }
+        });
+</script>
+<br><br>
+<div class="postition-relative">
+<img src="{{ asset('images/medi-banner.png') }}" id="banner" alt="Banner" class="img-fluid" style="width: 100%; height: auto;">
+<div class="container mt-5 position-absolute bg-white" id="consult">
   <h3 class="pb-3">Fiche Médicale</h3>
+  <div class="container mb-3">
+    <label for="childSelect"><strong>Enfant </strong></label> 
+    <select class="form-control w-25" id="childSelect"> <!-- Voir comment faire pour téléphone -->
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option> 
+    </select>
+  </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item"><strong>Nom de l'enfant: </strong> Leblanc</li>
     <li class="list-group-item"><strong>Prénom de l'enfant: </strong> Juste</li>
@@ -16,5 +36,6 @@
     <li class="list-group-item"><strong>Vaccination tetanos: </strong> Oui</li>
     <li class="list-group-item"><strong>Adresse: </strong> Rue Royale 67, 1000 Bruxelles</li>
   </ul>
+  </div>
 </div>
 @endsection
