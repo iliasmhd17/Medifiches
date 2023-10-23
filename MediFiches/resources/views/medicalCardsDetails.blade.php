@@ -39,6 +39,7 @@
 
                 <a href="/fiches/" class="btn btn-primary card-link">Retour</a>
             </div>
+            <div class="card-footer text-muted"> </div>
         </div>
     @endforeach
 @endsection
