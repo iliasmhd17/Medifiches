@@ -20,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('fiche-medicale',[ficheController::class, "display_record"]);
+
+Route::get('formulaire', [ficheController::class, "display_form"]);

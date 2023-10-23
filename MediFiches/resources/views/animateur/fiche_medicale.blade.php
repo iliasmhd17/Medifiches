@@ -9,7 +9,7 @@
             }
         });
 </script>
-<br><br>
+
 <div class="postition-relative">
 <img src="{{ asset('images/medi-banner.png') }}" id="banner" alt="Banner" class="img-fluid" style="width: 100%; height: auto;">
 <div class="container mt-5 position-absolute bg-white" id="consult">
@@ -22,6 +22,7 @@
       <option value="3">3</option>
       <option value="4">4</option> 
     </select>
+    <input type="button" class="btn btn-outline-primary mt-1" value="Fiche">
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item"><strong>Nom de l'enfant: </strong> Leblanc</li>

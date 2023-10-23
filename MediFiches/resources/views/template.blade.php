@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
     <title>MediFiches @yield('title')</title>
     <meta charset="UTF-8">
@@ -11,12 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('[data-toggle="collapse"]').on('click', function() {
+                $('#navbarSupportedContent').toggleClass('show');
+            })
+        });
+    </script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3 shadow fixed-top border-bottom border-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3 shadow fixed-top border-bottom border-dark mb-5">
         <a class="navbar-brand" href="/">MediFiches</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -25,6 +31,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="fiche-medicale">Fiche Médicale</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="formulaire">Créer une fiche</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
