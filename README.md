@@ -5,6 +5,7 @@
   - [Table of content :](#table-of-content-)
   - [Meet the development Team](#meet-the-development-team)
   - [Project Skeleton](#project-skeleton)
+  - [How to contribute](#how-to-contribute)
   - [Development State](#development-state)
 
 
@@ -37,6 +38,16 @@ The team behind this project, PBTeam, is made of the following members :
 - Database          : SQL
 - Authentication    : Socialite and Jetstream
 
+## How to contribute
+If you want to contribute to this project, here's a step-by-step guide to get yoy started :
+1. Clone the repository :
+`git clone https://git.esi-bru.be/2023-2024/prjg5/pbteam.git`
+1. Install the dependencies :
+`composer install`
+1. Set up the `.env` file with your postgresql database information
+1. Run the project : 
+`php artisan serve`
+1. You're good to go!
 ## Development State
 The project is currently under development following the AGILE development pattern (Scrum).
 
