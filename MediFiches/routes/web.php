@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\ficheController;
 use Barryvdh\DomPDF\Facade as PDF;
 
 
@@ -21,5 +22,4 @@ Route::get('/', function () {
 });
 
 Route::post('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
-Route::get('/form', [PDFController::class, 'showForm'])->name('form');
 
