@@ -1,0 +1,29 @@
+﻿.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.centered h1 {
+    font-size: 3rem;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.footer {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 2em;
+}
+
+#consult {
+    top: 25px;
+    left: 50px;
+    width: 75%;
+    height: 100%;
+}
