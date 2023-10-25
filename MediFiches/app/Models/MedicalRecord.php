@@ -2,63 +2,62 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MedicalRecord extends Model
+class MedicalCard extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'national_number',
+        'can_participate',
+        'medical_record',
+        'tetanos_protected',
+        'allergies',
+        'allergies_consequences',
+        'medecins',
+        'quantity_medecine',
+        'time_medecine',
+        'birth_date',
+        'additional_infos',
+        'street',
+        'no',
+        'mailbox',
+        'country',
+        'city',
+    ];
 
-    /*Precise ce model utilise quel base de donné
-    Donc quand on créé une instance de ce model, cela créé une ligne dans la table*/
-    protected $table = 'medical_cards';
-    
-    //sinon laravel cherche a inserer updated_at ... qui ne sont pas dans la table
-    public $timestamps = false;
 
-    public static function getMedicalRecord($id)
+    public static function createMedicalCard($data)
     {
-        return self::where('national_number', $id)->first();
+        return self::create($data);
     }
 
-    public static function deleteMedicalRecord($id)
+    public static function updateMedicalCard($id, $data)
     {
-        return self::where('national_number', $id)->delete();
+        $medicalCard = self::find($id);
+        if ($medicalCard) {
+            $medicalCard->update($data);
+            return $medicalCard;
+        }
+        return null;
     }
 
-    public static function addMedicalRecord($data)
+    public static function deleteMedicalCard($id)
     {
-        // Créé une nouvelle instance du modèle MedicalRecod
-        $medicalRecord = new self;
-
-        $medicalRecord->national_number = $data['national_number'];
-        $medicalRecord->can_participate = $data['can_participate'];
-        $medicalRecord->medical_record = $data['medical_record'];
-        $medicalRecord->tetanos_protected = $data['tetanos_protected'];
-        $medicalRecord->allergies = $data['allergies'];
-        $medicalRecord->allergies_consequences = $data['allergies_consequences'];
-        $medicalRecord->medecins = $data['medecins'];
-        $medicalRecord->quantity_medecine = $data['quantity_medecine'];
-        $medicalRecord->time_medecine = $data['time_medecine'];
-        $medicalRecord->birth_date = $data['birth_date'];
-        $medicalRecord->additional_infos = $data['additional_infos'];
-        $medicalRecord->street = $data['street'];
-        $medicalRecord->no = $data['no'];
-        $medicalRecord->mailbox = $data['mailbox'];
-        $medicalRecord->city = $data['city'];
-        $medicalRecord->country = $data['country'];
-
-        // Enregistre le nouveau dossier médical dans la base de données
-        $medicalRecord->save();
-
-
-        return $medicalRecord;
+        $medicalCard = self::find($id);
+        if ($medicalCard) {
+            $medicalCard->delete();
+            return true;
+        }
+        return false;
     }
 
-    //$data est un tableau clé valeur contenant les atttribut à changer pour une ligne dans la table
-    public static function updateMedicalRecord($id, $data)
+    public static function getAllMedicalCards()
     {
-        return self::where('national_number', $id)->update($data);
+        return self::all();
+    }
+
+    public static function getMedicalCardById($id)
+    {
+        return self::find($id);
     }
 }
-
