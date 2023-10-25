@@ -6,6 +6,8 @@ use App\Http\Controllers\ficheController;
 use Barryvdh\DomPDF\Facade as PDF;
 
 
+use App\Http\Controllers\ficheController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,8 +20,11 @@ use Barryvdh\DomPDF\Facade as PDF;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('animateur/accueil');
 });
 
 Route::post('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 
+Route::get('fiche-medicale',[ficheController::class, "display_record"]);
+
+Route::get('formulaire', [ficheController::class, "display_form"]);
