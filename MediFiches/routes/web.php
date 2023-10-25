@@ -6,8 +6,6 @@ use App\Http\Controllers\ficheController;
 use Barryvdh\DomPDF\Facade as PDF;
 
 
-use App\Http\Controllers\ficheController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
