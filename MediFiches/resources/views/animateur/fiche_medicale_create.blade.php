@@ -24,14 +24,38 @@
                 <label for="first_name" class="m-2">Prénom : </label>
                 <input type="text" id="first_name" class="form-control w-25" placeholder="Entrez le prénom...">
             </div>
-            <label for="birth_date">Date de naissance</label>
-            <input type="date" id="birth_date" class="form-control w-25" placeholder="Entrez la date de naissance...">
-            <div class="input-group-text">
-                <label for="can_participer">Peut participer</label>
-                <input type="checkbox" id="can_participer">
+            <div class="input-group-text m-2">
+                <label for="birth_date" class="m-2">Date de naissance : </label>
+                <input type="date" id="birth_date" class="form-control w-25" placeholder="Entrez la date de naissance...">
             </div>
-            <label for="Email">Addresse email</label>
-            <input type="email" id="Email" class="form-control w-25" placeholder="Entrez un email...">
+            <div class="input-group-text m-2">
+                <label for="can_participer" class="m-2">Peut participer : </label>
+                <input type="checkbox" class="form-check-input" id="can_participer">
+            </div>
+            <div class="input-group-text m-2">
+                <label for="Email" class="m-2">Email : </label>
+                <input type="email" id="Email" class="form-control w-25" placeholder="Entrez un email...">
+            </div>
+            <div class="input-group-text m-2">
+                <label for="medic" class="m-2">Médicaments : </label>
+                <input type="text" class="form-control w-25" id="medic" placeholder="Entrez le(s) médicament(s)...">
+            </div>
+            <div class="input-group-text m-2">
+                <label for="qMedic" class="m-2">Quantité de médicaments : </label>
+                <input type="text" class="form-control w-25" id="qMedic" placeholder="Entrez la / les quantité(s)...">
+            </div>
+            <div class="input-group-text m-2">
+                <label for="fMedic" class="m-2">Indiquez la fréquence : </label>
+                <input type="text" class="form-control w-25" id="fMedic" placeholder="Entrez la / les fréquence(s)...">
+            </div>
+            <div class="input-group-text m-2">
+                <label for="allergies" class="m-2">Allergies : </label>
+                <input type="text" class="form-control w-25" id="allergies" placeholder="Entrez les allergies...">
+            </div>
+            <div class="input-group-text m-2">
+                <label for="consequences" class="m-2">Indiquez les conséquences : </label>
+                <input type="text" class="form-control w-25" id="consequence" placeholder="Entrez les consequences...">
+            </div>
         </div>
   </form>
   </div>
