@@ -18,7 +18,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 */
 
 Route::get('/', function () {
-    return view('animateur/accueil');
+    return view('welcome');
 });
 
 Route::middleware([
