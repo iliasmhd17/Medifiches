@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('animateur/accueil');
 });
 
-Route::post('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
+Route::post('/generate-pdf', [PDFController::class, 'generatePDFs'])->name('generate-pdf');
 
 Route::get('fiche-medicale',[ficheController::class, "display_record"]);
 

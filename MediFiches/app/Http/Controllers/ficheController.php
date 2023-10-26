@@ -1,13 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Infos_Pdf; 
+use App\Models\MedicalCard;
+
 
 class ficheController extends Controller {
     
     public function display_record() 
-    { // reçoit un id,  record::get(1),
-        //$record = MedicalRecord::getMedicalRecord($id); 
-        return view("animateur/fiche_medicale");
+    { 
+        $data = Infos_Pdf::find(1); 
+        $medical_card = MedicalCard::find(123456789);
+
+        return view("animateur/fiche_medicale", compact('data','medical_card'));
     }
 
     public function display_form()
