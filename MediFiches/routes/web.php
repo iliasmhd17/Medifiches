@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ficheController;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 /*
 |--------------------------------------------------------------------------

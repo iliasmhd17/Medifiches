@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3 shadow fixed-top border-bottom border-dark mb-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3 shadow fixed-top border-bottom border-dark">
         <a class="navbar-brand" href="/">MediFiches</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
