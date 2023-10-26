@@ -14,7 +14,10 @@ use App\Http\Controllers\MedicalController;
 |
 */
 
-
-Route::get('/fiches',[MedicalController::class,'getDbRecords']);
+// Route::get('/', function () {
+//     return redirect()->route('fiches');
+// });
+Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('fiches');
+Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
 
 
