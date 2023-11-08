@@ -15,8 +15,8 @@ class PDFController extends Controller
 
     public function generatePDF()
     {
-        $data = MedicalCard::find(123456789);
-        $info = Person::find(123456789);
+        $data = MedicalCard::find(123456);
+        $info = Person::find(123456);
         //devoir faire ca pour l'élève récupéré via l'url pour chaque table
 
         if ($data && $info) {
