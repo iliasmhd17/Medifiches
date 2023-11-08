@@ -15,21 +15,6 @@
   <div class="container mt-5 position-absolute bg-white" id="consult">
     <div class="d-flex justify-content-between align-items-center">
       <h3 class="pb-3">Fiche Médicale</h3>
-      <form method="POST" action="{{ route('generate-pdf') }}">
-        @csrf
-        <button class="hover-effect" type="submit"><img src="{{ asset('images/down3.png') }}" alt="Bouton PDF" style="width: 40px; height: auto;" >
-      </button>
-      </form>
-    </div>
-    <div class="container mb-3">
-      <label for="childSelect"><strong>Enfant </strong></label>
-      <select class="form-control w-25" id="childSelect">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-      <input type="button" class="btn btn-outline-primary mt-1" value="Fiche">
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item"><strong>Nom de l'enfant: </strong> {{$data->nom}}</li>

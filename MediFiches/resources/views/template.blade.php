@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-<<<<<<< HEAD
-=======
-
->>>>>>> listes_fiches_médicales
 <head>
     <title>MediFiches @yield('title')</title>
     <meta charset="UTF-8">
@@ -14,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
-<<<<<<< HEAD
     <script type="text/javascript">
         $(document).ready(function() {
             $('[data-toggle="collapse"]').on('click', function() {
@@ -22,49 +17,31 @@
             })
         });
     </script>
-=======
->>>>>>> listes_fiches_médicales
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-3 shadow fixed-top border-bottom border-dark">
         <a class="navbar-brand" href="/">MediFiches</a>
-<<<<<<< HEAD
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-label="Toggle navigation">
-=======
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
->>>>>>> listes_fiches_médicales
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-<<<<<<< HEAD
-                    <a class="nav-link" href="fiche-medicale">Fiche Médicale</a>
+                    <a class="nav-link" href="/fiches">Fiches médicale</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="formulaire">Créer une fiche</a>
-=======
-                    <a class="nav-link" href="/fiches">Fiche Médicale</a>
->>>>>>> listes_fiches_médicales
                 </li>
             </ul>
         </div>
     </nav>
-<<<<<<< HEAD
 
-    @yield('content')
-
-</body>
-
-</html>
-=======
     <div class="container">
         <br><br><br><br>
-    @yield('content')
+        @yield('content')
     </div>
 </body>
-
 </html>
->>>>>>> listes_fiches_médicales
+
