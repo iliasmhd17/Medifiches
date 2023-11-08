@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +9,8 @@ class Person extends Model
     protected $fillable = [
         'national_number', 'first_name', 'last_name', 'email', 'role'
     ];
-
+    protected $primaryKey = 'national_number';
+    protected $table = 'persons';
     public static function createPerson($data)
     {
         return self::create($data);

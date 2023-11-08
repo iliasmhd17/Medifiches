@@ -25,7 +25,7 @@ class MedicalCard extends Model
         'city',
     ];
 
-
+    protected $primaryKey = 'national_number';
     public static function createMedicalCard($data)
     {
         return self::create($data);
