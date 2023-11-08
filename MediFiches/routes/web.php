@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ficheController;
 use Barryvdh\DomPDF\Facade as PDF;
-
+use App\Http\Controllers\MedicalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +17,11 @@ use Barryvdh\DomPDF\Facade as PDF;
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('animateur/accueil');
 });
+
 
 // Route::middleware([
 //     'auth:sanctum',
@@ -34,3 +36,7 @@ Route::get('/', function () {
 Route::get('fiche-medicale',[ficheController::class, "display_record"]);
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 Route::get('formulaire', [ficheController::class, "display_form"]);
+Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('fiches');
+Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
+
+

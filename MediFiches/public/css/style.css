@@ -5,7 +5,11 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
+button {
+    border: none; /* Supprime la bordure */
+    outline: none; /* Supprime la mise en évidence au focus */
+    background-color: white;
+  }
 .centered h1 {
     font-size: 3rem;
     color: #fff;

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MedicalCard extends Model
 {
+    protected $primaryKey = 'national_number';
     protected $fillable = [
         'national_number',
         'can_participate',
@@ -25,7 +26,7 @@ class MedicalCard extends Model
         'city',
     ];
 
-    protected $primaryKey = 'national_number';
+    
     public static function createMedicalCard($data)
     {
         return self::create($data);
