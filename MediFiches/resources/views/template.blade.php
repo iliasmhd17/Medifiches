@@ -32,7 +32,7 @@
                     <a class="nav-link" href="/fiches">Fiches médicale</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="formulaire">Créer une fiche</a>
+                    <a class="nav-link" href="/formulaire">Créer une fiche</a>
                 </li>
             </ul>
         </div>

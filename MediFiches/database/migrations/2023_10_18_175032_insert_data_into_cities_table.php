@@ -158,6 +158,6 @@ class  InsertDataIntoCitiesTable extends Migration
     public function down()
     {
         // Pour supprimer les données insérées, vous pouvez exécuter la requête inverse
-        DB::table('cities')->truncate();
+        //DB::table('cities')->delete();
     }
 }

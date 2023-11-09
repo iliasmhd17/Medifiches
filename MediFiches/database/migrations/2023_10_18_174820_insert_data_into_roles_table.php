@@ -16,6 +16,6 @@ class InsertDataIntoRolesTable extends Migration
 
     public function down()
     {
-        DB::table('Roles')->whereIn('role', ['Animateur', 'Parent', 'Enfant'])->delete();
+        //DB::table('Roles')->whereIn('role', ['Animateur', 'Parent', 'Enfant'])->delete();
     }
 }

@@ -38,5 +38,6 @@ Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('genera
 Route::get('formulaire', [ficheController::class, "display_form"]);
 Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('fiches');
 Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
+Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create.record');
 
 

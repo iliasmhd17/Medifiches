@@ -15,6 +15,6 @@ class InsertDataIntoCountriesTable extends Migration
 
     public function down()
     {
-        DB::table('countries')->where('name', 'Belgique')->delete();
+        //DB::table('countries')->where('name', 'Belgique')->delete();
     }
 }

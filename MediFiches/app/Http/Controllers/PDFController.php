@@ -90,12 +90,7 @@ class PDFController extends Controller
 
             // Chemin vers le répertoire public
             $webRoot = public_path();
-//
             $html2 = view('pdf', compact('data', 'info'))->render();
-//=======
-//            $html2 = view('animateur/pdf', compact('data'))->render();
-//
-            // HTML avec arrière-plan d'image
             $html = '<html>
 <head>
     <style>
