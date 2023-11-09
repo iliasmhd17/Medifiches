@@ -44,7 +44,12 @@ If you want to contribute to this project, here's a step-by-step guide to get yo
 `git clone https://git.esi-bru.be/2023-2024/prjg5/pbteam.git`
 1. Install the dependencies :
 `composer install`
+`npm install`
+1. Build ui files:
+`npm run build`
 1. Set up the `.env` file with your postgresql database information
+1. Migrate to database :
+`php artisan migrate`
 1. Run the project : 
 `php artisan serve`
 1. You're good to go!
