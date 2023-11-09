@@ -23,16 +23,16 @@ Route::get('/', function () {
 });
 
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-
-// });
+ Route::middleware([
+     'auth:sanctum',
+     config('jetstream.auth_session'),
+     'verified',
+ ])->group(function () {
+     Route::get('/dashboard', function () {
+         return view('dashboard');
+     })->name('dashboard');
+ });
+ 
 Route::get('fiche-medicale',[ficheController::class, "display_record"]);
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 Route::get('formulaire', [ficheController::class, "display_form"]);
