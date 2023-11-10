@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Infos_Pdf;
 use App\Models\MedicalCard;
 use App\Models\Person;
+use App\Models\User;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -70,14 +71,14 @@ class PDFController extends Controller
         }
     }
 
-    public function generatePDF()
+    public function generatePDF(Request $request)
     {
-        $data = MedicalCard::find(123456);
-        $info = Person::find(123456);
+        $data = MedicalCard::find($request->national_number);
+        // $info = User::find($request->nationa_number);
         //devoir faire ca pour l'élève récupéré via l'url pour chaque table
 
-        if ($data && $info) {
-            $pdf = PDF::loadView('pdf', compact('data', 'info'));
+        if ($data) {
+            $pdf = PDF::loadView('pdf', compact('data'));
 
             //accéder à l'instance Dompdf du PDF généré
             $dompdf = $pdf->getDomPDF();
@@ -90,7 +91,7 @@ class PDFController extends Controller
 
             // Chemin vers le répertoire public
             $webRoot = public_path();
-            $html2 = view('pdf', compact('data', 'info'))->render();
+            $html2 = view('pdf', compact('data'))->render();
             $html = '<html>
 <head>
     <style>
@@ -123,10 +124,10 @@ class PDFController extends Controller
             $dompdf->render();
 
             // Téléchargement du PDF
-            $filename = $info['last_name'] . '_' . $info['first_name'] . '.pdf';
+            $filename = $request->national_number.'.pdf';
             return $pdf->download($filename);
         } else {
-            return redirect()->route('fiche-medicale')->with('error', 'Aucune donnée trouvée pour préremplir le formulaire.');
+            return redirect()->route('records')->with('error', 'Aucune donnée trouvée pour préremplir le formulaire.');
         }
     }
 

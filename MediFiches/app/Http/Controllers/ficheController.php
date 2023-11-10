@@ -19,4 +19,8 @@ class ficheController extends Controller {
     {
         return view("animateur/fiche_medicale_create");
     }
+    public function display_testing()
+    {
+        return view("testing_form");
+    }
 }

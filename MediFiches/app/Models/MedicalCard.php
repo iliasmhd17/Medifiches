@@ -27,11 +27,10 @@ class MedicalCard extends Model
         'city',
     ];
 
-    
     public static function createMedicalCard($data)
     {
         $medicalCard = new self;
-        $medicalCard->national_number = $data['national_number']; 
+        $medicalCard->national_number = $data['national_number'];
         $medicalCard->fill($data);
         $medicalCard->save();
         return $medicalCard;

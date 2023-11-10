@@ -10,6 +10,8 @@
             @foreach ($data as $row)
             <br><br><br><br><h3 class="pb-3">Fiche médicale <strong> {{ $row->national_number }}</strong></h3>
                 <form method="POST" action="{{ route('generate-pdf') }}" class="ms-auto">
+
+                    <input type="text" name="national_number" value="{{$row->national_number}}" hidden>
                     @csrf
                     <button type="submit" class="btn" style="background: none; border: none;" title="Télécharger en PDF">
                         <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">Télécharger

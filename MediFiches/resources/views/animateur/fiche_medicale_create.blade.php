@@ -6,6 +6,8 @@
                     {{ __('Créez une fiche médicale') }}
                 </h2>
             </x-slot>
+            
+            <x-validation-errors class="mb-4" />
             <form action="{{ route('create.record') }}" method="post">
                 @csrf
                 <div>
@@ -26,7 +28,7 @@
                 </div>
                 <div>
                     <x-label for="can_participer" value="{{ __('Peut participer') }}" />
-                    <x-input id="can_participer" class="block mt-1 w-full" type="checkbox" name="can_participer" />
+                    <x-input id="can_participer" class="block mt-1 w-full" type="checkbox" name="can_participate" />
                 </div>
                 <div>
                     <x-label for="medical_record" value="{{ __('Médecin traitant') }}" />
@@ -34,7 +36,7 @@
                 </div>
                 <div>
                     <x-label for="tetanos" value="{{ __('Vaccin du tétanos fait ?') }}" />
-                    <x-input id="tetanos" class="block mt-1 w-full" type="checkbox" name="tetanos" />
+                    <x-input id="tetanos" class="block mt-1 w-full" type="checkbox" name="tetanos_protected" />
                 </div>
                 <div>
                     <x-label for="Email" value="{{ __('Email') }}" />
@@ -42,15 +44,15 @@
                 </div>
                 <div>
                     <x-label for="medic" value="{{ __('Médicaments') }}" />
-                    <x-input id="medic" class="block mt-1 w-full" type="text" name="medic" :value="old('medic')" placeholder="Entrez le(s) médicament(s)..." />
+                    <x-input id="medic" class="block mt-1 w-full" type="text" name="medecins" :value="old('medecine')" placeholder="Entrez le(s) médicament(s)..." />
                 </div>
                 <div>
                     <x-label for="qMedic" value="{{ __('Quantité de médicaments') }}" />
-                    <x-input id="qMedic" class="block mt-1 w-full" type="text" name="qMedic" :value="old('qMedic')" placeholder="Entrez la / les quantité(s)..." />
+                    <x-input id="qMedic" class="block mt-1 w-full" type="text" name="quantity_medecine" :value="old('quantity_medecine')" placeholder="Entrez la / les quantité(s)..." />
                 </div>
                 <div>
                     <x-label for="fMedic" value="{{ __('Indiquez la fréquence') }}" />
-                    <x-input id="fMedic" class="block mt-1 w-full" type="text" name="fMedic" :value="old('fMedic')" placeholder="Entrez la / les fréquence(s)..." />
+                    <x-input id="fMedic" class="block mt-1 w-full" type="text" name="time_medecine" :value="old('time_medecine')" placeholder="Entrez la / les fréquence(s)..." />
                 </div>
                 <div>
                     <x-label for="allergies" value="{{ __('Allergies') }}" />
@@ -58,7 +60,7 @@
                 </div>
                 <div>
                     <x-label for="consequences" value="{{ __('Indiquez les conséquences') }}" />
-                    <x-input id="consequences" class="block mt-1 w-full" type="text" name="consequences" :value="old('consequences')" placeholder="Entrez les conséquences..." />
+                    <x-input id="consequences" class="block mt-1 w-full" type="text" name="allergies_consequences" :value="old('allergies_consequences')" placeholder="Entrez les conséquences..." />
                 </div>
                 <div>
                     <x-label for="street" value="{{ __('Rue') }}" />
@@ -66,11 +68,11 @@
                 </div>
                 <div>
                     <x-label for="no" value="{{ __('Numéro') }}" />
-                    <x-input id="no" class="block mt-1 w-full" type="text" name="no" :value="old('no')" placeholder="Entrez votre numéro" />
+                    <x-input id="no" class="block mt-1 w-full" type="number" name="no" :value="old('no')" placeholder="Entrez votre numéro" />
                 </div>
                 <div>
                     <x-label for="mailbox" value="{{ __('Boite') }}" />
-                    <x-input id="mailbox" class="block mt-1 w-full" type="text" name="mailbox" :value="old('mailbox')" placeholder="Entrez votre boite" />
+                    <x-input id="mailbox" class="block mt-1 w-full" type="number" name="mailbox" :value="old('mailbox')" placeholder="Entrez votre boite" />
                 </div>
                 <div>
                     <x-label for="country" value="{{ __('Pays') }}" />
@@ -79,6 +81,10 @@
                 <div>
                     <x-label for="city" value="{{ __('Ville') }}" />
                     <x-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" placeholder="Entrez votre ville" />
+                </div>
+                <div>
+                    <!-- <x-label for="city" value="{{ __('Ville') }}" /> -->
+                    <x-input id="city" class="block mt-1 w-full" type="text" name="additional_infos" placeholder="Entrez votre ville" />
                 </div>
                 <button class="btn btn-primary" type="submit">{{ __('Envoyer') }}</button>
             </form>

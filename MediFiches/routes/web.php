@@ -40,5 +40,7 @@ Route::get('formulaire', [ficheController::class, "display_form"])->name('record
 Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('records');
 Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
 Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create.record');
+Route::post('/create-testing', [MedicalController::class, 'create_testing'])->name('create.testing');
+Route::get('/testing', [ficheController::class, "display_testing"])->name('testing_form');
 
 

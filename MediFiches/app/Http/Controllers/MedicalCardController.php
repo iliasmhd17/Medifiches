@@ -39,7 +39,7 @@ class MedicalCardController extends Controller
             'city' => 'required',
         ]);
         
-        print($data['national_number']);
+        print("validated data: "+$data['national_number']);
        
         MedicalCard::createMedicalCard($data);
 

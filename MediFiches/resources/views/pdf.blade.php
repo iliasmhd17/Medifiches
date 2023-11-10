@@ -48,18 +48,6 @@
     <h1>Fiche santé individuelle</h1>
     <p>Cette fiche contient des informations importantes concernant la santé du participant. Elle doit être complète et mise à jour pour garantir une prise en charge adaptée en cas d'urgence.</p>
 
-    <!-- Section Identité -->
-    <div class="info-section">
-        <h2>Identité du participant</h2>
-        <p>Nom : {{ $info->last_name }}</p>
-        <p>Prénom : {{ $info->first_name }}</p>
-        <p>Date de naissance : {{ $data->birth_date }}</p>
-        <p>Adresse : {{ $data->street }} {{ $data->no }}, {{ $data->postcode }} {{ $data->city }}</p>
-        <p>Téléphone : 0485644461</p>
-        <p>Email : {{ $data->mailbox }}</p>
-    </div>
-
-    <!-- Section Contact d'urgence -->
     <div class="info-section">
         <h2>Contacts en cas d'urgence</h2>
         <p>Parent 1: {{ $data->parent_1_name }} - {{ $data->parent_1_phone }} - {{ $data->parent_1_email }}</p>

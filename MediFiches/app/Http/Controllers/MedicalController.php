@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
+use App\Models\Testing;
+
 class MedicalController extends Controller
 {
 
@@ -28,26 +30,31 @@ class MedicalController extends Controller
 
     public function createRecord(Request $request) 
     {
-        $national_number = $request->input('national_number');
-        $can_participer = $request->input('can_participer');
-        $medical_record = $request->input('medical_record');
-        $tetanos = $request->input('tetanos');
-        $allergies = $request->input('allergies');
-        $consequences = $request->input('consequences');
-        $medic = $request->input('medic');
-        $qMedic = $request->input('qMedic');
-        $fMedic = $request->input('fMedic');
-        $birth_date = $request->input('birth_date');
-        $street = $request->input('street');
-        $no = $request->input('no');
-        $mailbox = $request->input('mailbox');
-        $contry = $request->input('contry');
-        $city = $request->input('city');
-        $data = [$national_number,
-        $can_participer, $medical_record, $tetanos, $allergies, $consequences,
-        $medic, $qMedic, $fMedic, $birth_date, $street, $no, $mailbox, $contry, $city];
+
+        $data = $request->validate([
+            'national_number' => 'required',
+            'medical_record' => 'required',
+            'birth_date' => 'required',
+            'street' => 'required',
+            'no' => 'required',
+            'mailbox' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+        ]);
+        print_r($data);
         MedicalCard::createMedicalCard($data);
         return redirect('fiches');
+    }
+
+    public function create_testing(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required'
+        ]);
+        // $testing = new Testing();
+        // $testing->name = $request->name;
+        // $testing->save();
+        Testing::create($data);
     }
 
 }
