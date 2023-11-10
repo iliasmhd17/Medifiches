@@ -20,19 +20,19 @@ class AddForeignKeysToTables extends Migration
         });
 
         // Foreign Key: medical_cards.national_number -> persons.national_number
-        Schema::table('medical_cards', function (Blueprint $table) {
-            $table->foreign('national_number')->references('national_number')->on('persons');
-        });
+        // Schema::table('medical_cards', function (Blueprint $table) {
+        //     $table->foreign('national_number')->references('national_number')->on('persons');
+        // });
 
         // Foreign Key: medical_cards.city -> cities.name
-        Schema::table('medical_cards', function (Blueprint $table) {
-            $table->foreign('city')->references('name')->on('cities');
-        });
+        // Schema::table('medical_cards', function (Blueprint $table) {
+        //     $table->foreign('city')->references('name')->on('cities');
+        // });
 
         // Foreign Key: medical_cards.country -> countries.name
-        Schema::table('medical_cards', function (Blueprint $table) {
-            $table->foreign('country')->references('name')->on('countries');
-        });
+        // Schema::table('medical_cards', function (Blueprint $table) {
+        //     $table->foreign('country')->references('name')->on('countries');
+        // });
 
         // Foreign Key: animators.animation_group -> groups.name
         Schema::table('animators', function (Blueprint $table) {
@@ -56,19 +56,19 @@ class AddForeignKeysToTables extends Migration
     });
 
     // Foreign Key: medical_cards.country -> countries.name
-    Schema::table('medical_cards', function (Blueprint $table) {
-        $table->dropForeign(['country']);
-    });
+    // Schema::table('medical_cards', function (Blueprint $table) {
+    //     $table->dropForeign(['country']);
+    // });
 
     // Foreign Key: medical_cards.city -> cities.name
-    Schema::table('medical_cards', function (Blueprint $table) {
-        $table->dropForeign(['city']);
-    });
+    // Schema::table('medical_cards', function (Blueprint $table) {
+    //     $table->dropForeign(['city']);
+    // });
 
     // Foreign Key: medical_cards.national_number -> persons.national_number
-    Schema::table('medical_cards', function (Blueprint $table) {
-        $table->dropForeign(['national_number']);
-    });
+    // Schema::table('medical_cards', function (Blueprint $table) {
+    //     $table->dropForeign(['national_number']);
+    // });
 
     // Foreign Key: additional_fields.medical_card -> medical_cards.national_number
     Schema::table('additional_fields', function (Blueprint $table) {

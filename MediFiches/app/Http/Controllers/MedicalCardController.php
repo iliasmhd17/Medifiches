@@ -38,7 +38,9 @@ class MedicalCardController extends Controller
             'country' => 'required',
             'city' => 'required',
         ]);
-
+        
+        print($data['national_number']);
+       
         MedicalCard::createMedicalCard($data);
 
         return redirect()->route('medicalcards.index');

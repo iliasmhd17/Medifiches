@@ -1,97 +1,87 @@
-@extends('template')
-@section('title', " - Créer une Fiche Médicale")
-@section('content')
-<script type="text/javascript">
-        $(document).ready(function() {
-            let width = screen.width
-            if (width <= 800) {
-                $("#banner").attr("src", "{{ asset('images/medi-banner-vertical.png') }}");
-            }
-        });
-</script>
-<br><br>
-<div class="postition-relative">
-<img src="{{ asset('images/medi-banner.png') }}" id="banner" alt="Banner" class="img-fluid" style="width: 100%; height: auto;">
-<div class="container mt-5 position-absolute bg-white" id="consult">
-  <h3 class="pb-3">Créer Fiche Médicale</h3>
-  <form action="{{route('create.record')}}" method="post">
-        @csrf
-        <div class="form-group">
-        <div class="input-group-text m-2">
-                <label for="national_number" class="m-2">Numéro national : </label>
-                <input type="text" id="national_number" class="form-control w-25" placeholder="Entrez le numéro national...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="last_name" class="m-2">Nom : </label>
-                <input type="text" id="last_name" class="form-control w-25" placeholder="Entrez le nom de famille...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="first_name" class="m-2">Prénom : </label>
-                <input type="text" id="first_name" class="form-control w-25" placeholder="Entrez le prénom...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="birth_date" class="m-2">Date de naissance : </label>
-                <input type="date" id="birth_date" class="form-control w-25" placeholder="Entrez la date de naissance...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="can_participer" class="m-2">Peut participer : </label>
-                <input type="checkbox" class="form-check-input" id="can_participer">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="medical_record" class="m-2">Médecin traitant : </label>
-                <input type="text" id="medical_record" class="form-control w-25" placeholder="Entrez le médecin...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="tetanos" class="m-2">Vaccin du tétanos fait ?: </label>
-                <input type="checkbox" class="form-check-input" id="tetanos">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="Email" class="m-2">Email : </label>
-                <input type="email" id="Email" class="form-control w-25" placeholder="Entrez un email...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="medic" class="m-2">Médicaments : </label>
-                <input type="text" class="form-control w-25" id="medic" placeholder="Entrez le(s) médicament(s)...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="qMedic" class="m-2">Quantité de médicaments : </label>
-                <input type="text" class="form-control w-25" id="qMedic" placeholder="Entrez la / les quantité(s)...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="fMedic" class="m-2">Indiquez la fréquence : </label>
-                <input type="text" class="form-control w-25" id="fMedic" placeholder="Entrez la / les fréquence(s)...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="allergies" class="m-2">Allergies : </label>
-                <input type="text" class="form-control w-25" id="allergies" placeholder="Entrez les allergies...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="consequences" class="m-2">Indiquez les conséquences : </label>
-                <input type="text" class="form-control w-25" id="consequences" placeholder="Entrez les consequences...">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="street" class="m-2">Rue : </label>
-                <input type="text" class="form-control w-25" id="street" placeholder="Entrez votre rue">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="no" class="m-2">Numéro : </label>
-                <input type="text" class="form-control w-25" id="no" placeholder="Entrez votre numéro">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="mailbox" class="m-2">Boite : </label>
-                <input type="text" class="form-control w-25" id="mailbox" placeholder="Entrez votre boite">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="contry" class="m-2">Pays : </label>
-                <input type="text" class="form-control w-25" id="contry" placeholder="Entrez votre pays">
-            </div>
-            <div class="input-group-text m-2">
-                <label for="city" class="m-2">Ville : </label>
-                <input type="text" class="form-control w-25" id="city" placeholder="Entrez votre ville">
-            </div>
+<x-app-layout>
+    <div class="postition-relative">
+        <div class="container mt-5 position-absolute bg-white" id="consult">
+            <x-slot name="header">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Créez une fiche médicale') }}
+                </h2>
+            </x-slot>
+            <form action="{{ route('create.record') }}" method="post">
+                @csrf
+                <div>
+                    <x-label for="national_number" value="{{ __('No. de registre nationale') }}" />
+                    <x-input id="national_number" class="block mt-1 w-full" type="text" name="national_number" :value="old('national_number')" required autofocus autocomplete="national_number" />
+                </div>
+                <div>
+                    <x-label for="last_name" value="{{ __('Nom') }}" />
+                    <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autocomplete="last_name" />
+                </div>
+                <div>
+                    <x-label for="first_name" value="{{ __('Prénom') }}" />
+                    <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autocomplete="first_name" />
+                </div>
+                <div>
+                    <x-label for="birth_date" value="{{ __('Date de naissance') }}" />
+                    <x-input id="birth_date" class="block mt-1 w-full" type="date" name="birth_date" :value="old('birth_date')" required autocomplete="birth_date" />
+                </div>
+                <div>
+                    <x-label for="can_participer" value="{{ __('Peut participer') }}" />
+                    <x-input id="can_participer" class="block mt-1 w-full" type="checkbox" name="can_participer" />
+                </div>
+                <div>
+                    <x-label for="medical_record" value="{{ __('Médecin traitant') }}" />
+                    <x-input id="medical_record" class="block mt-1 w-full" type="text" name="medical_record" :value="old('medical_record')" placeholder="Entrez le médecin..." />
+                </div>
+                <div>
+                    <x-label for="tetanos" value="{{ __('Vaccin du tétanos fait ?') }}" />
+                    <x-input id="tetanos" class="block mt-1 w-full" type="checkbox" name="tetanos" />
+                </div>
+                <div>
+                    <x-label for="Email" value="{{ __('Email') }}" />
+                    <x-input id="Email" class="block mt-1 w-full" type="email" name="Email" :value="old('Email')" placeholder="Entrez un email..." />
+                </div>
+                <div>
+                    <x-label for="medic" value="{{ __('Médicaments') }}" />
+                    <x-input id="medic" class="block mt-1 w-full" type="text" name="medic" :value="old('medic')" placeholder="Entrez le(s) médicament(s)..." />
+                </div>
+                <div>
+                    <x-label for="qMedic" value="{{ __('Quantité de médicaments') }}" />
+                    <x-input id="qMedic" class="block mt-1 w-full" type="text" name="qMedic" :value="old('qMedic')" placeholder="Entrez la / les quantité(s)..." />
+                </div>
+                <div>
+                    <x-label for="fMedic" value="{{ __('Indiquez la fréquence') }}" />
+                    <x-input id="fMedic" class="block mt-1 w-full" type="text" name="fMedic" :value="old('fMedic')" placeholder="Entrez la / les fréquence(s)..." />
+                </div>
+                <div>
+                    <x-label for="allergies" value="{{ __('Allergies') }}" />
+                    <x-input id="allergies" class="block mt-1 w-full" type="text" name="allergies" :value="old('allergies')" placeholder="Entrez les allergies..." />
+                </div>
+                <div>
+                    <x-label for="consequences" value="{{ __('Indiquez les conséquences') }}" />
+                    <x-input id="consequences" class="block mt-1 w-full" type="text" name="consequences" :value="old('consequences')" placeholder="Entrez les conséquences..." />
+                </div>
+                <div>
+                    <x-label for="street" value="{{ __('Rue') }}" />
+                    <x-input id="street" class="block mt-1 w-full" type="text" name="street" :value="old('street')" placeholder="Entrez votre rue" />
+                </div>
+                <div>
+                    <x-label for="no" value="{{ __('Numéro') }}" />
+                    <x-input id="no" class="block mt-1 w-full" type="text" name="no" :value="old('no')" placeholder="Entrez votre numéro" />
+                </div>
+                <div>
+                    <x-label for="mailbox" value="{{ __('Boite') }}" />
+                    <x-input id="mailbox" class="block mt-1 w-full" type="text" name="mailbox" :value="old('mailbox')" placeholder="Entrez votre boite" />
+                </div>
+                <div>
+                    <x-label for="country" value="{{ __('Pays') }}" />
+                    <x-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" placeholder="Entrez votre pays" />
+                </div>
+                <div>
+                    <x-label for="city" value="{{ __('Ville') }}" />
+                    <x-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" placeholder="Entrez votre ville" />
+                </div>
+                <button class="btn btn-primary" type="submit">{{ __('Envoyer') }}</button>
+            </form>
         </div>
-        <button class="btn btn-primary" href="/create-record" type="submit">Envoyer</button>
-  </form>
-  </div>
-</div>
-@endsection
+    </div>
+</x-app-layout>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class MedicalCard extends Model
 {
@@ -29,7 +30,12 @@ class MedicalCard extends Model
     
     public static function createMedicalCard($data)
     {
-        return self::create($data);
+        $medicalCard = new self;
+        $medicalCard->national_number = $data['national_number']; 
+        $medicalCard->fill($data);
+        $medicalCard->save();
+        return $medicalCard;
+        //return self::create($data);
     }
 
     public static function updateMedicalCard($id, $data)

@@ -19,8 +19,9 @@ use App\Http\Controllers\MedicalController;
 
 
 Route::get('/', function () {
-    return view('animateur/accueil');
-});
+    return view('welcome');
+})->name('home');
+
 
 
  Route::middleware([
@@ -35,8 +36,8 @@ Route::get('/', function () {
  
 Route::get('fiche-medicale',[ficheController::class, "display_record"]);
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
-Route::get('formulaire', [ficheController::class, "display_form"]);
-Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('fiches');
+Route::get('formulaire', [ficheController::class, "display_form"])->name('record_form');
+Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('records');
 Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
 Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create.record');
 
