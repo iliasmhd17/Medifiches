@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
 use App\Models\Testing;
+use App\Forms\RecordForm;
+use Illuminate\Support\Facades\Validator;
 
 class MedicalController extends Controller
 {
@@ -24,37 +26,27 @@ class MedicalController extends Controller
         $children = DB::table('persons')
         ->where('national_number', $id)
         ->get();
-        //return view('medicalCardsDetails', ['data' => $data,'children ' => $children]);
         return view('medicalCardsDetails',compact('data','children'));
     }
 
     public function createRecord(Request $request) 
     {
 
-        $data = $request->validate([
-            'national_number' => 'required',
-            'medical_record' => 'required',
-            'birth_date' => 'required',
-            'street' => 'required',
-            'no' => 'required',
-            'mailbox' => 'required',
-            'country' => 'required',
-            'city' => 'required',
-        ]);
-        print_r($data);
+        $validator = Validator::make($request->all(), RecordForm::rules());
+
+        // Check if the validation fails
+        if ($validator->fails()) {
+            // Log the validation errors
+            \Log::error($validator->errors());
+
+            // Redirect back with validation errors
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // If validation passes, proceed with your logic
+        $data = $request->all();
         MedicalCard::createMedicalCard($data);
         return redirect('fiches');
-    }
-
-    public function create_testing(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required'
-        ]);
-        // $testing = new Testing();
-        // $testing->name = $request->name;
-        // $testing->save();
-        Testing::create($data);
     }
 
 }

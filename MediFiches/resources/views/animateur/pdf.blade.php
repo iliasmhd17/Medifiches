@@ -49,14 +49,14 @@
             <p>Cette fiche a pour objectif d'être un appui pour les animateurs ou le personnel soignant en cas de besoin. Il est essentiel que les renseignements que vous fournissez soient complets, corrects et à jour au moment des activités concernées.</p>
         </div>
         <div class="section">
-            <h3>Identité de l'enfant</h3>
+            <h3>Identité de l'enfant:</h3>
             <p>Nom : Prénom : Né(e) le</p>
             <p>Adresse :</p>
             <p>Localité : CP : Tél. / GSM : </p>
             <p>Pays : E-mail :</p>
         </div>
         <div class="section">
-            <h3>Personnes à contacter en cas d’urgence</h3>
+            <h3>Personnes à contacter en cas d'urgence</h3>
             <p>Nom : </p>
             <p>Adresse : {{$medical_card->street}}</p>
             <p>Lien de parenté : </p>

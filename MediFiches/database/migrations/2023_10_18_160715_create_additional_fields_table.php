@@ -8,7 +8,7 @@ class CreateAdditionalFieldsTable extends Migration
     public function up()
     {
         Schema::create('additional_fields', function (Blueprint $table) {
-            $table->integer('medical_card');
+            $table->string('medical_card');
             $table->string('field_name', 255);
             $table->string('field_value', 255);
             

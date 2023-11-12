@@ -74,7 +74,6 @@ class PDFController extends Controller
     public function generatePDF(Request $request)
     {
         $data = MedicalCard::find($request->national_number);
-        // $info = User::find($request->nationa_number);
         //devoir faire ca pour l'élève récupéré via l'url pour chaque table
 
         if ($data) {
@@ -110,7 +109,7 @@ class PDFController extends Controller
     </style>
 </head>
 <body>
-    <div class="background"></div>' . $html2 . '
+    <div class="background"></div>' . $html2 .'
 </body>
 </html>';
 

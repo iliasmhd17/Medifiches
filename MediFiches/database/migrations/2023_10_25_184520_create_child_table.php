@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('children', function (Blueprint $table) {
-            $table->integer('national_number')->primary();
-            $table->integer('parent_1')->nullable();
-            $table->integer('parent_2')->nullable();
+            $table->string('national_number')->primary();
+            $table->string('parent_1')->nullable();
+            $table->string('parent_2')->nullable();
             $table->string('group')->nullable();
             $table->foreign('parent_1')->references('national_number')->on('users')->cascadeOnDelete();
             $table->foreign('parent_2')->references('national_number')->on('users')->cascadeOnDelete();

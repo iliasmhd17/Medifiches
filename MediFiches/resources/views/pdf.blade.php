@@ -47,7 +47,19 @@
 <div class="container">
     <h1>Fiche santé individuelle</h1>
     <p>Cette fiche contient des informations importantes concernant la santé du participant. Elle doit être complète et mise à jour pour garantir une prise en charge adaptée en cas d'urgence.</p>
-
+    <div class="info-section">
+        <h2>Informations sur l'enfant</h2>
+        <p>Nom: {{ $data->last_name}}</p>
+        <p>Prénom: {{ $data->first_name}}</p>
+        <p>Date de naissance: {{ $data->birth_date}}</p>
+        <p>Email: {{ $data->email}}</p>
+        <h2>Adresse</h2>
+        <p>Rue: {{ $data->street }}</p>
+        <p>Numéro: {{ $data->no }}</p>
+        <p>Ville: {{ $data->city}}</p>
+        <p>Code Postal: {{ $data->postal_code }}</p>
+        <p>Pays: {{ $data->country }}</p>
+    </div>
     <div class="info-section">
         <h2>Contacts en cas d'urgence</h2>
         <p>Parent 1: {{ $data->parent_1_name }} - {{ $data->parent_1_phone }} - {{ $data->parent_1_email }}</p>
@@ -78,6 +90,7 @@
     <!-- Section Médicaments -->
     <div class="info-section">
         <h2>Médicaments</h2>
+        <p>Médicament à prendre: {{ $data->medecins }}</p>
         <p>Prise régulière de médicaments : {{$data->quantity_medecine}}</p>
     </div>
 </div>

@@ -10,6 +10,9 @@ class MedicalCard extends Model
     protected $primaryKey = 'national_number';
     protected $fillable = [
         'national_number',
+        'first_name',
+        'last_name',
+        'email',
         'can_participate',
         'medical_record',
         'tetanos_protected',
@@ -22,9 +25,13 @@ class MedicalCard extends Model
         'additional_infos',
         'street',
         'no',
-        'mailbox',
+        'postal_code',
         'country',
         'city',
+    ];
+    protected $casts = [
+        'can_participate' => 'boolean',
+        'tetanos_protected' => 'boolean',
     ];
 
     public static function createMedicalCard($data)

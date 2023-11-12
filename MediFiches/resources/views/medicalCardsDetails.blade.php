@@ -38,8 +38,8 @@
               <li class="list-group-item"><strong>Note Extra: </strong>{{ $row->additional_infos }}</li>
               <li class="list-group-item"><strong>Rue:</strong> {{ $row->street }}</li>
               <li class="list-group-item"><strong>numéro de maison:</strong> {{ $row->no }}</li>
-              <li class="list-group-item"><strong>Boite à lettre:</strong> {{ $row->mailbox }}</li>
               <li class="list-group-item"><strong>Ville:</strong> {{ $row->city }}</li>
+              <li class="list-group-item"><strong>Code Postal:</strong> {{ $row->postal_code }}</li>
               <li class="list-group-item"><strong>Pays:</strong> {{ $row->country }}</li>
             </ul>
             @endforeach

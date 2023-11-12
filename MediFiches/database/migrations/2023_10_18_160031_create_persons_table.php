@@ -9,7 +9,7 @@ class CreatePersonsTable extends Migration
     public function up()
     {
         Schema::create('persons', function (Blueprint $table) {
-            $table->integer('national_number')->primary();
+            $table->string('national_number')->primary();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
