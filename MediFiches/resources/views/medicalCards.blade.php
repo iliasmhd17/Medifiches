@@ -9,8 +9,6 @@
             </h3>
         </div>
     </x-slot>
-
-    <div style="background-image: url('{{ asset('images/medi-banner.png') }}'); background-size: cover; background-position: center; height: 100vh; position: relative; background-attachment: fixed;">
         <div class="container-fluid mt-5 position-absolute text-white d-flex align-items-center justify-content-center" id="consult">
             <div class="row row-cols-1 row-cols-md-3 w-100">
                 @foreach ($data as $row)
