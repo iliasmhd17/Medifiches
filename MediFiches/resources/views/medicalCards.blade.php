@@ -12,9 +12,10 @@
                     <div class="col-md-4 mb-4">
                         <div class="card border-secondary h-100 w-100">
                             <div class="card-header" style="color: #000;">
-                                <h5 class="card-title">{{ $row->national_number }}</h5>
+                                <h5 class="card-title">{{ $row->first_name }} {{ $row->last_name }}</h5>
                             </div>
                             <div class="card-body text-secondary">
+                                <p class="card-text">Numéro-National: {{ $row->national_number }}</p>
                                 <p class="card-text">Médecin: {{ $row->medecins }}</p>
                                 <p class="card-text">Allergie: {{ $row->allergies }}</p>
                                 <p class="card-text">Consequences: {{ $row->allergies_consequences }}</p>
