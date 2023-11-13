@@ -69,7 +69,7 @@
     <!-- Section Médecin traitant -->
     <div class="info-section">
         <h2>Médecin traitant</h2>
-        <p>Nom : {{ $data->medecins }}</p>
+        <p>Nom : {{ $data->medical_record }}</p>
     </div>
 
     <!-- Section Informations de santé -->
