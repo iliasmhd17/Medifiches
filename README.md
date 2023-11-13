@@ -17,9 +17,9 @@ This project consists on creating a website for animators and parents to see, mo
 The team behind this project, PBTeam, is made of the following members :
 |       Name            |  ID |
 |:---------------------:|:---:|
-|Taha Ahmed             |58744|
-|Lecky-Thompson William |58412|
-|Vivace F               |54490|  
+| Taha Ahmed             |58744|
+| Lecky-Thompson William |58412|
+| Vivace F               |54490|  
 | Ibrahim Tahiri        |54563|
 | Scott Kula Kula       |55284|
 | Ilias Mehdi           |55727|
@@ -57,19 +57,15 @@ If you want to contribute to this project, here's a step-by-step guide to get yo
 The project is currently under development following the AGILE development pattern (Scrum).
 
 ## Instruction for the pdf
-Installing the Library:
-Use Composer to add the "barryvdh/laravel-dompdf" library to the Laravel project by running the command composer require barryvdh/laravel-dompdf.
-
-Configuring the Service Provider:
-Add the service provider Barryvdh\DomPDF\ServiceProvider to the config/app.php file in the providers array.
-
-Configuring the Alias:
-Add the PDF facade to the config/app.php file in the aliases array.
-
-Using in Code:
-Use the library to generate PDF files from pdf.blade.php by using PDF::loadView('pdf') to load the view into a PDF.
-
-Downloading the PDF:
+1. Installing the Library:
+Use Composer to add the "barryvdh/laravel-dompdf" library to the Laravel project by running the command: `composer require barryvdh/laravel-dompdf`
+1. Configuring the Service Provider:
+Add the service provider Barryvdh\DomPDF\ServiceProvider to the `config/app.php` file in the providers array.
+1. Configuring the Alias:
+Add the PDF facade to the `config/app.php` file in the aliases array.
+1. Using in Code:
+Use the library to generate PDF files from pdf.blade.php by using `PDF::loadView('pdf')` to load the view into a PDF.
+1. Downloading the PDF:
 Use the download method to download the generated PDF.
 
 The code is also documented.
