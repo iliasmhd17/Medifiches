@@ -56,6 +56,23 @@ If you want to contribute to this project, here's a step-by-step guide to get yo
 ## Development State
 The project is currently under development following the AGILE development pattern (Scrum).
 
+## Instruction for the pdf
+Installing the Library:
+Use Composer to add the "barryvdh/laravel-dompdf" library to the Laravel project by running the command composer require barryvdh/laravel-dompdf.
+
+Configuring the Service Provider:
+Add the service provider Barryvdh\DomPDF\ServiceProvider to the config/app.php file in the providers array.
+
+Configuring the Alias:
+Add the PDF facade to the config/app.php file in the aliases array.
+
+Using in Code:
+Use the library to generate PDF files from pdf.blade.php by using PDF::loadView('pdf') to load the view into a PDF.
+
+Downloading the PDF:
+Use the download method to download the generated PDF.
+
+The code is also documented.
 - Sprint 1 (16/10 - 26/10)
 - Sprint 2 (06/11 - 16/11)
 - Sprint 3 (20/11 - 30/11)
