@@ -5,7 +5,6 @@
         </h2>
     </x-slot>
 
-    
         <div class="container" style="padding-top: 5rem;">
             <form action="{{ route('create_record') }}" method="post">
                 <div class="row">
