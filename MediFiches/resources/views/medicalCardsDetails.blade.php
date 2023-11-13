@@ -3,7 +3,6 @@
 @section('content')
 
     <div class="postition-relative">
-        <img src="{{ asset('images/medi-banner.png') }}" id="banner" alt="Banner" class="img-fluid" style="width: 100%; height: auto;">
         <div class="container mt-5 position-absolute bg-white" id="consult">
             <div class="d-flex justify-content-between align-items-center mb-3">
 
@@ -29,6 +28,8 @@
             <ul class="list-group list-group-flush">
 
               <li class="list-group-item"><strong>Numéro national : </strong>{{ $row->national_number }}</li>
+              <li class="list-group-item"><strong>Nom : </strong>{{$row->last_name }}</li>
+              <li class="list-group-item"><strong>Prénom : </strong>{{$row->first_name }}</li>
               <li class="list-group-item"><strong>Médecin : </strong> {{ $row->medecins }}</li>
               <li class="list-group-item"><strong>Allergie:</strong> {{ $row->allergies }}</li>
               <li class="list-group-item"><strong>Consequences:</strong> {{ $row->allergies_consequences }}</li>
@@ -37,7 +38,7 @@
               <li class="list-group-item"><strong>Date De Naissance:</strong> {{ $row->birth_date }}</li>
               <li class="list-group-item"><strong>Note Extra: </strong>{{ $row->additional_infos }}</li>
               <li class="list-group-item"><strong>Rue:</strong> {{ $row->street }}</li>
-              <li class="list-group-item"><strong>numéro de maison:</strong> {{ $row->no }}</li>
+              <li class="list-group-item"><strong>Numéro de maison:</strong> {{ $row->no }}</li>
               <li class="list-group-item"><strong>Ville:</strong> {{ $row->city }}</li>
               <li class="list-group-item"><strong>Code Postal:</strong> {{ $row->postal_code }}</li>
               <li class="list-group-item"><strong>Pays:</strong> {{ $row->country }}</li>
