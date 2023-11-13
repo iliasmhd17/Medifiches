@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use DB;
 
 class MedicalCard extends Model
@@ -32,6 +33,7 @@ class MedicalCard extends Model
     protected $casts = [
         'can_participate' => 'boolean',
         'tetanos_protected' => 'boolean',
+        'updated_at' => 'datetime',
     ];
 
     public static function createMedicalCard($data)

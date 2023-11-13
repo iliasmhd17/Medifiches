@@ -14,7 +14,9 @@ class MedicalController extends Controller
 
     public function getDbRecords(){
      $data = DB::table('medical_cards')->get();
-        return view('medicalCards', ['data' => $data]);
+     $nbFiches = DB::table('medical_cards')->count();
+
+        return view('medicalCards', compact('data', 'nbFiches'));
     }
 
     public function getCardDetails($id){
@@ -26,10 +28,11 @@ class MedicalController extends Controller
         $children = DB::table('persons')
         ->where('national_number', $id)
         ->get();
+
         return view('medicalCardsDetails',compact('data','children'));
     }
 
-    public function createRecord(Request $request) 
+    public function createRecord(Request $request)
     {
 
         $validator = Validator::make($request->all(), RecordForm::rules());
