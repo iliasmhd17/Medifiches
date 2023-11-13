@@ -12,12 +12,14 @@
 
                     <input type="text" name="national_number" value="{{$row->national_number}}" hidden>
                     @csrf
+                    Télécharger
                     <button type="submit" class="btn" style="background: none; border: none;" title="Télécharger en PDF">
-                        <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">Télécharger
+                        <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">
                     </button>
                 </form>
+
+                @endforeach
             </div>
-            @foreach ($children as $item)
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>Nom : </strong>{{$item->last_name }}</li>
                 <li class="list-group-item"><strong>Prénom : </strong>{{$item->first_name }}</li>
@@ -43,7 +45,6 @@
               <li class="list-group-item"><strong>Code Postal:</strong> {{ $row->postal_code }}</li>
               <li class="list-group-item"><strong>Pays:</strong> {{ $row->country }}</li>
             </ul>
-            @endforeach
         </div>
     </div>
 
