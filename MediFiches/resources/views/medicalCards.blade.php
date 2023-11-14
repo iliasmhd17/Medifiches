@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p class="card-text mb-2">{{ $row->national_number }}</p>
-                                    <p class="card-text mb-2">{{ $row->medecins }}</p>
+                                    <p class="card-text mb-2">{{ $row->medical_record }}</p>
                                     <p class="card-text mb-2">{{ $row->allergies }}</p>
                                     <p class="card-text mb-2">{{ $row->allergies_consequences }}</p>
                                     <p class="card-text mb-2">{{ Carbon\Carbon::parse($row->updated_at)->isoFormat('D MMMM YYYY', 'fr')  }}</p>
