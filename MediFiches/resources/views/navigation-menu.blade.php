@@ -21,6 +21,11 @@
                     <x-nav-link href="{{ route('record_form') }}" :active="request()->routeIs('record_form')">
                         {{ __('Cree une fiche') }}
                     </x-nav-link>
+                    @if (Auth::user()->role == 'parent')
+                        <x-nav-link href="{{ route('view_Animateur') }}" :active="request()->routeIs('view_Animateur')">
+                            {{ __('Ajouter un organisteur') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

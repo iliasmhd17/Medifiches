@@ -34,6 +34,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/formulaire">Créer une fiche</a>
                 </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/formulaire">ajouter un organisateur</a>
+                </li>
+                
             </ul>
         </div>
     </nav>

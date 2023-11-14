@@ -42,7 +42,6 @@ class MedicalController extends Controller
         // Check if the validation fails
         if ($validator->fails()) {
             
-
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimateurController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ficheController;
@@ -40,7 +41,8 @@ Route::get('formulaire', [ficheController::class, "display_form"])->name('record
 Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('records');
 Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
 Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create_record');
+Route::post('/animateur/createAnimateur',[AnimateurController::class,'createAnimateur'])->name('create_animateur');
+Route::get('/animateur',[AnimateurController::class,'viewAnimateur'])->name('view_Animateur');
 //Route::post('/create-testing', [MedicalController::class, 'create_testing'])->name('create_testing');
 //Route::get('/testing', [ficheController::class, "display_testing"])->name('testing_form');
-
 

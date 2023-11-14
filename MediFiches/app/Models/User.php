@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'national_number',
         'last_name',
+        'role',
     ];
 
     /**
@@ -60,4 +61,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public static function createAnimateur($data){
+        $data['role'] = 'Animateur';
+        User::create($data);
+    }
 }
