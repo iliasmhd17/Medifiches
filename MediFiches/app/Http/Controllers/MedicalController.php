@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
 use App\Models\Testing;
 use App\Forms\RecordForm;
+use App\Models\Children;
 use Illuminate\Support\Facades\Validator;
 
 class MedicalController extends Controller
@@ -36,8 +37,7 @@ class MedicalController extends Controller
 
         // Check if the validation fails
         if ($validator->fails()) {
-            // Log the validation errors
-            \Log::error($validator->errors());
+            
 
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
@@ -46,6 +46,11 @@ class MedicalController extends Controller
         // If validation passes, proceed with your logic
         $data = $request->all();
         MedicalCard::createMedicalCard($data);
+        $child_data = [
+            'national_number' => $data['national_number'],
+            'parent_1' => $data['email']
+        ];
+        Children::createChild($child_data);
         return redirect('fiches');
     }
 

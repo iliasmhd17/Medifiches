@@ -21,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $table->dropForeign(["person"]);
+        Schema::table('animators', function (Blueprint $table){
+            $table->dropForeign(["person"]);
+        });
     }
 };

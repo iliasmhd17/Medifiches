@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('parent_1')->nullable();
             $table->string('parent_2')->nullable();
             $table->string('group')->nullable();
-            $table->foreign('parent_1')->references('national_number')->on('users')->cascadeOnDelete();
-            $table->foreign('parent_2')->references('national_number')->on('users')->cascadeOnDelete();
+            $table->foreign('parent_1')->references('email')->on('users')->cascadeOnDelete();
+            $table->foreign('parent_2')->references('email')->on('users')->cascadeOnDelete();
             $table->foreign('group')->references('name')->on('groups')->nullOnDelete();
         });
     }
