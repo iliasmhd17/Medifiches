@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
@@ -14,7 +15,10 @@ class MedicalController extends Controller
 {
 
     public function getDbRecords(){
-     $data = DB::table('medical_cards')->get();
+        $userEmail = Auth::user()->email;
+
+        // Retrieve records from the medical_cards table where the email matches
+        $data = DB::table('medical_cards')->where('email', $userEmail)->get();    
         return view('medicalCards', ['data' => $data]);
     }
 
@@ -48,7 +52,7 @@ class MedicalController extends Controller
         MedicalCard::createMedicalCard($data);
         $child_data = [
             'national_number' => $data['national_number'],
-            'parent_1' => $data['email']
+            'parent_1' => Auth::user()->email,
         ];
         Children::createChild($child_data);
         return redirect('fiches');

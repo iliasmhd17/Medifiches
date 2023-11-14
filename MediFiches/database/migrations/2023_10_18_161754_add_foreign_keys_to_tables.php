@@ -46,14 +46,14 @@ class AddForeignKeysToTables extends Migration
     // Supprimez les contraintes de clé étrangère dans l'ordre inverse de la création (dans la méthode down()).
 
     // Foreign Key: animators.animation_group -> groups.name
-    Schema::table('animators', function (Blueprint $table) {
-        $table->dropForeign(['animation_group']);
-    });
+    // Schema::table('animators', function (Blueprint $table) {
+    //     $table->dropForeign(['animation_group']);
+    // });
 
     // Foreign Key: children.group -> groups.name
-    Schema::table('children', function (Blueprint $table) {
-        $table->dropForeign(['group']);
-    });
+    // Schema::table('children', function (Blueprint $table) {
+    //     $table->dropForeign(['group']);
+    // });
 
     // Foreign Key: medical_cards.country -> countries.name
     // Schema::table('medical_cards', function (Blueprint $table) {
