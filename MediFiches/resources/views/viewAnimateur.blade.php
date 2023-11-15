@@ -8,6 +8,7 @@
     <div style="background-image: url('{{ asset('images/medi-banner.png') }}'); background-size: cover; background-position: center; height: 100vh; position: relative; background-attachment: fixed; margin: 0;">
         <div class="container" style="padding-top: 5rem;">
             <form action="{{ route('create_animateur') }}" method="post">
+                @csrf
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-6">

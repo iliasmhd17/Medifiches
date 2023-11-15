@@ -9,7 +9,7 @@ class CreateAnimatorsTable extends Migration
     public function up()
     {
         Schema::create('animators', function (Blueprint $table) {
-            $table->string('person')->primary();
+            $table->string('user')->primary();
             $table->string('animation_group', 255)->nullable();
 
         });

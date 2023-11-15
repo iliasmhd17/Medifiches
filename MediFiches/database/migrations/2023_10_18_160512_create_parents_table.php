@@ -17,6 +17,6 @@ class CreateParentsTable extends Migration
 
     public function down()
     {
-        //Schema::dropIfExists('parents');
+        Schema::dropIfExists('parents');
     }
 }
