@@ -170,6 +170,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -182,6 +184,7 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
+    
 
     'aliases' => Facade::defaultAliases()->merge([
         'PDF' => \Barryvdh\DomPDF\Facade::class,
