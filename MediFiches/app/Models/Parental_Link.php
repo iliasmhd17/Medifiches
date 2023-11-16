@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Children extends Model
+class Parental_Link extends Model
 {
     protected $fillable = [
         'national_number',
         'parent_1',
         'parent_2',
+        'relation_1',
+        'relation_2',
         'group',
     ];
     protected $primaryKey = 'national_number';
-    protected $table = 'children';
+    protected $table = 'parental_link';
 
     public static function createChild($data)
     {

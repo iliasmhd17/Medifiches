@@ -35,7 +35,7 @@ Route::get('/', function () {
      })->name('dashboard');
  });
  
-Route::get('fiche-medicale',[ficheController::class, "display_record"]);
+// Route::get('fiche-medicale',[ficheController::class, "display_record"]);
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 Route::get('formulaire', [ficheController::class, "display_form"])->name('record_form');
 Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('records');

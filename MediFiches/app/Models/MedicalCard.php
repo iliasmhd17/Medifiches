@@ -3,30 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class MedicalCard extends Model
 {
+    protected $table = 'medical_card';
     protected $primaryKey = 'national_number';
     protected $fillable = [
         'national_number',
         'first_name',
         'last_name',
-        'email',
         'can_participate',
-        'medical_record',
+        'doctor',
         'tetanos_protected',
         'allergies',
-        'allergies_consequences',
         'medecins',
-        'quantity_medecine',
-        'time_medecine',
         'birth_date',
         'additional_infos',
         'street',
         'no',
+        'mail_box',
         'postal_code',
-        'country',
         'city',
     ];
     protected $casts = [
@@ -72,5 +69,10 @@ class MedicalCard extends Model
     public static function getMedicalCardById($id)
     {
         return self::find($id);
+    }
+
+    public static function getUserEmail($email){
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('parent_1',$email)->orWhere('parent_2',$email)->get();
+        return $data;
     }
 }
