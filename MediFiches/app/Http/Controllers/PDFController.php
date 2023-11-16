@@ -10,10 +10,11 @@ use App\Models\Person;
 use App\Models\User;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\DB;
 
 class PDFController extends Controller
 {
- public function generatePDFs()
+    public function generatePDFs()
     {
         // Récupérez les données de la table 'Infos_Pdf'
         $data = Infos_Pdf::find(2);
@@ -90,7 +91,14 @@ class PDFController extends Controller
 
             // Chemin vers le répertoire public
             $webRoot = public_path();
-            $html2 = view('pdf', compact('data'))->render();
+
+            $parent_infos = DB::table('parental_link')
+                ->join('medical_card', 'national_number', '=', 'national_number')
+                ->join('parent', 'parent_1', '=', 'user')
+                ->join('parent', 'parent_2', '=', 'user')
+                ->groupBy('national_number');
+
+            $html2 = view('pdf', compact('data', 'parent_infos'))->render();
             $html = '<html>
 <head>
     <style>
@@ -109,7 +117,7 @@ class PDFController extends Controller
     </style>
 </head>
 <body>
-    <div class="background"></div>' . $html2 .'
+    <div class="background"></div>' . $html2 . '
 </body>
 </html>';
 
@@ -123,11 +131,10 @@ class PDFController extends Controller
             $dompdf->render();
 
             // Téléchargement du PDF
-            $filename = $request->national_number.'.pdf';
+            $filename = $request->national_number . '.pdf';
             return $pdf->download($filename);
         } else {
             return redirect()->route('records')->with('error', 'Aucune donnée trouvée pour préremplir le formulaire.');
         }
     }
-
 }

@@ -25,7 +25,7 @@
                                 <div class="mb-3">
                                     <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
                                     @if($field['type'] === 'checkbox')
-                                        <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])"/>
+                                        <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" value="1"/>
                                     @elseif(isset($field['isTextArea']))
                                         <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'], Auth::user()->email)"></textarea>
                                     @else
@@ -44,7 +44,7 @@
                                     <div class="mb-3">
                                         <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
                                         @if($field['type'] === 'checkbox')
-                                            <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])"/>
+                                            <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" value="1"/>
                                         @elseif(isset($field['isTextArea']))
                                             <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'], Auth::user()->email)"></textarea>
                                         @else

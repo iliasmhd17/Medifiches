@@ -17,7 +17,7 @@ class RecordForm
             'allergies' => ['nullable', 'string'],
             'street' => ['required', 'string', 'max:255'],
             'no' => ['required', 'string','max:4'],
-            'mail_box'=> ['required', 'string','max:4'],
+            'mail_box'=> ['string','max:4'],
             'postal_code' => ['required', 'int'],
             'city' => ['required', 'string', 'max:255'],
             'additional_infos' => ['nullable', 'string']
@@ -37,7 +37,7 @@ class RecordForm
             ['name' => 'allergies', 'label' => 'Allergies', 'type' => 'text', 'required' => false, 'placeholder' => 'Entrez les allergies...','isTextArea'=>true],
             ['name' => 'street', 'label' => 'Rue', 'type' => 'text', 'required' => true, 'placeholder' => 'Entrez votre rue'],
             ['name' => 'no', 'label' => 'Numéro', 'type' => 'text', 'required' => true, 'placeholder' => 'Entrez votre numéro'],
-            ['name' => 'mail_box', 'label' => 'maibox', 'type' => 'text', 'required' => true, 'placeholder' => 'Entrez votre numéro'],
+            ['name' => 'mail_box', 'label' => 'maibox', 'type' => 'text', 'required' => false, 'placeholder' => 'Entrez votre numéro'],
             ['name' => 'postal_code', 'label' => 'Code Postal', 'type' => 'number', 'required' => true, 'placeholder' => 'Entrez votre code postal'],
             ['name' => 'city', 'label' => 'Ville', 'type' => 'text', 'required' => true, 'placeholder' => 'Entrez votre ville'],
             ['name' => 'additional_infos', 'label' => 'Informations additionnelles', 'type' => 'textarea', 'required' => false, 'placeholder' => 'Entrez des informations supplémentaires','isTextArea'=>true],

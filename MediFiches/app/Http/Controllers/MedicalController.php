@@ -30,10 +30,14 @@ class MedicalController extends Controller
         ->where('national_number', $id)
         ->get();
 
-        $children = DB::table('persons')
+        $children = DB::table('medical_card')
         ->where('national_number', $id)
         ->get();
-        return view('medicalCardsDetails',compact('data','children'));
+
+        $parent_infos = DB::table('parental_link')
+        ->join('medical_card', 'national_number', '=', 'national_number')
+        ->groupBy('national_number');
+        return view('medicalCardsDetails',compact('data','children', 'parent_infos'));
     }
 
     public function createRecord(Request $request) 
