@@ -137,9 +137,80 @@ class MedicalCardTest extends TestCase
 
         // Vérifiez si la carte médicale a été correctement supprimée de la base de données
         $this->assertDatabaseMissing('medical_card', ['national_number' => $nationalNumberToDelete]);
-
-        // Vous pouvez également ajouter d'autres assertions en fonction de vos besoins
     }
 
-    //sur chatgpt les test pour les 3 get sont deja fait mais je dois ajouter
+    public function testGetMedicalCard()
+{
+    // Arrange
+    $nationalNumberToRetrieve = '111111111';
+
+    // Act
+    $retrievedMedicalCard = MedicalCard::getMedicalCardById($nationalNumberToRetrieve);
+
+    // Assert
+    $this->assertInstanceOf(MedicalCard::class, $retrievedMedicalCard);
+    $this->assertEquals('Jane', $retrievedMedicalCard->first_name);
+    
+}
+
+public function testGetAllMedicalCards()
+{
+    // Act
+    $allMedicalCards = MedicalCard::getAllMedicalCards();
+
+    // Assert
+    $this->assertIsIterable($allMedicalCards);
+    $this->assertGreaterThan(0, count($allMedicalCards));
+
+    // You can perform more specific assertions based on your data structure
+    foreach ($allMedicalCards as $medicalCard) {
+        $this->assertInstanceOf(MedicalCard::class, $medicalCard);
+    }
+}
+
+public function testGetNonExistingMedicalCard()
+{
+    // Arrange
+    $nationalNumberToRetrieve = '999999999'; // Assuming this doesn't exist
+
+    // Act
+    $retrievedMedicalCard = MedicalCard::getMedicalCardById($nationalNumberToRetrieve);
+
+    // Assert
+    $this->assertNull($retrievedMedicalCard);
+}
+
+public function testUpdateNonExistingMedicalCard()
+{
+    // Arrange
+    $nonExistingNationalNumber = '999999999'; // Assuming this doesn't exist
+
+    $updatedData = [
+        'first_name' => 'Updated John',
+        'tetanos_protected' => true,
+        'medecins' => 'Paracetamol',
+        'postal_code' => '54321',
+    ];
+
+    // Act
+    $updatedMedicalCard = MedicalCard::updateMedicalCard($nonExistingNationalNumber, $updatedData);
+
+    // Assert
+    $this->assertNull($updatedMedicalCard);
+}
+
+public function testDeleteNonExistingMedicalCard()
+{
+    // Arrange
+    $nonExistingNationalNumber = '999999999'; // Assuming this doesn't exist
+
+    // Act
+    $result = MedicalCard::deleteMedicalCard($nonExistingNationalNumber);
+
+    // Assert
+    $this->assertFalse($result);
+}
+
+
+    
 }
