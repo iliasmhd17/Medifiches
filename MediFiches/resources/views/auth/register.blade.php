@@ -19,11 +19,6 @@
                 <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="last_name" />
             </div>
 
-            <div>
-                <x-label for="national_number" value="{{ __('No. de registre nationale') }}" />
-                <x-input id="national_number" class="block mt-1 w-full" type="text" name="national_number" :value="old('national_number')" required autofocus autocomplete="national_number" />
-            </div>
-
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
