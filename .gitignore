@@ -4,7 +4,6 @@ MediFiches/public/build
 MediFiches/public/hot
 MediFiches/public/storage
 MediFiches/storage/*.key
-MediFiches/vendor
 MediFiches/.env.backup
 MediFiches/.env.production
 MediFiches/.phpunit.result.cache
