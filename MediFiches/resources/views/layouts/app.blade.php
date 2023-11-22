@@ -10,7 +10,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
         <!-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Medifiches') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
