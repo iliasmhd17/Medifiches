@@ -29,7 +29,6 @@ class MedicalCard extends Model
     protected $casts = [
         'can_participate' => 'boolean',
         'tetanos_protected' => 'boolean',
-        'updated_at' => 'datetime',
     ];
 
     public static function createMedicalCard($data)

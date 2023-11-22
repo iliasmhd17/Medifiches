@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+    <div style="background-image: url('{{ asset('images/medi-banner.png') }}'); background-size: cover; background-position: center; height: 100vh; position: relative; background-attachment: fixed; margin: 0;">
         <div class="container" style="padding-top: 5rem;">
             <form action="{{ route('create_record') }}" method="post">
                 @csrf

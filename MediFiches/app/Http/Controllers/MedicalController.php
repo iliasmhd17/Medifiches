@@ -40,7 +40,7 @@ class MedicalController extends Controller
         return view('medicalCardsDetails',compact('data','children', 'parent_infos'));
     }
 
-    public function createRecord(Request $request)
+    public function createRecord(Request $request) 
     {
 
         $validator = Validator::make($request->all(), RecordForm::rules());
