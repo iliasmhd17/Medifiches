@@ -10,7 +10,6 @@
                     <input type="text" name="national_number" value="{{$row->national_number}}" hidden>
                     @csrf
                     <button type="submit" class="btn" style="background: none; border: none; display: flex; align-items: center;" title="Télécharger en PDF">
-                        Télécharger
                         <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px; margin-left: 5px;">
                     </button>
                 </form>
