@@ -5,9 +5,11 @@
         </x-slot>
 
         <x-validation-errors class="mb-4" />
+        <a href="{{ route('socialite.redirect', 'google') }}" title="Connexion/Inscription avec Google" class="btn btn-link"  >Continuer avec Google</a>
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+
 
             <div>
                 <x-label for="name" value="{{ __('Prenom') }}" />
