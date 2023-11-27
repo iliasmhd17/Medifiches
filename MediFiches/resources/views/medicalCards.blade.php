@@ -23,14 +23,12 @@
                                     <p class="card-text mb-2 text-left">Numéro-National:</p>
                                     <p class="card-text mb-2 text-left">Médecin:</p>
                                     <p class="card-text mb-2 text-left">Allergie:</p>
-                                    <p class="card-text mb-2 text-left">Consequences:</p>
                                     <p class="card-text mb-2 text-left">Dernière mise à jour:</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="card-text mb-2">{{ $row->national_number }}</p>
-                                    <p class="card-text mb-2">{{ $row->medical_record }}</p>
+                                    <p class="card-text mb-2">{{ $row->doctor }}</p>
                                     <p class="card-text mb-2">{{ $row->allergies }}</p>
-                                    <p class="card-text mb-2">{{ $row->allergies_consequences }}</p>
                                     <p class="card-text mb-2">{{ Carbon\Carbon::parse($row->updated_at)->isoFormat('D MMMM YYYY', 'fr')  }}</p>
                                 </div>
                             </div>
