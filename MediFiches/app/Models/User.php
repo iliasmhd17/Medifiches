@@ -67,17 +67,16 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public static function createAnimateur($data){
-        $data['role'] = 'Animateur';
-        $data['password'] = Str::random(16);
+        $password = Str::random(16);
+        $data['role'] = 'Animator';
+        $data['password'] = Hash::make($password);
+        $data['email_verified_at'] = date("Y-m-d H:i:s");
 
         $testMailData = [
             'title' => $data['email'],
-            'body' => $data['password'],
+            'body' => $password,
         ];
-
-        Mail::to($data['email'])->send(new SendMail($testMailData));
-        dd('Success! Email has been sent successfully.');
-        $data['password'] = Hash::make($data['password']);
         User::create($data);
+        Mail::to($data['email'])->send(new SendMail($testMailData));
     }
 }

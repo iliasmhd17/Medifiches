@@ -15,6 +15,10 @@
                             <div class="bg-white p-4">
                                 <x-label for="email" value="email" />
                                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"/>
+                                <x-label for="first_name" value="first_name" />
+                                <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')"/>
+                                <x-label for="last_name" value="last_name" />
+                                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')"/>
                             </div>
                             <button class="btn btn-outline-primary" type="submit">{{ __('Envoyer') }}</button>
                         </div>
