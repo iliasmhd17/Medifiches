@@ -15,7 +15,6 @@
 
                             <x-validation-errors class="mb-4" />
                             
-
                             @php
                                 $halfCount = count($formFields) / 2;
                             @endphp

@@ -16,10 +16,15 @@ class MedicalController extends Controller
 {
 
     public function getDbRecords(){
-        $userEmail = Auth::user()->email;
+        $user = Auth::user();
+        $userEmail = $user->email;
 
         // Retrieve records from the medical_cards table where the email matches
         $data = MedicalCard::getUserEmail($userEmail);
+        if($user->role == 'Animator')
+        {
+            $data = MedicalCard::getAllMedicalCards();
+        }
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();    
         return view('medicalCards', ['data' => $data]);
     }
@@ -61,6 +66,18 @@ class MedicalController extends Controller
         ];
         Parental_Link::createChild($child_data);
         return redirect('fiches');
+    }
+
+    public function deleteRecord(Request $request)
+    {
+        $data = $request->all();
+        MedicalCard::deleteMedicalCard($data['national_number']);
+        return redirect('/fiches');
+    }
+
+    public function getRecordEditPage($id)
+    {
+        $data = MedicalCard::getMedicalCardById($id);
     }
 
 }
