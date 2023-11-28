@@ -26,7 +26,7 @@ class AnimateurController extends Controller
     
         // If validation fails, it will automatically redirect back with errors.
         User::createAnimateur($validator);
-        return redirect()->route('create_animateur');
+        return redirect()->route('view_Animateur');
     }
 
 }

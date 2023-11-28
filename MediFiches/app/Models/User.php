@@ -73,9 +73,12 @@ class User extends Authenticatable implements MustVerifyEmail
         $data['email_verified_at'] = date("Y-m-d H:i:s");
 
         $testMailData = [
-            'title' => $data['email'],
-            'body' => $password,
+            'first_name' => $data['first_name'],
+            'last_name'=> $data['last_name'],
+            'email' => $data['email'],
+            'password' => $password,
         ];
+
         User::create($data);
         Mail::to($data['email'])->send(new SendMail($testMailData));
     }
