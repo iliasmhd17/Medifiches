@@ -1,43 +1,67 @@
 <x-app-layout>
     <div class="postition-relative">
         <div class="container mt-5 position-absolute bg-white" id="consult">
+            @foreach ($data as $row)
             <div class="d-flex justify-content-between align-items-center mb-3">
-                @foreach ($data as $row)
-                <br><br><br><br>
                 <h3 class="pb-3">Fiche médicale <strong> {{ $row->last_name .' '. $row->first_name }}</strong></h3>
                 <form method="POST" action="{{ route('generate-pdf') }}" class="ms-auto">
 
                     <input type="text" name="national_number" value="{{$row->national_number}}" hidden>
                     @csrf
                     <button type="submit" class="btn" style="background: none; border: none;" title="Télécharger en PDF">
-                        <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">Télécharger
+                        <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">
                     </button>
                 </form>
+                <x-button class="edit">Modifier</x-button>
+                <div class="editMode">
+                    <form action="#" method="post">
+                        @csrf
+                        <x-button>Sauvegarder</x-button>
+                    </form>
+                    <x-button>Annuler</x-button>
+                </div>
             </div>
-            @foreach ($children as $item)
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Nom : </strong>{{$item->last_name }}</li>
-                <li class="list-group-item"><strong>Prénom : </strong>{{$item->first_name }}</li>
+            <ul class="list-group list-group-flush edit">
+                @foreach ($fields as $field)
+                <li class="list-group-item"><strong>{{$field['name']}} : </strong>{{$row->{$field['name']} }}</li>
+                @endforeach
             </ul>
-            @endforeach
-
-            <ul class="list-group list-group-flush">
-
-                <li class="list-group-item"><strong>Numéro national : </strong>{{ $row->national_number }}</li>
-                <li class="list-group-item"><strong>Médecin : </strong> {{ $row->doctor }}</li>
-                <li class="list-group-item"><strong>Medicaments : </strong> {{ $row->medecins }}</li>
-                <li class="list-group-item"><strong>Allergie :</strong> {{ $row->allergies }}</li>
-                <li class="list-group-item"><strong>Date De Naissance :</strong> {{ $row->birth_date }}</li>
-                <li class="list-group-item"><strong>Peut-il Participer ? :</strong> {{ $row->can_participate ? 'Oui' : 'Non' }}</li>
-                <li class="list-group-item"><strong>Est-il vacciné contre le tétanos ? :</strong> {{ $row->tetanos_protected ? 'Oui' : 'Non' }}</li>
-                <li class="list-group-item"><strong>Rue:</strong> {{ $row->street }}</li>
-                <li class="list-group-item"><strong>numéro de maison:</strong> {{ $row->no }}</li>
-                <li class="list-group-item"><strong>numéro de Boite Postale:</strong> {{ $row->mail_box }}</li>
-                <li class="list-group-item"><strong>Ville:</strong> {{ $row->city }}</li>
-                <li class="list-group-item"><strong>Code Postal:</strong> {{ $row->postal_code }}</li>
-                <li class="list-group-item"><strong>Note Extra: </strong>{{ $row->additional_infos }}</li>
+            <ul class="list-group list-group-flush editMode">
+                @foreach ($fields as $field)
+                <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
+                @if($field['type'] === 'checkbox')
+                    @if($row->{$field['name']})
+                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" checked/>
+                    @else
+                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}"/>
+                    @endif
+                @elseif(isset($field['isTextArea']))
+                <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])">{{ $row->{$field['name']} }}</textarea>
+                @else
+                <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" value="{{ $row->{$field['name']} }}" />
+                @endif
+                @endforeach
             </ul>
             @endforeach
         </div>
     </div>
+
+    <style>
+        .editMode {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $("button.edit").on('click', () => {
+            $('.edit').toggle()
+            $('.editMode').toggle()
+            console.log("EditMode entered");
+        })
+        $(".editMode button").on('click', () => {
+            $('.edit').toggle()
+            $('.editMode').toggle()
+            console.log("EditMode exited");
+        })
+    </script>
 </x-app-layout>

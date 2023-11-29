@@ -42,7 +42,8 @@ class MedicalController extends Controller
         $parent_infos = DB::table('parental_link')
         ->join('medical_card', 'national_number', '=', 'national_number')
         ->groupBy('national_number');
-        return view('medicalCardsDetails',compact('data','children', 'parent_infos'));
+        $fields = RecordForm::getFormFields();
+        return view('medicalCardsDetails',compact('data','children', 'parent_infos', 'fields'));
     }
 
     public function createRecord(Request $request) 
