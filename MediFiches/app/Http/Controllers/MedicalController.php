@@ -73,12 +73,29 @@ class MedicalController extends Controller
     {
         $data = $request->all();
         MedicalCard::deleteMedicalCard($data['national_number']);
-        return redirect('/fiches');
+        return redirect('fiches');
     }
 
     public function getRecordEditPage($id)
     {
         $data = MedicalCard::getMedicalCardById($id);
+    }
+
+    public function editRecord(Request $request)
+    {
+        $validator = Validator::make($request->all(), RecordForm::rules());
+
+        // Check if the validation fails
+        if ($validator->fails()) {
+            
+            // Redirect back with validation errors
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // If validation passes, proceed with your logic
+        $data = $request->all();
+        MedicalCard::updateMedicalCard($data['national_number'], $data);
+        return redirect('fiches/details/'.$data['national_number']);
     }
 
 }

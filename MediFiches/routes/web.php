@@ -43,6 +43,7 @@ Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
 Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create_record');
 Route::post('/animateur/createAnimateur',[AnimateurController::class,'createAnimateur'])->name('create_animateur');
 Route::post('/delete_record',[MedicalController::class,'deleteRecord'])->name('delete_record');
+Route::post('/edit_record',[MedicalController::class,'editRecord'])->name('edit_record');
 Route::get('/animateur',[AnimateurController::class,'viewAnimateur'])->name('view_Animateur');
 //Route::post('/create-testing', [MedicalController::class, 'create_testing'])->name('create_testing');
 //Route::get('/testing', [ficheController::class, "display_testing"])->name('testing_form');
