@@ -22,7 +22,7 @@
                 <x-validation-errors class="mb-4" />
                 <ul class="list-group list-group-flush edit">
                     @foreach ($fields as $field)
-                        <li class="list-group-item"><strong>{{ $field['name'] }} : </strong>{{ $row->{$field['name']} }}
+                        <li class="list-group-item"><strong>{{ $field['label'] }} : </strong>{{ $row->{$field['name']} }}
                         </li>
                     @endforeach
                 </ul>
