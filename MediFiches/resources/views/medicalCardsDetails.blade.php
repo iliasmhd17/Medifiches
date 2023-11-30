@@ -14,10 +14,12 @@
                             <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">
                         </button>
                     </form>
+                    @if (Auth::user()->role == 'Parent')
                     <x-button class="edit">Modifier</x-button>
                     <div class="editMode" id="editActions">
                         <x-button>Annuler</x-button>
                     </div>
+                    @endif
                 </div>
                 <x-validation-errors class="mb-4" />
                 <ul class="list-group list-group-flush edit">
@@ -31,7 +33,15 @@
                         @csrf
                         @foreach ($fields as $field)
                             <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
-                            @if ($field['type'] === 'checkbox')
+                            @if ($field['name'] === 'national_number')
+                            <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
+                                    type="{{ $field['type'] }}" name="{{ $field['name'] }}"
+                                    autofocus autocomplete="{{ $field['name'] }}"
+                                    placeholder="{{ __($field['placeholder'] ?? '') }}"
+                                    value="{{ $row->{$field['name']} }}" readonly/>
+                            
+                            @elseif ($field['type'] === 'checkbox')
+                                <x-input name="{{ $field['name'] }}" type="hidden" value="0"/>
                                 @if ($row->{$field['name']})
                                     <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
                                         name="{{ $field['name'] }}" checked value="1" />
