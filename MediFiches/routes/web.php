@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimateurController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ficheController;
@@ -37,12 +38,16 @@ Route::get('/', function () {
      })->name('dashboard');
  });
  
-Route::get('fiche-medicale',[ficheController::class, "display_record"]);
+// Route::get('fiche-medicale',[ficheController::class, "display_record"]);
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 Route::get('formulaire', [ficheController::class, "display_form"])->name('record_form');
 Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('records');
 Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
 Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create_record');
+Route::post('/animateur/createAnimateur',[AnimateurController::class,'createAnimateur'])->name('create_animateur');
+Route::post('/delete_record',[MedicalController::class,'deleteRecord'])->name('delete_record');
+Route::post('/edit_record',[MedicalController::class,'editRecord'])->name('edit_record');
+Route::get('/animateur',[AnimateurController::class,'viewAnimateur'])->name('view_Animateur');
 //Route::post('/create-testing', [MedicalController::class, 'create_testing'])->name('create_testing');
 //Route::get('/testing', [ficheController::class, "display_testing"])->name('testing_form');
 Route::get('/registerGoogle',[registerGoogleController::class, "registerGoogle"]);

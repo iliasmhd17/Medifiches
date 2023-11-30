@@ -1,51 +1,96 @@
-@extends('template')
-@section('title', 'détail')
-@section('content')
-    
+<x-app-layout>
     <div class="postition-relative">
-        <img src="{{ asset('images/medi-banner.png') }}" id="banner" alt="Banner" class="img-fluid" style="width: 100%; height: auto;">
         <div class="container mt-5 position-absolute bg-white" id="consult">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-
             @foreach ($data as $row)
-            <br><br><br><br><h3 class="pb-3">Fiche médicale <strong> {{ $row->national_number }}</strong></h3>
-                <form method="POST" action="{{ route('generate-pdf') }}" class="ms-auto">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="pb-3">Fiche médicale <strong> {{ $row->last_name . ' ' . $row->first_name }}</strong>
+                    </h3>
+                    <form method="POST" action="{{ route('generate-pdf') }}" class="ms-auto">
 
-                    <input type="text" name="national_number" value="{{$row->national_number}}" hidden>
-                    @csrf
-                    <button type="submit" class="btn" style="background: none; border: none;" title="Télécharger en PDF">
-                        <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">Télécharger
-                    </button>
-                </form>
-            </div>
-            @foreach ($children as $item)
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Nom : </strong>{{$item->last_name }}</li>
-                <li class="list-group-item"><strong>Prénom : </strong>{{$item->first_name }}</li>
-                <li class="list-group-item"><strong>Email : </strong>{{$item->email }}</li>
-            </ul> 
-            @endforeach
-            
-            <ul class="list-group list-group-flush">
-              
-              <li class="list-group-item"><strong>Numéro national : </strong>{{ $row->national_number }}</li>
-              <li class="list-group-item"><strong>Médecin : </strong> {{ $row->medecins }}</li>
-              <li class="list-group-item"><strong>Allergie:</strong> {{ $row->allergies }}</li>
-              <li class="list-group-item"><strong>Consequences:</strong> {{ $row->allergies_consequences }}</li>
-              <li class="list-group-item"><strong>Quantite_medecine:</strong> {{ $row->quantity_medecine }}</li>
-              <li class="list-group-item"><strong>Frequence :</strong> {{ $row->time_medecine }}</li>
-              <li class="list-group-item"><strong>Date De Naissance:</strong> {{ $row->birth_date }}</li>
-              <li class="list-group-item"><strong>Note Extra: </strong>{{ $row->additional_infos }}</li>
-              <li class="list-group-item"><strong>Rue:</strong> {{ $row->street }}</li>
-              <li class="list-group-item"><strong>numéro de maison:</strong> {{ $row->no }}</li>
-              <li class="list-group-item"><strong>Ville:</strong> {{ $row->city }}</li>
-              <li class="list-group-item"><strong>Code Postal:</strong> {{ $row->postal_code }}</li>
-              <li class="list-group-item"><strong>Pays:</strong> {{ $row->country }}</li>
-            </ul>
+                        <input type="text" name="national_number" value="{{ $row->national_number }}" hidden>
+                        @csrf
+                        <button type="submit" class="btn" style="background: none; border: none;"
+                            title="Télécharger en PDF">
+                            <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">
+                        </button>
+                    </form>
+                    @if (Auth::user()->role == 'Parent')
+                    <x-button class="edit">Modifier</x-button>
+                    <div class="editMode" id="editActions">
+                        <x-button>Annuler</x-button>
+                    </div>
+                    @endif
+                </div>
+                <x-validation-errors class="mb-4" />
+                <ul class="list-group list-group-flush edit">
+                    @foreach ($fields as $field)
+                        <li class="list-group-item"><strong>{{ $field['label'] }} : </strong>{{ $row->{$field['name']} }}
+                        </li>
+                    @endforeach
+                </ul>
+                <ul class="list-group list-group-flush editMode">
+                    <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
+                        @csrf
+                        @foreach ($fields as $field)
+                            <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
+                            @if ($field['name'] === 'national_number')
+                            <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
+                                    type="{{ $field['type'] }}" name="{{ $field['name'] }}"
+                                    autofocus autocomplete="{{ $field['name'] }}"
+                                    placeholder="{{ __($field['placeholder'] ?? '') }}"
+                                    value="{{ $row->{$field['name']} }}" readonly/>
+                            
+                            @elseif ($field['type'] === 'checkbox')
+                                <x-input name="{{ $field['name'] }}" type="hidden" value="0"/>
+                                @if ($row->{$field['name']})
+                                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
+                                        name="{{ $field['name'] }}" checked value="1" />
+                                @else
+                                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
+                                        name="{{ $field['name'] }}" value="1" />
+                                @endif
+                            @elseif(isset($field['isTextArea']))
+                                <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}"
+                                    :value="old(''.$field['name'])">{{ $row->{$field['name']} }}</textarea>
+                            @else
+                                <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
+                                    type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old('' . $field['name'])"
+                                    autofocus autocomplete="{{ $field['name'] }}"
+                                    placeholder="{{ __($field['placeholder'] ?? '') }}"
+                                    value="{{ $row->{$field['name']} }}" />
+                            @endif
+                        @endforeach
+                        <x-button type="submit" id="editSubmit">Sauvegarder</x-button>
+                    </form>
+                </ul>
             @endforeach
         </div>
     </div>
-   
-@endsection
 
+    <style>
+        .editMode {
+            display: none;
+        }
+    </style>
+
+<script>
+    $(document).ready(()=> {
+        $('#editSubmit').appendTo('#editActions')
+        $("button.edit").on('click', () => {
+            $('.edit').toggle()
+            $('.editMode').toggle()
+            console.log("EditMode entered");
+        })
+        $(".editMode button").on('click', () => {
+            $('.edit').toggle()
+            $('.editMode').toggle()
+            console.log("EditMode exited");
+        })
+
+        $('#editSubmit').on('click', () => {
+            $('#editRecordForm').submit()
+        })
+    })
+    </script>
+</x-app-layout>
 

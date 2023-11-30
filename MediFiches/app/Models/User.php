@@ -10,6 +10,11 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Support\Str;
+use Mail;
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\Hash;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
@@ -24,11 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
-        'national_number',
-        'last_name',
+        'role',
     ];
 
     /**
@@ -60,4 +65,21 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public static function createAnimateur($data){
+        $password = Str::random(16);
+        $data['role'] = 'Animator';
+        $data['password'] = Hash::make($password);
+        $data['email_verified_at'] = date("Y-m-d H:i:s");
+
+        $testMailData = [
+            'first_name' => $data['first_name'],
+            'last_name'=> $data['last_name'],
+            'email' => $data['email'],
+            'password' => $password,
+        ];
+
+        User::create($data);
+        Mail::to($data['email'])->send(new SendMail($testMailData));
+    }
 }

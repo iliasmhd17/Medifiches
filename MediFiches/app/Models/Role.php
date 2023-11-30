@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $table = 'roles';
-    protected $primaryKey = 'role';
+    protected $table = 'role';
+    protected $primaryKey = 'name';
 
     public function getAllRoles()
     {

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('animators', function (Blueprint $table){
-            $table->foreign("person")->references("national_number")->on("users")->cascadeOnDelete();
+        Schema::create('relation', function (Blueprint $table) {
+            $table->string('name', 255)->primary();
         });
     }
 
@@ -21,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $table->dropForeign(["person"]);
+        Schema::dropIfExists('relation');
     }
 };
