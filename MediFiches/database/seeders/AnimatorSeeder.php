@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 class AnimatorSeeder extends Seeder
 {
+    
     /**
      * Run the database seeds.
      */

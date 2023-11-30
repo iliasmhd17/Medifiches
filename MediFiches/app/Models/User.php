@@ -83,3 +83,4 @@ class User extends Authenticatable implements MustVerifyEmail
         Mail::to($data['email'])->send(new SendMail($testMailData));
     }
 }
+

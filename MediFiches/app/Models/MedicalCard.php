@@ -76,3 +76,4 @@ class MedicalCard extends Model
         return $data;
     }
 }
+
