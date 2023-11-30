@@ -25,8 +25,10 @@ class MedicalController extends Controller
         {
             $data = MedicalCard::getAllMedicalCards();
         }
-        // $data = DB::table('medical_card')->where('email', $userEmail)->get();    
-        return view('medicalCards', ['data' => $data]);
+        $nbFiches = $data->count();
+
+        // $data = DB::table('medical_card')->where('email', $userEmail)->get();
+        return view('medicalCards', compact('data', 'nbFiches'));
     }
 
     public function getCardDetails($id){
@@ -46,14 +48,14 @@ class MedicalController extends Controller
         return view('medicalCardsDetails',compact('data','children', 'parent_infos', 'fields'));
     }
 
-    public function createRecord(Request $request) 
+    public function createRecord(Request $request)
     {
 
         $validator = Validator::make($request->all(), RecordForm::rules());
 
         // Check if the validation fails
         if ($validator->fails()) {
-            
+
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -87,7 +89,7 @@ class MedicalController extends Controller
 
         // Check if the validation fails
         if ($validator->fails()) {
-            
+
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }
