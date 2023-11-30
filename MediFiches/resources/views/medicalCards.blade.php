@@ -17,15 +17,17 @@
                             <div class="card-body text-secondary">
                                 <p class="card-text">Médecin: {{ $row->doctor }}</p>
                                 <p class="card-text">Allergie: {{ $row->allergies }}</p>
-                                <div>
-                                    <a href="/fiches/details/{{ $row->national_number }}" class="btn btn-secondary">Détails</a>
-                                    @if (Auth::user()->role == 'Parent')
+                                <div class="flex">
+                                    <!-- <a href="/fiches/details/{{ $row->national_number }}" class="btn btn-secondary">Détails</a> -->
+                                    <form action="fiches/details/{{ $row->national_number }}" method="get">
+                                            @csrf
+                                            <x-button type="submit">Détails</x-button>
+                                        </form>
                                         <form action="{{ route('delete_record') }}" method="post">
                                             @csrf
                                             <input type="text" name="national_number" id="national_number" value="{{$row->national_number}}" hidden>
                                             <x-button type="submit">Delete</x-button>
                                         </form>
-                                    @endif
                                 </div>
                             </div>
                         </div>
