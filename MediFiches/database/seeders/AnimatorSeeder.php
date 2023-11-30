@@ -18,7 +18,7 @@ class AnimatorSeeder extends Seeder
             'last_name' => 'admin',
             'email' => 'admin@admin.com',
             'email_verified_at' => date("Y-m-d H:i:s"),
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('administratorisrollingontheroad'),
             'role' => 'Animator'
         ]);
     }

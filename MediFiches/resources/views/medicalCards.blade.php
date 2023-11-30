@@ -19,13 +19,11 @@
                                 <p class="card-text">Allergie: {{ $row->allergies }}</p>
                                 <div>
                                     <a href="/fiches/details/{{ $row->national_number }}" class="btn btn-secondary">Détails</a>
-                                    @if (Auth::user()->role == 'Parent')
                                         <form action="{{ route('delete_record') }}" method="post">
                                             @csrf
                                             <input type="text" name="national_number" id="national_number" value="{{$row->national_number}}" hidden>
                                             <x-button type="submit">Delete</x-button>
                                         </form>
-                                    @endif
                                 </div>
                             </div>
                         </div>
