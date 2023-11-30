@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -26,15 +27,19 @@ class registerGoogleController extends Controller
         $email = $data->getEmail();
 
 
-         User::create([
+        $user = User::create([
             'name' => $name,
             'last_name' => $nickname,
             'national_number' => '12345678955',
             'email' => $email,
             'password' => Hash::make('12345678910111213'),
-        ]);
+            'email_verified_at' => date('Y-m-d H:i:s'),
 
-        return view('dashboard');
+        ]);
+        dd(date('Y-m-d H:i:s'));
+        Auth::login($user);
+
+        //return redirect('/dashboard');
         //$avatar = $data->getAvatar();
 
 //...

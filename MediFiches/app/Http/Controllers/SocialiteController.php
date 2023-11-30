@@ -24,7 +24,7 @@ class SocialiteController extends Controller
 
         // On vérifie si le provider est autorisé
         if (in_array($provider, $this->providers)) {
-            return Socialite::driver($provider)->redirect(); // On redirige vers le provider
+            return Socialite::driver($provider)->redirect(); // On redirige vers le provider, le moment ou je rentre ds la page google
         }
         abort(404); // Si le provider n'est pas autorisé
     }
@@ -45,6 +45,8 @@ class SocialiteController extends Controller
 
             // voir les informations de l'utilisateur
             dd($user);
+            // auth()->login($user);
+            // return redirect('/dashboard');
          }
          abort(404);
     }
