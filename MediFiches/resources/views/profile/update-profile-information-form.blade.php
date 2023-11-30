@@ -51,14 +51,17 @@
                 <x-input-error for="photo" class="mt-2" />
             </div>
         @endif
-
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
-            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="name" />
-            <x-input-error for="name" class="mt-2" />
+            <x-label for="first_name" value="{{ __('First name') }}" />
+            <x-input id="first_name" type="text" class="mt-1 block w-full" wire:model="state.first_name" required autocomplete="first_name" />
+            <x-input-error for="first_name" class="mt-2" />
         </div>
-
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="last_name" value="{{ __('Last name') }}" />
+            <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model="state.last_name" required autocomplete="last_name" />
+            <x-input-error for="last_name" class="mt-2" />
+        </div>
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="email" value="{{ __('Email') }}" />
