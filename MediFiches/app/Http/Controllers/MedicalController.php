@@ -99,4 +99,3 @@ class MedicalController extends Controller
     }
 
 }
-
