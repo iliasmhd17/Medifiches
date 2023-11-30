@@ -7,8 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 
 
 class registerGoogleController extends Controller
@@ -26,20 +25,22 @@ class registerGoogleController extends Controller
         //$password = Hash::make('12345678910111213');
         $email = $data->getEmail();
 
-
+        if (User::where('email', $email)->exists()) {
+            $user = User::where('email', $email)->first();
+            Auth::login($user);
+            return redirect('/dashboard');
+        }
         $user = User::create([
             'name' => $name,
             'last_name' => $nickname,
             'national_number' => '12345678955',
             'email' => $email,
             'password' => Hash::make('12345678910111213'),
-            'email_verified_at' => date('Y-m-d H:i:s'),
-
         ]);
-        dd(date('Y-m-d H:i:s'));
+        $user->markEmailAsVerified();
         Auth::login($user);
 
-        //return redirect('/dashboard');
+        return redirect('/dashboard');
         //$avatar = $data->getAvatar();
 
 //...
