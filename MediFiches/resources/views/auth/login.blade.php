@@ -11,7 +11,7 @@
                 {{ session('status') }}
             </div>
         @endif
-
+        <a href="{{ route('socialite.redirect', 'google') }}" title="Connexion/Inscription avec Google" class="btn btn-link"  >Continuer avec Google</a>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 

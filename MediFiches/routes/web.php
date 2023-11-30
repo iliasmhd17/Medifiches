@@ -6,6 +6,9 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ficheController;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\MedicalController;
+use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\registerGoogleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +50,17 @@ Route::post('/edit_record',[MedicalController::class,'editRecord'])->name('edit_
 Route::get('/animateur',[AnimateurController::class,'viewAnimateur'])->name('view_Animateur');
 //Route::post('/create-testing', [MedicalController::class, 'create_testing'])->name('create_testing');
 //Route::get('/testing', [ficheController::class, "display_testing"])->name('testing_form');
+Route::get('/registerGoogle',[registerGoogleController::class, "registerGoogle"]);
 
+
+
+# Socialite URLs
+
+// La page où on présente les liens de redirection vers les providers
+Route::get("login-register", [SocialiteController::class, 'loginRegister']);
+
+// La redirection vers le provider
+Route::get("redirect/{provider}", [SocialiteController::class, 'redirect'])->name('socialite.redirect');
+
+// Le callback du provider
+Route::get("callback/{provider}", [SocialiteController::class, 'callback'])->name('socialite.callback');
