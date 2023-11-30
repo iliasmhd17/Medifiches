@@ -45,4 +45,6 @@ Route::post('/animateur/createAnimateur',[AnimateurController::class,'createAnim
 Route::post('/delete_record',[MedicalController::class,'deleteRecord'])->name('delete_record');
 Route::post('/edit_record',[MedicalController::class,'editRecord'])->name('edit_record');
 Route::get('/animateur',[AnimateurController::class,'viewAnimateur'])->name('view_Animateur');
+//Route::post('/create-testing', [MedicalController::class, 'create_testing'])->name('create_testing');
+//Route::get('/testing', [ficheController::class, "display_testing"])->name('testing_form');
 
