@@ -14,7 +14,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
 
-    <title>Medifiches</title>
+    <title>Laravel</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

@@ -20,12 +20,13 @@ class AnimateurController extends Controller
     public function createAnimateur(Request $request){
         $validator = $request->validate([
             'email' => ['required', 'email', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
         ]);
     
         // If validation fails, it will automatically redirect back with errors.
         User::createAnimateur($validator);
-    
-        return redirect()->route('viewAnimateur');
+        return redirect()->route('view_Animateur');
     }
 
 }

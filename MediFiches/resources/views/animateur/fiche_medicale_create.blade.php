@@ -15,11 +15,9 @@
 
                             <x-validation-errors class="mb-4" />
                             
-
                             @php
                                 $halfCount = count($formFields) / 2;
                             @endphp
-
                             @foreach($formFields as $index => $field)
                             @if($index < $halfCount)
                                 <div class="mb-3">
@@ -27,9 +25,9 @@
                                     @if($field['type'] === 'checkbox')
                                         <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" value="1"/>
                                     @elseif(isset($field['isTextArea']))
-                                        <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'], Auth::user()->email)"></textarea>
+                                        <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])"></textarea>
                                     @else
-                                        <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" required autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" />
+                                        <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" />
                                     @endif                                
                                 </div>
                                 @endif
@@ -48,7 +46,7 @@
                                         @elseif(isset($field['isTextArea']))
                                             <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'], Auth::user()->email)"></textarea>
                                         @else
-                                            <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" required autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" />
+                                            <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" />
                                         @endif
                                         </div>
                                 @endif

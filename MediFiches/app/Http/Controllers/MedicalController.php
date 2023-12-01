@@ -16,11 +16,17 @@ class MedicalController extends Controller
 {
 
     public function getDbRecords(){
-        $userEmail = Auth::user()->email;
+        $user = Auth::user();
+        $userEmail = $user->email;
 
         // Retrieve records from the medical_cards table where the email matches
         $data = MedicalCard::getUserEmail($userEmail);
+        if($user->role == 'Animator')
+        {
+            $data = MedicalCard::getAllMedicalCards();
+        }
         $nbFiches = $data->count();
+
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();
         return view('medicalCards', compact('data', 'nbFiches'));
     }
@@ -38,7 +44,8 @@ class MedicalController extends Controller
         $parent_infos = DB::table('parental_link')
         ->join('medical_card', 'national_number', '=', 'national_number')
         ->groupBy('national_number');
-        return view('medicalCardsDetails',compact('data','children', 'parent_infos'));
+        $fields = RecordForm::getFormFields();
+        return view('medicalCardsDetails',compact('data','children', 'parent_infos', 'fields'));
     }
 
     public function createRecord(Request $request)
@@ -62,6 +69,35 @@ class MedicalController extends Controller
         ];
         Parental_Link::createChild($child_data);
         return redirect('fiches');
+    }
+
+    public function deleteRecord(Request $request)
+    {
+        $data = $request->all();
+        MedicalCard::deleteMedicalCard($data['national_number']);
+        return redirect('fiches');
+    }
+
+    public function getRecordEditPage($id)
+    {
+        $data = MedicalCard::getMedicalCardById($id);
+    }
+
+    public function editRecord(Request $request)
+    {
+        $validator = Validator::make($request->all(), RecordForm::rules());
+
+        // Check if the validation fails
+        if ($validator->fails()) {
+
+            // Redirect back with validation errors
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // If validation passes, proceed with your logic
+        $data = $request->all();
+        MedicalCard::updateMedicalCard($data['national_number'], $data);
+        return redirect('fiches/details/'.$data['national_number']);
     }
 
 }
