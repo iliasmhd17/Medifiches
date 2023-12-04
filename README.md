@@ -15,22 +15,22 @@ This project consists on creating a website for animators and parents to see, mo
 ## Meet the development Team
 
 The team behind this project, PBTeam, is made of the following members :
-|       Name            |  ID |
-|:---------------------:|:---:|
-|Taha Ahmed             |58744|
-|Lecky-Thompson William |58412|
-|Vivace F               |54490|  
-| Ibrahim Tahiri        |54563|
-| Scott Kula Kula       |55284|
-| Ilias Mehdi           |55727|
-| Arthur Nanson         |56035|
-| Rida Belkhiri         |58063|
-| Imad El Harrouti      |58132|
-| Zeki Ozkara           |58143|
-| Imad El Harrouti      |58132|
-| Ismael El Yasidi      |54420|
-| Nader Hadj Youssef    |58685|
-| Yahya Ouamar          |54915|
+|       Name             |  ID |
+|:----------------------:|:---:|
+| Taha Ahmed             |58744|
+| Lecky-Thompson William |58412|
+| Vivace F               |54490|  
+| Ibrahim Tahiri         |54563|
+| Scott Kula Kula        |55284|
+| Ilias Mehdi            |55727|
+| Arthur Nanson          |56035|
+| Rida Belkhiri          |58063|
+| Imad El Harrouti       |58132|
+| Zeki Ozkara            |58143|
+| Imad El Harrouti       |58132|
+| Ismael El Yasidi       |54420|
+| Nader Hadj Youssef     |54685|
+| Yahya Ouamar           |54915|
   
 ## Project Skeleton
 - Backend           : Laravel
