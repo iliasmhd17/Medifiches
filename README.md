@@ -72,7 +72,7 @@ The project is currently under development following the AGILE development patte
 
 ## Extra instructions for the PDF
    
-1. **Configuring the `php.ini`located in the php folder **
+1. **Configuring the `php.ini`located in the php folder**
    - Uncomment the extention which start with: `;extension= gd`
 
 1. **Downloading the PDF:**
