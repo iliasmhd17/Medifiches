@@ -33,6 +33,10 @@ class MedicalCard extends Model
 
     public static function createMedicalCard($data)
     {
+        if (self::where('national_number', $data['national_number'])->exists()) {
+            // Vous pouvez personnaliser ce message d'erreur
+            throw new \Exception("Un enregistrement avec le numéro de registre national donné existe déjà.");
+        }
         $medicalCard = new self;
         $medicalCard->national_number = $data['national_number'];
         $medicalCard->fill($data);

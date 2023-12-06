@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Validator;
 class MedicalController extends Controller
 {
 
-    public function getDbRecords(){
+    public function getDbRecords()
+    {
         $user = Auth::user();
         $userEmail = $user->email;
 
         // Retrieve records from the medical_cards table where the email matches
         $data = MedicalCard::getUserEmail($userEmail);
-        if($user->role == 'Animator')
-        {
+        if ($user->role == 'Animator') {
             $data = MedicalCard::getAllMedicalCards();
         }
         $nbFiches = $data->count();
@@ -31,21 +31,22 @@ class MedicalController extends Controller
         return view('medicalCards', compact('data', 'nbFiches'));
     }
 
-    public function getCardDetails($id){
+    public function getCardDetails($id)
+    {
 
         $data = DB::table('medical_card')
-        ->where('national_number', $id)
-        ->get();
+            ->where('national_number', $id)
+            ->get();
 
         $children = DB::table('medical_card')
-        ->where('national_number', $id)
-        ->get();
+            ->where('national_number', $id)
+            ->get();
 
         $parent_infos = DB::table('parental_link')
-        ->join('medical_card', 'national_number', '=', 'national_number')
-        ->groupBy('national_number');
+            ->join('medical_card', 'national_number', '=', 'national_number')
+            ->groupBy('national_number');
         $fields = RecordForm::getFormFields();
-        return view('medicalCardsDetails',compact('data','children', 'parent_infos', 'fields'));
+        return view('medicalCardsDetails', compact('data', 'children', 'parent_infos', 'fields'));
     }
 
     public function createRecord(Request $request)
@@ -59,7 +60,14 @@ class MedicalController extends Controller
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+        try {
+            MedicalCard::createMedicalCard($request->all());
+            // Redirection après la création réussie
+            return redirect()->route('nom_de_la_route_après_création'); // Remplacez par la route appropriée
+        } catch (\Exception $e) {
+            // Gestion de l'exception si le numéro national existe déjà
+            return redirect()->back()->withErrors(['national_number' => $e->getMessage()])->withInput();
+        }
         // If validation passes, proceed with your logic
         $data = $request->all();
         MedicalCard::createMedicalCard($data);
@@ -97,7 +105,6 @@ class MedicalController extends Controller
         // If validation passes, proceed with your logic
         $data = $request->all();
         MedicalCard::updateMedicalCard($data['national_number'], $data);
-        return redirect('fiches/details/'.$data['national_number']);
+        return redirect('fiches/details/' . $data['national_number']);
     }
-
 }

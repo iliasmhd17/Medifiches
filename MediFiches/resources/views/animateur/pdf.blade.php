@@ -1,88 +1,91 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
-
+<html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
     <title>Fiche santé individuelle</title>
-    <meta name="author" content="sbz">
-    <style type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
         body {
-            font-family: Arial, sans-serif;
-            margin-right: 1cm;
-        }
-
-        .container {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
             padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            /* background: #f4f4f4; */
+            color: #333;
         }
-
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        h2,
-        h3 {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 15px;
+        h1, h2 {
+            color: #444;
         }
-
-        .section {
-            margin-top: 15px;
+        h2 {
+            border-bottom: 2px solid #444;
+            padding-bottom: 3px;
+            margin-top: 20px;
         }
-
-        p {
-            font-size: 14px;
-            margin: 0;
-            margin-top: 10px;
+        .info-section {
+            background: #e7e7e7;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #007bff;
+        }
+        .info-section p {
+            margin: 5px 0;
+        }
+        .info-section h2 {
+            margin-top: 0;
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Fiche santé individuelle - Mouvement de jeunesse</h1>
-        <div class="section">
-            <h2>Objectif de la fiche</h2>
-            <p>Cette fiche a pour objectif d'être un appui pour les animateurs ou le personnel soignant en cas de besoin. Il est essentiel que les renseignements que vous fournissez soient complets, corrects et à jour au moment des activités concernées.</p>
-        </div>
-        <div class="section">
-            <h3>Identité de l'enfant:</h3>
-            <p>Nom : Prénom : Né(e) le</p>
-            <p>Adresse :</p>
-            <p>Localité : CP : Tél. / GSM : </p>
-            <p>Pays : E-mail :</p>
-        </div>
-        <div class="section">
-            <h3>Personnes à contacter en cas d'urgence</h3>
-            <p>Nom : </p>
-            <p>Adresse : {{$medical_card->street}}</p>
-            <p>Lien de parenté : </p>
-            <p>Tél. / GSM :</p>
-            <p>E-mail :</p>
-        </div>
-        <div class="section">
-            <h3>Médecin traitant</h3>
-            <p>Nom : </p>
-            <p>Tél. / GSM : </p>
-        </div>
-        <div class="section">
-            <h3>Informations confidentielles concernant la santé du participant</h3>
-            <p>Le participant peut-il prendre part aux activités proposées ? (sport, excursions, jeux, natation…)?</p>
-            <p></p>
-            <p>Y a-t-il des données médicales spécifiques importantes à connaître pour le bon déroulement de l’activité/du camp ? (ex. : problèmes cardiaques, épilepsie, asthme, diabète, mal des transports, rhumatisme, somnambulisme, affections cutanées, handicap moteur ou mental…)
-            <p> Indiquez la fréquence, la gravité et les actions à mettre en œuvre pour les éviter et/ou y réagir.</p>
-            </p>
-            <p>Le participant est-il en ordre de vaccination contre le tétanos ?</p>
-            <p>Le participant est-il allergique à certaines substances, aliments ou médicaments ? Oui - Non</p>
-            <p>Si oui, lesquels ?</p>
-            <p>Le participant doit-il prendre des médicaments ? Si oui lesquels : En quelle quantité ?</p>
-            <p>Quand ?</p>
-
-        </div>
+<div class="container">
+    <h1>Fiche santé individuelle</h1>
+    <p>Cette fiche contient des informations importantes concernant la santé du participant. Elle doit être complète et mise à jour pour garantir une prise en charge adaptée en cas d'urgence.</p>
+    <div class="info-section">
+        <h2>Informations sur l'enfant</h2>
+        <p>Nom: {{ $data->last_name}}</p>
+        <p>Prénom: {{ $data->first_name}}</p>
+        <p>Date de naissance: {{ $data->birth_date}}</p>
+        <p>Email: {{ $data->email}}</p>
+        <h2>Adresse</h2>
+        <p>Rue: {{ $data->street }}</p>
+        <p>Numéro: {{ $data->no }}</p>
+        <p>Boite Postale: {{ $data->mail_box }}</p>
+        <p>Ville: {{ $data->city}}</p>
+        <p>Code Postal: {{ $data->postal_code }}</p>
     </div>
+    <div class="info-section">
+        <h2>Contacts en cas d'urgence</h2>
+        <p>Parent 1: {{ $data->parent_1 }} - {{ $data->parent_1_phone }} - {{ $data->parent_1_email }}</p>
+        <p>Parent 2: {{ $data->parent_2 }} - {{ $data->parent_2_phone }} - {{ $data->parent_2_email }}</p>
+    </div>
+    <!-- Section Médecin traitant -->
+    <div class="info-section">
+        <h2>Médecin traitant</h2>
+        <p>Nom : {{ $data->doctor }}</p>
+    </div>
+    <!-- Section Informations de santé -->
+    <div class="info-section">
+        <h2>Informations sur la santé</h2>
+        <p>Des détails spécifiques : {{ $data->additional_infos}}</p>
+        <p>L'enfant peut participer à toute les activités? {{ $data->can_participate ? 'Oui' : 'Non' }} </p>
+        <p>L'enfant est vacciné contre le tétanos ? {{ $data->tetanons_protected ? 'Oui' : 'Non' }}</p>
+    </div>
+    <!-- Section Allergies -->
+    <div class="info-section">
+        <h2>Allergies et réactions</h2>
+        <p>Allergies connues : {{ $data->allergies}}</p>
+    </div>
+    <!-- Section Médicaments -->
+    <div class="info-section">
+        <h2>Médicaments</h2>
+        <p>Médicament à prendre: {{ $data->medecins }}</p>
+    </div>
+</div>
 </body>
-
 </html>
