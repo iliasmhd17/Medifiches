@@ -25,10 +25,15 @@ class MedicalCard extends Model
         'mail_box',
         'postal_code',
         'city',
+        'tetanos_update',
+        'phone_number_doctor',
     ];
+    protected $dateFormat = 'd/m/Y';
     protected $casts = [
         'can_participate' => 'boolean',
         'tetanos_protected' => 'boolean',
+        'birth_date' => 'date:d-m-Y',
+        'tetanos_update' => 'date:d-m-Y',
     ];
 
     public static function createMedicalCard($data)
@@ -63,7 +68,8 @@ class MedicalCard extends Model
 
     public static function getAllMedicalCards()
     {
-        return self::all();
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->get();
+        return $data;
     }
 
     public static function getMedicalCardById($id)

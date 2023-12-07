@@ -18,12 +18,13 @@ class MedicalController extends Controller
     public function getDbRecords(){
         $user = Auth::user();
         $userEmail = $user->email;
-
+        $data;
         // Retrieve records from the medical_cards table where the email matches
-        $data = MedicalCard::getUserEmail($userEmail);
         if($user->role == 'Animator')
         {
             $data = MedicalCard::getAllMedicalCards();
+        }else{
+            $data = MedicalCard::getUserEmail($userEmail);
         }
         $nbFiches = $data->count();
 
