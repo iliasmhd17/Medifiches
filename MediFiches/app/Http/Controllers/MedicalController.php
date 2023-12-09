@@ -50,26 +50,32 @@ class MedicalController extends Controller
 
     public function createRecord(Request $request)
     {
-
         $validator = Validator::make($request->all(), RecordForm::rules());
-
+    
         // Check if the validation fails
         if ($validator->fails()) {
-
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+    
         // If validation passes, proceed with your logic
         $data = $request->all();
+    
+        // Emergency contact of parent and doctor
+        $data['emergency_contact_parent'] = $request->input('emergency_contact_parent');
+        $data['emergency_contact_doctor'] = $request->input('emergency_contact_doctor');
+    
         MedicalCard::createMedicalCard($data);
+    
         $child_data = [
             'national_number' => $data['national_number'],
             'parent_1' => Auth::user()->email,
         ];
+    
         Parental_Link::createChild($child_data);
+    
         return redirect('fiches');
-    }
+    }    
 
     public function deleteRecord(Request $request)
     {
