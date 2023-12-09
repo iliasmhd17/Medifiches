@@ -25,6 +25,8 @@ class MedicalCard extends Model
         'mail_box',
         'postal_code',
         'city',
+        'emergency_contact_parent',
+        'emergency_contact_doctor',
     ];
     protected $casts = [
         'can_participate' => 'boolean',
@@ -40,6 +42,11 @@ class MedicalCard extends Model
         $medicalCard = new self;
         $medicalCard->national_number = $data['national_number'];
         $medicalCard->fill($data);
+
+        // emergency contact of parent and doctor
+        $medicalCard->emergency_contact_parent = $data['emergency_contact_parent'];
+        $medicalCard->emergency_contact_doctor = $data['emergency_contact_doctor'];
+
         $medicalCard->save();
         return $medicalCard;
         //return self::create($data);
@@ -75,8 +82,9 @@ class MedicalCard extends Model
         return self::find($id);
     }
 
-    public static function getUserEmail($email){
-        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('parent_1',$email)->orWhere('parent_2',$email)->get();
+    public static function getUserEmail($email)
+    {
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt', 'pt.national_number', '=', 'Mc.national_number')->where('parent_1', $email)->orWhere('parent_2', $email)->get();
         return $data;
     }
 }
