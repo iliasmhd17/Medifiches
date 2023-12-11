@@ -1,4 +1,4 @@
-<link href="{{ asset('css/style2.css') }}" rel="stylesheet">
+<link href="{{ asset('css/google_button.css') }}" rel="stylesheet">
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
