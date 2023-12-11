@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::table('medical_card', function (Blueprint $table) {
             $table->date('tetanos_update')->nullable();
-            $table->date('phone_number_doctor')->nullable();
+            $table->string('phone_number_doctor')->nullable();
+            $table->string('emergency_contact_parent')->nullable();
         });
     }
 
@@ -24,7 +25,8 @@ return new class extends Migration
     {
         Schema::table('medical_card', function (Blueprint $table) {
             $table->dropColumn('tetanos_update');
-            $table->dropColumn('phone_number_data');
+            $table->dropColumn('phone_number_doctor');
+            $table->dropColumn('emergency_contact_parent');
         });
     }
 };

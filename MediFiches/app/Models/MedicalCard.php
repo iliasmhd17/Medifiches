@@ -27,13 +27,11 @@ class MedicalCard extends Model
         'city',
         'tetanos_update',
         'phone_number_doctor',
+        'emergency_contact_parent'
     ];
-    protected $dateFormat = 'd/m/Y';
     protected $casts = [
         'can_participate' => 'boolean',
         'tetanos_protected' => 'boolean',
-        'birth_date' => 'date:d-m-Y',
-        'tetanos_update' => 'date:d-m-Y',
     ];
 
     public static function createMedicalCard($data)
@@ -48,7 +46,7 @@ class MedicalCard extends Model
 
         // emergency contact of parent and doctor
         $medicalCard->emergency_contact_parent = $data['emergency_contact_parent'];
-        $medicalCard->emergency_contact_doctor = $data['emergency_contact_doctor'];
+        // $medicalCard->emergency_contact_doctor = $data['emergency_contact_doctor'];
 
         $medicalCard->save();
         return $medicalCard;
