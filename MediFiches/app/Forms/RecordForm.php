@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Forms;
+use Illuminate\Validation\Rule;
 
 class RecordForm
 {
@@ -13,15 +14,28 @@ class RecordForm
             'birth_date' => ['required', 'date'],
             'can_participate' => ['boolean'],
             'doctor' => ['string', 'max:255'],
-            'tetanos_protected' => ['boolean'],
+            'tetanos_protected' => ['boolean',
+                Rule::requiredIf(function () {
+                    // Check if tetanos_protected is not null
+                    return request()->input('tetanos_update') !== null;
+                }),],
             'medecins' => ['nullable', 'string'],
+            'phone_number_doctor' => ['string','max:10'],
             'allergies' => ['nullable', 'string'],
             'street' => ['required', 'string', 'max:255'],
             'no' => ['required', 'string', 'max:4'],
             'mail_box' => ['nullable', 'string', 'max:4'],
             'postal_code' => ['required', 'int'],
             'city' => ['required', 'string', 'max:255'],
-            'additional_infos' => ['nullable', 'string']
+            'additional_infos' => ['nullable', 'string'],
+            'tetanos_update' => [
+                'nullable',
+                'date',
+                Rule::requiredIf(function () {
+                    // Check if tetanos_protected is not null
+                    return request()->input('tetanos_protected') !== null;
+                }),
+            ],
         ];
     }
 
@@ -34,7 +48,9 @@ class RecordForm
             ['name' => 'birth_date', 'label' => 'Date de naissance', 'type' => 'date', 'required' => true],
             ['name' => 'can_participate', 'label' => 'Peut participer', 'type' => 'checkbox', 'required' => false],
             ['name' => 'doctor', 'label' => 'Médecin traitant', 'type' => 'text', 'required' => false, 'placeholder' => 'Entrez le médecin...'],
+            ['name' => 'phone_number_doctor', 'label' => 'Numéro de téléphone', 'type' => 'text', 'required' => false, 'placeholder' => 'Entrez le numéro du médecin...'],
             ['name' => 'tetanos_protected', 'label' => 'Vaccin du tétanos fait ?', 'type' => 'checkbox', 'required' => false],
+            ['name' => 'tetanos_update', 'label' => 'Date de dernier rappel', 'type' => 'date', 'required' => true],
             ['name' => 'medecins', 'label' => 'Médicaments', 'type' => 'text', 'required' => false, 'placeholder' => 'Entrez le(s) médicament(s)...', 'isTextArea' => true],
             ['name' => 'allergies', 'label' => 'Allergies', 'type' => 'text', 'required' => false, 'placeholder' => 'Entrez les allergies...', 'isTextArea' => true],
             ['name' => 'street', 'label' => 'Rue', 'type' => 'text', 'required' => true, 'placeholder' => 'Entrez votre rue'],
