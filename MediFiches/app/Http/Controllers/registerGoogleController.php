@@ -24,10 +24,13 @@ class registerGoogleController extends Controller
         $nickname = $data['family_name'];
         //$password = Hash::make('12345678910111213');
         $email = $data->getEmail();
-
-        if (User::where('email', $email)->exists()) {
-            $user = User::where('email', $email)->first();
-            Auth::login($user);
+        try {
+            if (User::where('email', $email)->exists()) {
+                $user = User::where('email', $email)->first();
+                Auth::login($user);
+                return redirect('/dashboard');
+            }
+        } catch (Exception $e) {
             return redirect('/dashboard');
         }
         $user = User::create([
