@@ -88,4 +88,8 @@
     </div>
 </div>
 </body>
+<footer>
+    <img src="{{ asset('\images\pbtpdf.png') }}" alt="Description de l'image" style="position: absolute; bottom: 0; left: 0;">
+</footer>
+
 </html>

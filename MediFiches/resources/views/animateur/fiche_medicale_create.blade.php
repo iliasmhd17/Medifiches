@@ -17,22 +17,25 @@
                             @php
                             $halfCount = count($formFields) / 2;
                             @endphp
-                            
+
                             @if($errors->has('national_number'))
-                                <div class="alert alert-danger">
-                                    {{ $errors->first('national_number') }}
-                                </div>
-                                @endif
+                            <div class="alert alert-danger">
+                                {{ $errors->first('national_number') }}
+                            </div>
+                            @endif
                             @foreach($formFields as $index => $field)
                             @if($index < $halfCount) <div class="mb-3">
                                 <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
-                                @if($field['type'] === 'checkbox')
+                                @if($field['name'] === 'national_number')
+                                <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" required autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" oninput="updateBirthDate()" />
+                                @elseif($field['type'] === 'checkbox')
                                 <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}" name="{{ $field['name'] }}" value="1" />
                                 @elseif(isset($field['isTextArea']))
-                                <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])"></textarea>
+                                <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'], Auth::user()->email)"></textarea>
                                 @else
-                                <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" />
+                                <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old(''.$field['name'])" required autofocus autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}" />
                                 @endif
+
                         </div>
                         @endif
                         @endforeach
