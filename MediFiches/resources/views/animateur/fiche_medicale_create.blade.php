@@ -15,7 +15,7 @@
                             <x-validation-errors class="mb-4" />
 
                             @php
-                            $halfCount = count($formFields) / 2;
+                            $halfCount = (count($formFields) / 2)+1;
                             @endphp
                             
                             @if($errors->has('national_number'))

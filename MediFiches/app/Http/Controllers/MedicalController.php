@@ -9,6 +9,7 @@ use App\Models\MedicalCard;
 use App\Models\Testing;
 use App\Forms\RecordForm;
 use App\Models\Children;
+use App\Models\Group;
 use App\Models\Parental_Link;
 use Illuminate\Support\Facades\Validator;
 
@@ -45,10 +46,12 @@ class MedicalController extends Controller
             ->get();
 
         $parent_infos = DB::table('parental_link')
-            ->join('medical_card', 'national_number', '=', 'national_number')
-            ->groupBy('national_number');
+            ->join('medical_card', 'parental_link.national_number', '=', 'medical_card.national_number')
+            ->get();
         $fields = RecordForm::getFormFields();
-        return view('medicalCardsDetails', compact('data', 'children', 'parent_infos', 'fields'));
+
+        $groups = Group::allGroups();
+        return view('medicalCardsDetails', compact('data', 'children', 'parent_infos', 'fields','groups'));
     }
 
     public function createRecord(Request $request)
@@ -113,4 +116,14 @@ class MedicalController extends Controller
         MedicalCard::updateMedicalCard($data['national_number'], $data);
         return redirect('fiches/details/' . $data['national_number']);
     }
+
+    public function addGroup(Request $request){
+    $originalName = $request->input('originalName');
+    $newName = $request->input('newName');
+
+    Parental_Link::updateGroupName($originalName, $newName);
+
+    return redirect('fiches/details/' . $request->input('national_number'));
+    }
+
 }
