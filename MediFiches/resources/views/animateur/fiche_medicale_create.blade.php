@@ -39,11 +39,6 @@
                         </div>
                         @endif
                         @endforeach
-                        <!-- Additional field for doctor's phone -->
-                        <div class="mb-3">
-                            <x-label for="emergency_contact_doctor" value="{{ __('Contact d’urgence (médecin)') }}" />
-                            <x-input id="emergency_contact_doctor" class="block mt-1 w-full" type="tel" name="emergency_contact_doctor" :value="old('emergency_contact_doctor')" />
-                        </div>
                     </div>
                 </div>
 
@@ -64,10 +59,6 @@
                         </div>
                         @endif
                         @endforeach
-                        <div class="mb-3">
-                            <x-label for="emergency_contact_parent" value="{{ __('Contact d’urgence (parent)') }}" />
-                            <x-input id="emergency_contact_parent" class="block mt-1 w-full" type="tel" name="emergency_contact_parent" :value="old('emergency_contact_parent')" />
-                        </div>
                         <button class="btn btn-outline-primary" type="submit">{{ __('Envoyer') }}</button>
                     </div>
                 </div>

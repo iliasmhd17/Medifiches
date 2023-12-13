@@ -24,7 +24,15 @@
                 <x-validation-errors class="mb-4" />
                 <ul class="list-group list-group-flush edit">
                     @foreach ($fields as $field)
-                        <li class="list-group-item"><strong>{{ $field['label'] }} : </strong>{{ $row->{$field['name']} }}
+                        <li class="list-group-item">
+                            <strong>{{ $field['label'] }} : </strong>
+                            @if ($row->{$field['name']} == 0)
+                            non
+                            @elseif ($row->{$field['name']} == 1)
+                            oui
+                            @else
+                            {{ $row->{$field['name']} }}
+                            @endif
                         </li>
                     @endforeach
                 </ul>

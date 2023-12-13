@@ -19,7 +19,7 @@ class MedicalController extends Controller
     {
         $user = Auth::user();
         $userEmail = $user->email;
-        $data;
+        $data = [];
         // Retrieve records from the medical_cards table where the email matches
         if($user->role == 'Animator')
         {
@@ -62,8 +62,6 @@ class MedicalController extends Controller
         }
         try {
             MedicalCard::createMedicalCard($request->all());
-            // Redirection après la création réussie
-            return redirect()->route('nom_de_la_route_après_création'); // Remplacez par la route appropriée
         } catch (\Exception $e) {
             // Gestion de l'exception si le numéro national existe déjà
             return redirect()->back()->withErrors(['national_number' => $e->getMessage()])->withInput();
@@ -73,9 +71,9 @@ class MedicalController extends Controller
     
         // Emergency contact of parent and doctor
         $data['emergency_contact_parent'] = $request->input('emergency_contact_parent');
-        $data['emergency_contact_doctor'] = $request->input('emergency_contact_doctor');
+        // $data['emergency_contact_doctor'] = $request->input('emergency_contact_doctor');
     
-        MedicalCard::createMedicalCard($data);
+        // MedicalCard::createMedicalCard($data);
     
         $child_data = [
             'national_number' => $data['national_number'],
