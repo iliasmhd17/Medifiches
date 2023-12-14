@@ -48,9 +48,7 @@
                     <div class="editGroupMode" hidden>
                         <form action="{{ route('add_group') }}" method="post" class="editGroupForm">
                             @csrf
-                            @foreach ($data as $row)
                             <input type="hidden" name="national_number" value="{{ $row->national_number }}">
-                            @endforeach
                             <input type="hidden" name="originalName" value="{{ $parent_infos[0]->group }}">
                             <select name="newName">
                                 @foreach ($groups as $group)
