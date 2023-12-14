@@ -27,8 +27,6 @@ return new class extends Migration
             $table->string('mail_box', 4);
             $table->integer('postal_code');
             $table->string('city', 255);
-            $table->string('emergency_contact_parent', 15)->nullable();
-            $table->string('emergency_contact_doctor', 15)->nullable();
             $table->timestamps();
         });
     }
