@@ -72,36 +72,62 @@
                 <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
                     @csrf
                     @foreach ($fields as $field)
-                    <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
-                    @if ($field['name'] === 'national_number')
-                    <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}"
-                        name="{{ $field['name'] }}" autofocus autocomplete="{{ $field['name'] }}"
-                        placeholder="{{ __($field['placeholder'] ?? '') }}" value="{{ $row->{$field['name']} }}"
-                        readonly />
-
-                    @elseif ($field['type'] === 'checkbox')
-                    <x-input name="{{ $field['name'] }}" type="hidden" value="0" />
-                    @if ($row->{$field['name']})
-                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
-                        name="{{ $field['name'] }}" checked value="1" />
-                    @else
-                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
-                        name="{{ $field['name'] }}" value="1" />
-                    @endif
-                    @elseif(isset($field['isTextArea']))
-                    <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}"
-                        name="{{ $field['name'] }}"
-                        :value="old(''.$field['name'])">{{ $row->{$field['name']} }}</textarea>
-                    @else
-                    <x-input id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}"
-                       name="{{ $field['name'] }}" :value="old('' . $field['name'])" autofocus
-                        autocomplete="{{ $field['name'] }}" placeholder="{{ __($field['placeholder'] ?? '') }}"
-                        value="{{ $row->{$field['name']} }}" /> 
-                    @endif
+                        <li class="list-group-item">
+                            <strong>{{ $field['label'] }} : </strong>
+                            @if ($field['type'] == 'checkbox' && $row->{$field['name']} == 0)
+                            non
+                            @elseif ($field['type'] == 'checkbox' && $row->{$field['name']} == 1)
+                            oui
+                            @elseif(isset($row->{$field['name']}))
+                            {{ $row->{$field['name']} }}
+                            @else
+                            non specifié
+                            @endif
+                        </li>
                     @endforeach
-                    <x-button type="submit" id="editSubmit">Sauvegarder</x-button>
-                </form>
-            </ul>
+                </ul>
+                <ul class="list-group list-group-flush editMode">
+                    <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
+                        @csrf
+                        @foreach ($fields as $field)
+                            <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
+                            @if ($field['name'] === 'national_number')
+                            <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
+                                    type="{{ $field['type'] }}" name="{{ $field['name'] }}"
+                                    autofocus autocomplete="{{ $field['name'] }}"
+                                    placeholder="{{ __($field['placeholder'] ?? '') }}"
+                                    value="{{ $row->{$field['name']} }}" readonly/>
+                            
+                            @elseif ($field['type'] === 'checkbox')
+                                <x-input name="{{ $field['name'] }}" type="hidden" value="0"/>
+                                @if ($row->{$field['name']})
+                                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
+                                        name="{{ $field['name'] }}" checked value="1" />
+                                @else
+                                    <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
+                                        name="{{ $field['name'] }}" value="1" />
+                                @endif
+                            @elseif($field['isTextArea'])
+                                <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}"
+                                    :value="old(''.$field['name'])">{{ $row->{$field['name']} }}</textarea>
+                            @elseif(isset($row->{$field['name']}))
+                                <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
+                                    type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old('' . $field['name'])"
+                                    autofocus autocomplete="{{ $field['name'] }}"
+                                    placeholder="{{ __($field['placeholder'] ?? '') }}"
+                                    value="{{ $row->{$field['name']} }}" 
+                                    />
+                            @else
+                            <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
+                                    type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old('' . $field['name'])"
+                                    autofocus autocomplete="{{ $field['name'] }}"
+                                    placeholder="{{ __($field['placeholder'] ?? '') }}"
+                                    />
+                            @endif
+                        @endforeach
+                        <x-button type="submit" id="editSubmit">Sauvegarder</x-button>
+                    </form>
+                </ul>
             @endforeach
             
         </div>

@@ -13,15 +13,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        $this->call(RelationSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(AnimatorSeeder::class);
+        try {
+            $this->call(RelationSeeder::class);
+        } catch (\Exception $e) {
+            $this->command->error("Seeding failed: " . $e->getMessage());
+        }
+        try {
+            $this->call(RoleSeeder::class);
+        } catch (\Exception $e) {
+            $this->command->error("Seeding failed: " . $e->getMessage());
+        }
+        try {
+            $this->call(AnimatorSeeder::class);
+        } catch (\Exception $e) {
+            $this->command->error("Seeding failed: " . $e->getMessage());
+        }
+        try {
+            $this->call(FormFieldSeeder::class);
+        } catch (\Exception $e) {
+            $this->command->error("Seeding failed: " . $e->getMessage());
+        }
+        try {
+            $this->call(FormRuleSeeder::class);
+        } catch (\Exception $e) {
+            $this->command->error("Seeding failed: " . $e->getMessage());
+        }
     }
 }

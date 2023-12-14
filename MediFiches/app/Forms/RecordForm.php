@@ -14,11 +14,7 @@ class RecordForm
             'birth_date' => ['required', 'date'],
             'can_participate' => ['boolean'],
             'doctor' => ['string', 'max:255'],
-            'tetanos_protected' => ['boolean',
-                Rule::requiredIf(function () {
-                    // Check if tetanos_protected is not null
-                    return request()->input('tetanos_update') !== null;
-                }),],
+            'tetanos_protected' => ['boolean', 'requires_tetanos_update'],
             'medecins' => ['nullable', 'string'],
             'phone_number_doctor' => ['string','max:10'],
             'emergency_contact_parent' => ['string','max:10'],
@@ -29,14 +25,7 @@ class RecordForm
             'postal_code' => ['required', 'int'],
             'city' => ['required', 'string', 'max:255'],
             'additional_infos' => ['nullable', 'string'],
-            'tetanos_update' => [
-                'nullable',
-                'date',
-                Rule::requiredIf(function () {
-                    // Check if tetanos_protected is not null
-                    return request()->input('tetanos_protected') !== null;
-                }),
-            ],
+            'tetanos_update' => ['nullable','date','requires_tetanos_protected'],
         ];
     }
 
