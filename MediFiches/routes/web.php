@@ -52,6 +52,7 @@ Route::get('/', function () {
      Route::post('/group/deleteGroup',[GroupController::class,'deleteGroup'])->name('delete_group');
      Route::post('/group/editGroup',[GroupController::class,'editGroup'])->name('edit_group');
      Route::post('/fiches/details/addGroup',[MedicalController::class,'addGroup'])->name('add_group');
+     Route::post('/fiches/changeGroup',[MedicalController::class,'filterGroup'])->name('filter_group');
 
  });
  

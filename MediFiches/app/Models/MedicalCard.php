@@ -89,4 +89,9 @@ class MedicalCard extends Model
         $data = DB::table('medical_card as Mc')->join('parental_link as pt', 'pt.national_number', '=', 'Mc.national_number')->where('parent_1', $email)->orWhere('parent_2', $email)->get();
         return $data;
     }
+
+    public static function filterByGroup($group){
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('group',$group)->get();
+        return $data;
+    }
 }

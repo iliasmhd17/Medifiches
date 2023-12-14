@@ -29,9 +29,9 @@ class MedicalController extends Controller
             $data = MedicalCard::getUserEmail($userEmail);
         }
         $nbFiches = $data->count();
-
+        $groups = Group::allGroups();
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();
-        return view('medicalCards', compact('data', 'nbFiches'));
+        return view('medicalCards', compact('data', 'nbFiches','groups'));
     }
 
     public function getCardDetails($id)
@@ -126,4 +126,17 @@ class MedicalController extends Controller
     return redirect('fiches/details/' . $request->input('national_number'));
     }
 
+    public function filterGroup(Request $request){
+        $group = $request->input('group');
+        if($group == "allGroups"){
+            return redirect()->route("records");
+        }
+        $user = Auth::user();
+        $userEmail = $user->email;
+        $data = MedicalCard::filterByGroup($group);
+        $nbFiches = $data->count();
+        $groups = Group::allGroups();
+        // $data = DB::table('medical_card')->where('email', $userEmail)->get();
+        return view('medicalCards', compact('data', 'nbFiches','groups'));
+    }
 }
