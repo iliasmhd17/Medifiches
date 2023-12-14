@@ -39,13 +39,40 @@ class AnimateurController extends Controller
             'textarea'
         ];
         $fields = $this->form_fields;
+        // print_r($fields);
         return view('customFields', compact('default_order', 'types', 'fields'));
     }
 
     public function addCustomField(Request $request)
     {
         FormField::createField($request->all());
-        return redirect('custom_form_view');
+        return redirect()->route('custom_form_view');
+    }
+
+    public function changeFieldOrder(Request $request)
+    {
+        $data = $request->all();
+        $name = $request->all()['name'];
+        $new_order = $request->all()['order'];
+        $default_new_order = sizeof($this->form_fields) + 1;
+        if($new_order > 0 && $new_order < $default_new_order)
+        {
+            if($data['order'] - $data['old_order'] < 0)
+            {
+                FormField::moveFieldUp($name, $data['old_order'], $data);
+            }
+            else{
+                FormField::moveFieldDown($name, $data['old_order'], $data);
+            }
+        }
+        return redirect()->route('custom_form_view');
+    }
+    
+    public function deleteCustomField(Request $request)
+    {
+        $data = $request->all();
+        FormField::deleteField($data['name'], $data);
+        return redirect()->route('custom_form_view');
     }
 
     public function createAnimateur(Request $request){
@@ -59,5 +86,6 @@ class AnimateurController extends Controller
         User::createAnimateur($validator);
         return redirect()->route('view_Animateur');
     }
+
 
 }

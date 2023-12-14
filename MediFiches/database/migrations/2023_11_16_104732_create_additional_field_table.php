@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('medical_card');
             $table->string('field_name', 255);
             $table->text('field_value');
+            $table->timestamps();
             
             // Clé primaire composée
             $table->primary(['medical_card', 'field_name']);

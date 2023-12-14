@@ -34,7 +34,7 @@
                             </div>
                             <div>
                                 <x-label for="order" value="{{ __('Ordre') }}" />
-                                <x-input id="order" class="block mt-1 w-full" type="number" name="order" :value="old('order')" required value="{{$default_order}}" />
+                                <x-input id="order" class="block mt-1 w-full" type="number" name="order" :value="old('order')" required value="{{$default_order}}" min="1" max="{{$default_order}}" />
                             </div>
                             <div>
                                 <x-label for="placeholder" value="{{ __('Placeholder') }}" />
@@ -88,14 +88,20 @@
                                 <td class="px-6 py-4">{{ $field['isTextArea'] ? 'oui' : 'non' }}</td>
                                 <td class="flex align-center">
                                     <div>
-                                        <form action="" method="post">
+                                        <form action="{{route('change_field_order')}}" method="POST">
+                                            @csrf
                                             <input type="hidden" name="name" value="{{$field['name']}}">
+                                            <input type="hidden" name="order" value="{{$field['order'] - 1}}">
+                                            <input type="hidden" name="old_order" value="{{$field['order']}}">
                                             <x-button class="ml-4">
                                                 <i class="fa fa-angle-up"></i>
                                             </x-button>
                                         </form>
-                                        <form action="" method="post">
+                                        <form action="{{route('change_field_order')}}" method="POST">
+                                            @csrf
                                             <input type="hidden" name="name" value="{{$field['name']}}">
+                                            <input type="hidden" name="order" value="{{$field['order'] + 1}}">
+                                            <input type="hidden" name="old_order" value="{{$field['order']}}">
                                             <x-button class="ml-4">
                                                 <i class="fa fa-angle-down"></i>
                                             </x-button>
@@ -103,7 +109,8 @@
                                     </div>
                                     <div>
                                         @if ($field['isCustomField'])
-                                        <form action="" method="post">
+                                        <form action="{{route('delete_custom_field')}}" method="POST">
+                                            @csrf
                                             <input type="hidden" name="name" value="{{$field['name']}}">
                                             <x-button class="ml-4">
                                                 <i class="fa fa-trash" style="color: #ff0000;"></i>

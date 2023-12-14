@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
 use App\Forms\RecordForm;
+use App\Models\AdditionalField;
 use App\Models\FormField;
 use App\Models\FormRule;
 use App\Models\Parental_Link;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection;
 
 class MedicalController extends Controller
 {
@@ -30,10 +32,9 @@ class MedicalController extends Controller
         $userEmail = $user->email;
         $data = [];
         // Retrieve records from the medical_cards table where the email matches
-        if($user->role == 'Animator')
-        {
+        if ($user->role == 'Animator') {
             $data = MedicalCard::getAllMedicalCards();
-        }else{
+        } else {
             $data = MedicalCard::getUserEmail($userEmail);
         }
         $nbFiches = $data->count();
@@ -52,53 +53,64 @@ class MedicalController extends Controller
             ->where('national_number', $id)
             ->get();
 
-        $children = DB::table('medical_card')
-            ->where('national_number', $id)
-            ->get();
-
         $parent_infos = DB::table('parental_link')
             ->join('medical_card', 'national_number', '=', 'national_number')
             ->groupBy('national_number');
 
+        $additional_fields = AdditionalField::getFields($id)->pluck('field_value', 'field_name')->all();;
+
         $fields = $this->form_fields;
 
-        // print_r($fields);
-        return view('medicalCardsDetails', compact('data', 'children', 'parent_infos', 'fields'));
+        $mergedata = (object) array_merge((array)$data[0], $additional_fields);
+
+        $data[0] = $mergedata;
+
+        // print_r($data);
+        return view('medicalCardsDetails', compact('data', 'parent_infos', 'fields'));
     }
 
     public function createRecord(Request $request)
     {
         $validator = Validator::make($request->all(), $this->form_rules);
-    
+
         // Check if the validation fails
         if ($validator->fails()) {
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }
         try {
-            MedicalCard::createMedicalCard($request->all());
+            $request_data = $request->all();
+            $custom_data = [];
+            MedicalCard::createMedicalCard($request_data);
+
+            foreach ($this->form_fields as $field) {
+                if ($field['isCustomField']) {
+                    AdditionalField::insert([
+                        'medical_card' => $request_data['national_number'],
+                        'field_name' => $field['name'],
+                        'field_value' => $request_data[$field['name']],
+                    ]);
+                }
+            }
         } catch (\Exception $e) {
             // Gestion de l'exception si le numéro national existe déjà
             return redirect()->back()->withErrors(['national_number' => $e->getMessage()])->withInput();
-        }    
+        }
         // If validation passes, proceed with your logic
         $data = $request->all();
-    
+
         // Emergency contact of parent and doctor
         $data['emergency_contact_parent'] = $request->input('emergency_contact_parent');
-        // $data['emergency_contact_doctor'] = $request->input('emergency_contact_doctor');
-    
-        // MedicalCard::createMedicalCard($data);
-    
+
         $child_data = [
             'national_number' => $data['national_number'],
             'parent_1' => Auth::user()->email,
         ];
-    
+
         Parental_Link::createChild($child_data);
-    
+
         return redirect('fiches');
-    }    
+    }
 
     public function deleteRecord(Request $request)
     {
@@ -126,12 +138,21 @@ class MedicalController extends Controller
         // If validation passes, proceed with your logic
         $data = $request->all();
         MedicalCard::updateMedicalCard($data['national_number'], $data);
+        foreach ($this->form_fields as $field) {
+            if ($field['isCustomField']) {
+                AdditionalField::updateField(
+                    $data['national_number'],
+                    $field['name'],
+                    ['field_value' => $data[$field['name']],
+                ]);
+            }
+        }
         return redirect('fiches/details/' . $data['national_number']);
     }
 
     public function display_form()
     {
         $formFields = $this->form_fields;
-        return view("animateur/fiche_medicale_create",compact('formFields'));
+        return view("animateur/fiche_medicale_create", compact('formFields'));
     }
 }
