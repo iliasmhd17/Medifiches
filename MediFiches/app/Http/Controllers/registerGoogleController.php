@@ -14,7 +14,11 @@ class registerGoogleController extends Controller
 {
     public function registerGoogle (Request $request) {
         // Les informations provenant du provider
-        $data = Socialite::driver('google')->user();
+        try {
+            $data = Socialite::driver('google')->user();
+        } catch (Exception $e) {
+            return redirect('/dashboard');
+        }
 // token
         $token = $data->token;
 
@@ -34,11 +38,11 @@ class registerGoogleController extends Controller
             return redirect('/dashboard');
         }
         $user = User::create([
-            'name' => $name,
+            'first_name' => $name,
             'last_name' => $nickname,
-            'national_number' => '12345678955',
             'email' => $email,
             'password' => Hash::make('12345678910111213'),
+            'role' => 'Parent'
         ]);
         $user->markEmailAsVerified();
         Auth::login($user);
