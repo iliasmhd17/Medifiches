@@ -9,6 +9,10 @@ use App\Models\MedicalCard;
 use App\Models\AdditionalField;
 use App\Models\FormField;
 use App\Models\FormRule;
+use App\Models\Testing;
+use App\Forms\RecordForm;
+use App\Models\Children;
+use App\Models\Group;
 use App\Models\Parental_Link;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,7 +41,9 @@ class MedicalController extends Controller
         }
         $nbFiches = $data->count();
 
-        return view('medicalCards', compact('data', 'nbFiches'));
+        $groups = Group::allGroups();
+        // $data = DB::table('medical_card')->where('email', $userEmail)->get();
+        return view('medicalCards', compact('data', 'nbFiches','groups'));
     }
 
     public function getCardDetails($id)
@@ -60,7 +66,9 @@ class MedicalController extends Controller
         $data[0] = $mergedata;
 
         // print_r($data);
-        return view('medicalCardsDetails', compact('data', 'parent_infos', 'fields'));
+
+        $groups = Group::allGroups();
+        return view('medicalCardsDetails', compact('data', 'parent_infos', 'fields', 'groups'));
     }
 
     public function createRecord(Request $request)
@@ -152,5 +160,28 @@ class MedicalController extends Controller
     {
         $formFields = $this->form_fields;
         return view("animateur/fiche_medicale_create", compact('formFields'));
+    }
+    
+    public function addGroup(Request $request){
+    $originalName = $request->input('originalName');
+    $newName = $request->input('newName');
+
+    Parental_Link::updateGroupName($originalName, $newName);
+
+    return redirect('fiches/details/' . $request->input('national_number'));
+    }
+
+    public function filterGroup(Request $request){
+        $group = $request->input('group');
+        if($group == "allGroups"){
+            return redirect()->route("records");
+        }
+        $user = Auth::user();
+        $userEmail = $user->email;
+        $data = MedicalCard::filterByGroup($group);
+        $nbFiches = $data->count();
+        $groups = Group::allGroups();
+        // $data = DB::table('medical_card')->where('email', $userEmail)->get();
+        return view('medicalCards', compact('data', 'nbFiches','groups'));
     }
 }

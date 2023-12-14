@@ -8,6 +8,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\registerGoogleController;
+use App\Http\Controllers\GroupController;
+
 
 
 /*
@@ -50,6 +52,13 @@ Route::get('/', function () {
      Route::post('/formulaire/custom/update_order',[AnimateurController::class,'changeFieldOrder'])->name('change_field_order');
      Route::post('/formulaire/custom/delete',[AnimateurController::class,'deleteCustomField'])->name('delete_custom_field');
      Route::post('/formulaire/custom/edit',[AnimateurController::class,'editCustomField'])->name('edit_custom_field');
+     Route::get('/group',[GroupController::class,'groups'])->name('groups');
+     Route::post('/group/createGroup',[GroupController::class,'createGroup'])->name('create_group');
+     Route::post('/group/deleteGroup',[GroupController::class,'deleteGroup'])->name('delete_group');
+     Route::post('/group/editGroup',[GroupController::class,'editGroup'])->name('edit_group');
+     Route::post('/fiches/details/addGroup',[MedicalController::class,'addGroup'])->name('add_group');
+     Route::post('/fiches/changeGroup',[MedicalController::class,'filterGroup'])->name('filter_group');
+
  });
  
 // Route::get('fiche-medicale',[ficheController::class, "display_record"]);

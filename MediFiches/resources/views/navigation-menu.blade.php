@@ -30,6 +30,9 @@
                         <x-nav-link href="{{ route('custom_form_view') }}" :active="request()->routeIs('custom_form_view')">
                             {{ __('Customiser le formulaire') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('groups') }}" :active="request()->routeIs('groups')">
+                            {{ __('Gestion des groupes') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -183,6 +186,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ route('custom_form_view') }}" :active="request()->routeIs('custom_form_view')">
                     {{ __('Customiser le formulaire') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('groups') }}" :active="request()->routeIs('groups')">
+                    {{ __('Gestion des groupes') }}
                 </x-responsive-nav-link>
             @endif
         </div>

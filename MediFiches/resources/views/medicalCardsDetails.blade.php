@@ -2,27 +2,75 @@
     <div class="postition-relative">
         <div class="container mt-5 position-absolute bg-white" id="consult">
             @foreach ($data as $row)
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="pb-3">Fiche médicale <strong> {{ $row->last_name . ' ' . $row->first_name }}</strong>
-                    </h3>
-                    <form method="POST" action="{{ route('generate-pdf') }}" class="ms-auto">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="pb-3">Fiche médicale <strong> {{ $row->last_name . ' ' . $row->first_name }}</strong>
+                </h3>
+                <form method="POST" action="{{ route('generate-pdf') }}" class="ms-auto">
 
-                        <input type="text" name="national_number" value="{{ $row->national_number }}" hidden>
-                        @csrf
-                        <button type="submit" class="btn" style="background: none; border: none;"
-                            title="Télécharger en PDF">
-                            <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">
-                        </button>
-                    </form>
-                    @if (Auth::user()->role == 'Parent')
-                    <x-button class="edit">Modifier</x-button>
-                    <div class="editMode" id="editActions">
-                        <x-button>Annuler</x-button>
+                    <input type="text" name="national_number" value="{{ $row->national_number }}" hidden>
+                    @csrf
+                    <button type="submit" class="btn" style="background: none; border: none;"
+                        title="Télécharger en PDF">
+                        <img src="{{ asset('images/down.png') }}" alt="Générer PDF" style="height: 40px;">
+                    </button>
+                </form>
+                @if (Auth::user()->role == 'Parent')
+                <x-button class="edit">Modifier</x-button>
+                <div class="editMode" id="editActions">
+                    <x-button>Annuler</x-button>
+                </div>
+                @endif
+            </div>
+            <x-validation-errors class="mb-4" />
+            <ul class="list-group list-group-flush edit">
+                @foreach ($fields as $field)
+                <li class="list-group-item">
+                    <strong>{{ $field['label'] }} : </strong>
+                    @if ($row->{$field['name']} == 0)
+                    non
+                    @elseif ($row->{$field['name']} == 1)
+                    oui
+                    @else
+                    {{ $row->{$field['name']} }}
+                    @endif
+                </li>
+                @endforeach
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="groupName">
+                        <strong>Nom du Groupe: </strong>
+                        @if ($parent_infos[0]->group)
+                            {{ $parent_infos[0]->group }}
+                        @else
+                            Aucun groupe assigné
+                        @endif
+                    </span>
+                    @if (Auth::user()->role == 'Animator')
+                    <div class="editGroupMode" hidden>
+                        <form action="{{ route('add_group') }}" method="post" class="editGroupForm">
+                            @csrf
+                            @foreach ($data as $row)
+                            <input type="hidden" name="national_number" value="{{ $row->national_number }}">
+                            @endforeach
+                            <input type="hidden" name="originalName" value="{{ $parent_infos[0]->group }}">
+                            <select name="newName">
+                                @foreach ($groups as $group)
+                                    <option value="{{ $group->name }}">{{ $group->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-button type="button" class="save">Sauvegarder</x-button>
+                            <x-button type="button" class="cancel">Annuler</x-button>
+                        </form>
+                    </div>
+                    <div class="editGroup">
+                            <input type="hidden" name="originalName" value="{{ $parent_infos[0]->group }}">
+                            <x-button type="button" class="editBtn">Modifier le groupe</x-button>
                     </div>
                     @endif
-                </div>
-                <x-validation-errors class="mb-4" />
-                <ul class="list-group list-group-flush edit">
+                </li>
+            </ul>
+            <ul class="list-group list-group-flush editMode">
+                <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
+                    @csrf
                     @foreach ($fields as $field)
                         <li class="list-group-item">
                             <strong>{{ $field['label'] }} : </strong>
@@ -81,7 +129,9 @@
                     </form>
                 </ul>
             @endforeach
+            
         </div>
+
     </div>
 
     <style>
@@ -90,24 +140,41 @@
         }
     </style>
 
-<script>
-    $(document).ready(()=> {
-        $('#editSubmit').appendTo('#editActions')
-        $("button.edit").on('click', () => {
-            $('.edit').toggle()
-            $('.editMode').toggle()
-            console.log("EditMode entered");
-        })
-        $(".editMode button").on('click', () => {
-            $('.edit').toggle()
-            $('.editMode').toggle()
-            console.log("EditMode exited");
-        })
+    <script>
+        $(document).ready(() => {
+            $('#editSubmit').appendTo('#editActions')
+            $("button.edit").on('click', () => {
+                $('.edit').toggle()
+                $('.editMode').toggle()
+                console.log("EditMode entered");
+            })
+            $(".editMode button").on('click', () => {
+                $('.edit').toggle()
+                $('.editMode').toggle()
+                console.log("EditMode exited");
+            })
 
-        $('#editSubmit').on('click', () => {
-            $('#editRecordForm').submit()
+            $('#editSubmit').on('click', () => {
+                $('#editRecordForm').submit()
+            })
+            $(".editBtn").on('click', function () {
+            const listItem = $(this).closest('li');
+            listItem.find('.groupName').hide();
+            listItem.find('.editGroupMode').removeAttr('hidden');
+            listItem.find('.editGroup').attr('hidden', 'hidden');
+        });
+
+        $(".cancel").on('click', function () {
+            const listItem = $(this).closest('li');
+            listItem.find('.groupName').show();
+            listItem.find('.editGroupMode').attr('hidden', 'hidden');
+            listItem.find('.editGroup').removeAttr('hidden');
+        });
+
+        $(".save").on('click', function () {
+            const form = $(this).closest('form');
+            form.submit();
+        });
         })
-    })
     </script>
 </x-app-layout>
-

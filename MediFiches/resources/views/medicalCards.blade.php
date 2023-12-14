@@ -4,6 +4,16 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Liste de toutes les fiches medicales') }}
             </h2>
+            <form action="{{ route('filter_group') }}" method="post">
+                @csrf
+                <select name="group">
+                    @foreach ($groups as $group)
+                        <option value="{{ $group->name }}">{{ $group->name }}</option>
+                    @endforeach
+                        <option value="allGroups">Tous les groupes<option>
+                </select>
+                <x-button type="submit" class="save">Appliquer</x-button>
+            </form>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Total : ') . $nbFiches }}
             </h2>
@@ -27,12 +37,18 @@
                                     <p class="card-text mb-2 text-left">Médecin:</p>
                                     <p class="card-text mb-2 text-left">Allergie:</p>
                                     <p class="card-text mb-2 text-left">Dernière mise à jour:</p>
+                                    <p class="card-text mb-2 text-left">Groupe:<p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="card-text mb-2">{{ $row->national_number }}</p>
                                     <p class="card-text mb-2">{{ $row->doctor  }}</p>
                                     <p class="card-text mb-2">{{ empty($row->allergies) ? "Pas d'allergies" : $row->allergies }}</p>
                                     <p class="card-text mb-2">{{ Carbon\Carbon::parse($row->updated_at)->isoFormat('D MMMM YYYY', 'fr')  }}</p>
+                                    @if($row->group != null)
+                                    <p class="card-text mb-2">{{ $row->group  }}</p>
+                                    @else
+                                    <p class="card-text mb-2">Aucun groupe assigné</p>
+                                    @endif
                                 </div>
 
                                 <div class="flex">
