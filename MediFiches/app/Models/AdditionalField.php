@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class AdditionalField extends Model
 {
     protected $table = 'additional_field';
+    protected $primaryKey = ['medical_card', 'field_name'];
+    public $incrementing  = false;
     protected $fillable = [
         'medical_card',
         'field_name',
@@ -17,15 +20,15 @@ class AdditionalField extends Model
     public static function getFields($medical_card)
     {
         $fields = DB::table('additional_field')
-        ->where('medical_card', $medical_card)
-        ->get(['field_name', 'field_value']);
+            ->where('medical_card', $medical_card)
+            ->get(['field_name', 'field_value']);
 
         return $fields;
     }
     public static function getField($medical_card, $field_name)
     {
         return  self::where('medical_card', $medical_card)
-        ->where('field_name', $field_name)->first(['field_name', 'field_value']);
+            ->where('field_name', $field_name)->first(['field_name', 'field_value']);
     }
 
     public static function insert($data)
@@ -47,8 +50,7 @@ class AdditionalField extends Model
     public static function deleteAll($medical_card)
     {
         $fields = self::getFields($medical_card);
-        foreach($fields as $field)
-        {
+        foreach ($fields as $field) {
             $field->delete();
         }
     }
@@ -56,11 +58,49 @@ class AdditionalField extends Model
     {
         $field = self::getField($medical_card, $field_name);
 
-        if($field)
-        {
-            $field->update($data);
+        if ($field) {
+            $field->update(['field_value' => $data['field_value']]);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Set the keys for a save update query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function setKeysForSaveQuery(Builder $query)
+    {
+        $keys = $this->getKeyName();
+        if (!is_array($keys)) {
+            return parent::setKeysForSaveQuery($query);
+        }
+
+        foreach ($keys as $keyName) {
+            $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
+        }
+
+        return $query;
+    }
+
+    /**
+     * Get the primary key value for a save query.
+     *
+     * @param mixed $keyName
+     * @return mixed
+     */
+    protected function getKeyForSaveQuery($keyName = null)
+    {
+        if (is_null($keyName)) {
+            $keyName = $this->getKeyName();
+        }
+
+        if (isset($this->original[$keyName])) {
+            return $this->original[$keyName];
+        }
+
+        return $this->getAttribute($keyName);
     }
 }
