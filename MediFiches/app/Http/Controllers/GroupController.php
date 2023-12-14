@@ -17,6 +17,9 @@ class GroupController extends Controller
     }
 
     public function editGroup(Request $request){
+        if(Group::getGroup($request->input('newName'))){
+            return redirect()->route('groups');
+        }
         $originalName = $request->input('originalName');
         $newName = $request->input('newName');
         $data = ['name'=>$newName];
@@ -33,16 +36,19 @@ class GroupController extends Controller
         return redirect()->route('groups');
     }
 
-    public function createGroup(Request $request){
-        $validator = $request->validate([
-            'name' => ['required', 'max:255'],
-           
-        ]);
-    
-        // If validation fails, it will automatically redirect back with errors.
-        Group::createGroup($validator);
+    public function createGroup(Request $request)
+{
+    if(Group::getGroup($request->input('name'))){
         return redirect()->route('groups');
     }
+    $validator = $request->validate([
+        'name' => ['required', 'max:255'],
+    ]);
+
+    // If validation fails, it will automatically redirect back with errors.
+    Group::createGroup($validator);
+    return redirect()->route('groups');
+}
 
 
 

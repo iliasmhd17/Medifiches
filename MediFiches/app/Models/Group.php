@@ -45,4 +45,12 @@ class Group extends Model
         return DB::table('group')->get();
     }
 
+    public static function getGroup($groupname)
+    {
+        $group = self::find($groupname);
+        if($group){
+            return true;
+        }else return false;
+    }
+
 }
