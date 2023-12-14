@@ -37,6 +37,11 @@ class Parental_Link extends Model
         self::where('group', $originalName)->update(['group' => $newName]);
     }
 
+    public static function updateGroupNameChild($originalName, $newName,$national_number)
+    {
+        self::where('group', $originalName)->where('national_number',$national_number)->update(['group' => $newName]);
+    }
+
     public static function deletechild($id)
     {
         $child = self::find($id);

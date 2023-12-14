@@ -30,22 +30,22 @@
                     @forelse ($groups as $group)
                     <li class="list-group-item d-flex justify-content-between">
                         <span class="groupName">{{ $group->name }}</span>
-                        <div class="editMode" hidden>
+                        <div class="editMode flex" hidden>
                             <form action="{{ route('edit_group') }}" method="post" class="editGroupForm">
                                 @csrf
                                 <input type="hidden" name="originalName" value="{{ $group->name }}">
                                 <input type="text" class="form-control editInput" name="newName" value="{{ $group->name }}">
-                                <x-button class="save">Sauvegarder</x-button>
-                                <x-button type="button" class="cancel">Annuler</x-button>
+                                <x-button class="save fa-solid fa-floppy-disk"></x-button>
+                                <x-button type="button" class="cancel fa-solid fa-xmark"></x-button>
                             </form>
                         </div>
                         <div class="edit flex">
                             <form action="{{ route('delete_group') }}" method="post" class="deleteGroupForm">
                                 @csrf
                                 <input type="hidden" name="originalName" value="{{ $group->name }}">
-                                <x-button type="button" class="delete">Supprimer</x-button>
+                                <x-button type="button" class="delete fa-solid fa-trash"></x-button>
                             </form>
-                            <x-button type="button" class="editBtn">Modifier</x-button>
+                            <x-button type="button" class="editBtn fa-solid fa-pen-to-square"></x-button>
                         </div>
                     </li>
                     @empty

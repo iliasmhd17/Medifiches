@@ -54,8 +54,10 @@ class MedicalController extends Controller
             ->get();
 
         $parent_infos = DB::table('parental_link')
-            ->join('medical_card', 'national_number', '=', 'national_number')
-            ->groupBy('national_number');
+            ->join('medical_card', 'parental_link.national_number', '=', 'medical_card.national_number')
+            ->where('parental_link.national_number', $id)
+            ->get();
+        $fields = RecordForm::getFormFields();
 
         $additional_fields = AdditionalField::getFields($id)->pluck('field_value', 'field_name')->all();;
 
@@ -65,10 +67,9 @@ class MedicalController extends Controller
 
         $data[0] = $mergedata;
 
-        // print_r($data);
-
         $groups = Group::allGroups();
         return view('medicalCardsDetails', compact('data', 'parent_infos', 'fields', 'groups'));
+
     }
 
     public function createRecord(Request $request)
@@ -165,8 +166,10 @@ class MedicalController extends Controller
     public function addGroup(Request $request){
     $originalName = $request->input('originalName');
     $newName = $request->input('newName');
+    $national_number = $request->input('national_number');
+    var_dump($originalName, $newName, $national_number);
 
-    Parental_Link::updateGroupName($originalName, $newName);
+    Parental_Link::updateGroupNameChild($originalName, $newName,$national_number);
 
     return redirect('fiches/details/' . $request->input('national_number'));
     }
