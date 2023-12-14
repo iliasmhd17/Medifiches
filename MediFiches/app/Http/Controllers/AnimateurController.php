@@ -9,12 +9,43 @@ use App\Models\User;
 use App\Models\Testing;
 use App\Forms\RecordForm;
 use App\Models\Children;
+use App\Models\FormField;
+use App\Models\FormRule;
 use Illuminate\Support\Facades\Validator;
 
 class AnimateurController extends Controller
 {
+    protected $form_fields;
+    protected $form_rules;
+
+    public function __construct()
+    {
+        $this->form_fields = FormField::getFields()->toArray();
+        $this->form_rules = FormRule::getRules();
+    }
+
     public function viewAnimateur(Request $request){
         return view('viewAnimateur');
+    }
+    public function customFormView(Request $request){
+        $default_order = sizeof($this->form_fields) + 1;
+        $types = [
+            'text',
+            'tel',
+            'number',
+            'checkbox',
+            'radio',
+            'date',
+            'textarea'
+        ];
+        $fields = $this->form_fields;
+        return view('customFields', compact('default_order', 'types', 'fields'));
+    }
+
+    public function addCustomField(Request $request)
+    {
+        FormField::createField($request->all());
+        return redirect('custom_form_view');
     }
 
     public function createAnimateur(Request $request){

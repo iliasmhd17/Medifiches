@@ -6,14 +6,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
-use App\Models\Testing;
 use App\Forms\RecordForm;
-use App\Models\Children;
+use App\Models\FormField;
+use App\Models\FormRule;
 use App\Models\Parental_Link;
 use Illuminate\Support\Facades\Validator;
 
 class MedicalController extends Controller
 {
+
+    protected $form_fields;
+    protected $form_rules;
+
+    public function __construct()
+    {
+        $this->form_fields = FormField::getFields()->toArray();
+        $this->form_rules = FormRule::getRules();
+    }
 
     public function getDbRecords()
     {
@@ -29,7 +38,10 @@ class MedicalController extends Controller
         }
         $nbFiches = $data->count();
 
-        // $data = DB::table('medical_card')->where('email', $userEmail)->get();
+        // foreach($this->form_rules as $rule)
+        // {
+        //     echo $rule; 
+        // }
         return view('medicalCards', compact('data', 'nbFiches'));
     }
 
@@ -47,13 +59,16 @@ class MedicalController extends Controller
         $parent_infos = DB::table('parental_link')
             ->join('medical_card', 'national_number', '=', 'national_number')
             ->groupBy('national_number');
-        $fields = RecordForm::getFormFields();
+
+        $fields = $this->form_fields;
+
+        // print_r($fields);
         return view('medicalCardsDetails', compact('data', 'children', 'parent_infos', 'fields'));
     }
 
     public function createRecord(Request $request)
     {
-        $validator = Validator::make($request->all(), RecordForm::rules());
+        $validator = Validator::make($request->all(), $this->form_rules);
     
         // Check if the validation fails
         if ($validator->fails()) {
@@ -99,7 +114,7 @@ class MedicalController extends Controller
 
     public function editRecord(Request $request)
     {
-        $validator = Validator::make($request->all(), RecordForm::rules());
+        $validator = Validator::make($request->all(), $this->form_rules);
 
         // Check if the validation fails
         if ($validator->fails()) {
@@ -112,5 +127,11 @@ class MedicalController extends Controller
         $data = $request->all();
         MedicalCard::updateMedicalCard($data['national_number'], $data);
         return redirect('fiches/details/' . $data['national_number']);
+    }
+
+    public function display_form()
+    {
+        $formFields = $this->form_fields;
+        return view("animateur/fiche_medicale_create",compact('formFields'));
     }
 }

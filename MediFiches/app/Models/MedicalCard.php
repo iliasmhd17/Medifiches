@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 class MedicalCard extends Model
 {
     protected $table = 'medical_card';
+    
     protected $primaryKey = 'national_number';
+
     protected $fillable = [
         'national_number',
         'first_name',
@@ -29,6 +31,7 @@ class MedicalCard extends Model
         'phone_number_doctor',
         'emergency_contact_parent'
     ];
+
     protected $casts = [
         'can_participate' => 'boolean',
         'tetanos_protected' => 'boolean',

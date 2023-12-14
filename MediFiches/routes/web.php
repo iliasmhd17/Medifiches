@@ -37,7 +37,7 @@ Route::get('/', function () {
          return view('dashboard');
      })->name('dashboard');
      Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
-     Route::get('formulaire', [ficheController::class, "display_form"])->name('record_form');
+     Route::get('formulaire', [MedicalController::class, "display_form"])->name('record_form');
      Route::get('/fiches',[MedicalController::class,'getDbRecords'])->name('records');
      Route::get('/fiches/details/{id}',[MedicalController::class,'getCardDetails']);
      Route::post('/create-record', [MedicalController::class, 'createRecord'])->name('create_record');
@@ -45,6 +45,8 @@ Route::get('/', function () {
      Route::post('/delete_record',[MedicalController::class,'deleteRecord'])->name('delete_record');
      Route::post('/edit_record',[MedicalController::class,'editRecord'])->name('edit_record');
      Route::get('/animateur',[AnimateurController::class,'viewAnimateur'])->name('view_Animateur');
+     Route::get('/formulaire/custom',[AnimateurController::class,'customFormView'])->name('custom_form_view');
+     Route::post('/formulaire/custom/create',[AnimateurController::class,'addCustomField'])->name('add_custom_field');
  });
  
 // Route::get('fiche-medicale',[ficheController::class, "display_record"]);
