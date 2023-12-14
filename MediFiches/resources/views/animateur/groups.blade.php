@@ -36,10 +36,10 @@
                                 <input type="hidden" name="originalName" value="{{ $group->name }}">
                                 <input type="text" class="form-control editInput" name="newName" value="{{ $group->name }}">
                                 <x-button class="save">Sauvegarder</x-button>
+                                <x-button type="button" class="cancel">Annuler</x-button>
                             </form>
-                            <x-button class="cancel">Annuler</x-button>
                         </div>
-                        <div class="edit">
+                        <div class="edit flex">
                             <form action="{{ route('delete_group') }}" method="post" class="deleteGroupForm">
                                 @csrf
                                 <input type="hidden" name="originalName" value="{{ $group->name }}">

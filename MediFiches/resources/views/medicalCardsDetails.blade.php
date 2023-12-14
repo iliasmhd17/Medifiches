@@ -35,12 +35,11 @@
                     @endif
                 </li>
                 @endforeach
-                @foreach ($parent_infos as $info)
                 <li class="list-group-item d-flex justify-content-between">
                     <span class="groupName">
                         <strong>Nom du Groupe: </strong>
-                        @if ($info->group)
-                            {{ $info->group }}
+                        @if ($parent_infos[0]->group)
+                            {{ $parent_infos[0]->group }}
                         @else
                             Aucun groupe assigné
                         @endif
@@ -52,7 +51,7 @@
                             @foreach ($data as $row)
                             <input type="hidden" name="national_number" value="{{ $row->national_number }}">
                             @endforeach
-                            <input type="hidden" name="originalName" value="{{ $info->group }}">
+                            <input type="hidden" name="originalName" value="{{ $parent_infos[0]->group }}">
                             <select name="newName">
                                 @foreach ($groups as $group)
                                     <option value="{{ $group->name }}">{{ $group->name }}</option>
@@ -63,12 +62,11 @@
                         </form>
                     </div>
                     <div class="editGroup">
-                            <input type="hidden" name="originalName" value="{{ $info->group }}">
+                            <input type="hidden" name="originalName" value="{{ $parent_infos[0]->group }}">
                             <x-button type="button" class="editBtn">Modifier le groupe</x-button>
                     </div>
                     @endif
                 </li>
-            @endforeach
             </ul>
             <ul class="list-group list-group-flush editMode">
                 <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
