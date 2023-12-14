@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
 
 class AdditionalField extends Model
 {
@@ -57,12 +56,12 @@ class AdditionalField extends Model
     public static function updateField($medical_card, $field_name, $data)
     {
         $field = self::getField($medical_card, $field_name);
-
-        if ($field) {
-            $field->update(['field_value' => $data['field_value']]);
-            return true;
+        if($field == null) 
+        {
+            $field = self::insert($data);
         }
-        return false;
+        $field->update($data);
+        return true;
     }
 
     /**
@@ -71,7 +70,7 @@ class AdditionalField extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery($query)
     {
         $keys = $this->getKeyName();
         if (!is_array($keys)) {

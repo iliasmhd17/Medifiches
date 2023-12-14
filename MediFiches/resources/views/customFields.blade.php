@@ -69,57 +69,105 @@
                     </thead>
                     <tbody>
                         @foreach ($fields as $field)
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                {{-- @foreach ($field as $field_property)
-                                    @if ($field_property == 0)
-                                        <td class="px-6 py-4">non</td>
-                                    @elseif($field_property == 1)
-                                        <td class="px-6 py-4">oui</td>
-                                    @else
-                                        <td class="px-6 py-4">{{ $field_property }}</td>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4">{{ $field['name'] }}</td>
+                            <td class="px-6 py-4">{{ $field['label'] }}</td>
+                            <td class="px-6 py-4">{{ $field['type'] }}</td>
+                            <td class="px-6 py-4">{{ $field['order'] }}</td>
+                            <td class="px-6 py-4">{{ $field['placeholder'] }}</td>
+                            <td class="px-6 py-4">{{ $field['isTextArea'] ? 'oui' : 'non' }}</td>
+                            <td class="flex align-center">
+                                <div>
+                                    <form action="{{route('change_field_order')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="name" value="{{$field['name']}}">
+                                        <input type="hidden" name="order" value="{{$field['order'] - 1}}">
+                                        <input type="hidden" name="old_order" value="{{$field['order']}}">
+                                        <x-button class="ml-4">
+                                            <i class="fa fa-angle-up"></i>
+                                        </x-button>
+                                    </form>
+                                    <form action="{{route('change_field_order')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="name" value="{{$field['name']}}">
+                                        <input type="hidden" name="order" value="{{$field['order'] + 1}}">
+                                        <input type="hidden" name="old_order" value="{{$field['order']}}">
+                                        <x-button class="ml-4">
+                                            <i class="fa fa-angle-down"></i>
+                                        </x-button>
+                                    </form>
+                                </div>
+                                <div>
+                                    <x-button class="ml-4" id="edit_modal_launch_btn">
+                                        <i class="fa fa-edit" style="color: #00ff00;"></i>
+                                    </x-button>
+
+                                    <!-- Edit form modal -->
+                                    <div id="edit_modal" class="modal">
+                                        <!-- Modal content -->
+                                        <div class="modal-content">
+                                            <span class="modal_close_btn">&times;</span>
+                                            <form action="{{route('edit_custom_field')}}" method="POST">
+                                                @csrf
+                                                <x-input id="name" class="block mt-1 w-full" type="hidden" name="name" :value="old('name')" required autofocus autocomplete="name" value="{{$field['name']}}" readonly />
+                                                <x-input id="type" class="block mt-1 w-full" type="hidden" name="type" :value="old('type')" required autofocus autocomplete="type" value="{{$field['type']}}" readonly />
+                                                <x-input id="isTextArea" class="block mt-1 w-full" type="hidden" name="isTextArea" :value="old('isTextArea')" required autofocus autocomplete="isTextArea" value="{{$field['isTextArea']}}" readonly />
+                                                
+                                                <div>
+                                                    <x-label for="name" value="{{ __('Nom du champ') }}" />
+                                                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" value="{{$field['name']}}" readonly />
+                                                </div>
+                                                <div>
+                                                    <x-label for="label" value="{{ __('Label du champ') }}" />
+                                                    <x-input id="label" class="block mt-1 w-full" type="text" name="label" :value="old('label')" required autocomplete="label" value="{{$field['label']}}" />
+                                                </div>
+                                                <div>
+                                                    <x-label for="type" value="{{ __('Type du champ') }}" />
+                                                    <select name="type" id="type" disabled>
+                                                        <option value="{{$field['type']}}" selected>{{$field['type']}}</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <x-label for="order" value="{{ __('Ordre') }}" />
+                                                    <x-input id="order" class="block mt-1 w-full" type="number" name="order" :value="old('order')" required value="{{$field['order']}}" min="1" max="{{$default_order}}" />
+                                                </div>
+                                                <div>
+                                                    <x-label for="placeholder" value="{{ __('Placeholder') }}" />
+                                                    <x-input id="placeholder" class="block mt-1 w-full" type="text" name="text" :value="old('text')" required autocomplete="placeholder" value="{{$field['placeholder']}}" />
+                                                </div>
+                                                <div class="block mt-4">
+                                                    <label for="isTextArea" class="flex items-center">
+                                                        @if($field['isTextArea'])
+                                                        <x-checkbox id="isTextArea" name="isTextArea" checked disabled />
+                                                        @else
+                                                        <x-checkbox id="isTextArea" name="isTextArea" disabled />
+                                                        @endif
+                                                        <span class="ml-2 text-sm text-gray-600">{{ __('TextArea ?') }}</span>
+                                                    </label>
+                                                </div>
+                                                <x-button class="ml-4">
+                                                    {{ __('Sauvegarder') }}
+                                                </x-button>
+                                            </form>
+                                        </div>
+                                        <form action="{{route('edit_custom_field')}}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="name" value="{{$field['name']}}">
+                                        </form>
+                                    </div>
+
+                                    @if ($field['isCustomField'])
+                                    <form action="{{route('delete_custom_field')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="name" value="{{$field['name']}}">
+                                        <x-button class="ml-4">
+                                            <i class="fa fa-trash" style="color: #ff0000;"></i>
+                                        </x-button>
+                                    </form>
                                     @endif
-                                @endforeach --}}
-                                <td class="px-6 py-4">{{ $field['name'] }}</td>
-                                <td class="px-6 py-4">{{ $field['label'] }}</td>
-                                <td class="px-6 py-4">{{ $field['type'] }}</td>
-                                <td class="px-6 py-4">{{ $field['order'] }}</td>
-                                <td class="px-6 py-4">{{ $field['placeholder'] }}</td>
-                                <td class="px-6 py-4">{{ $field['isTextArea'] ? 'oui' : 'non' }}</td>
-                                <td class="flex align-center">
-                                    <div>
-                                        <form action="{{route('change_field_order')}}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="name" value="{{$field['name']}}">
-                                            <input type="hidden" name="order" value="{{$field['order'] - 1}}">
-                                            <input type="hidden" name="old_order" value="{{$field['order']}}">
-                                            <x-button class="ml-4">
-                                                <i class="fa fa-angle-up"></i>
-                                            </x-button>
-                                        </form>
-                                        <form action="{{route('change_field_order')}}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="name" value="{{$field['name']}}">
-                                            <input type="hidden" name="order" value="{{$field['order'] + 1}}">
-                                            <input type="hidden" name="old_order" value="{{$field['order']}}">
-                                            <x-button class="ml-4">
-                                                <i class="fa fa-angle-down"></i>
-                                            </x-button>
-                                        </form>
-                                    </div>
-                                    <div>
-                                        @if ($field['isCustomField'])
-                                        <form action="{{route('delete_custom_field')}}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="name" value="{{$field['name']}}">
-                                            <x-button class="ml-4">
-                                                <i class="fa fa-trash" style="color: #ff0000;"></i>
-                                            </x-button>
-                                        </form>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -131,9 +179,11 @@
     <script>
         // Get the modal
         var modal = document.getElementById("form_modal");
+        var edit_modal = document.getElementById("edit_modal");
 
         // Get the button that opens the modal
         var btn = document.getElementById("modal_launch_btn");
+        var edit_btn = document.getElementById("edit_modal_launch_btn");
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("modal_close_btn")[0];
@@ -143,10 +193,14 @@
             modal.style.display = "block";
         }
 
-        // When the user clicks on <span> (x), close the modal
+        edit_btn.onclick = function() {
+            edit_modal.style.display = "block";
+        }
+
         span.onclick = function() {
             modal.style.display = "none";
         }
+        // When the user clicks on <span> (x), close the modal
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {

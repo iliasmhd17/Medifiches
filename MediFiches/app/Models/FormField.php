@@ -63,6 +63,17 @@ class FormField extends Model
             return true;
         }
         return false;
-    } 
+    }
+    
+    public static function updateField($name, $data)
+    {
+        $field = self::find($name);
+        if($field) 
+        {
+            $field->update($data);
+            return true;
+        }
+        return false;
+    }
 
 }

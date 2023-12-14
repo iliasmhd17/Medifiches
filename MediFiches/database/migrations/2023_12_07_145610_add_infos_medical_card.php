@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('medical_card', function (Blueprint $table) {
             $table->date('tetanos_update')->nullable();
-            $table->string('phone_number_doctor')->nullable();
-            $table->string('emergency_contact_parent')->nullable();
+            $table->string('phone_number_doctor', 13)->nullable();
+            $table->string('emergency_contact_parent', 13)->nullable();
         });
     }
 

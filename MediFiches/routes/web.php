@@ -49,6 +49,7 @@ Route::get('/', function () {
      Route::post('/formulaire/custom/create',[AnimateurController::class,'addCustomField'])->name('add_custom_field');
      Route::post('/formulaire/custom/update_order',[AnimateurController::class,'changeFieldOrder'])->name('change_field_order');
      Route::post('/formulaire/custom/delete',[AnimateurController::class,'deleteCustomField'])->name('delete_custom_field');
+     Route::post('/formulaire/custom/edit',[AnimateurController::class,'editCustomField'])->name('edit_custom_field');
  });
  
 // Route::get('fiche-medicale',[ficheController::class, "display_record"]);

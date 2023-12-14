@@ -6,13 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MedicalCard;
-use App\Forms\RecordForm;
 use App\Models\AdditionalField;
 use App\Models\FormField;
 use App\Models\FormRule;
 use App\Models\Parental_Link;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Collection;
 
 class MedicalController extends Controller
 {
@@ -39,10 +37,6 @@ class MedicalController extends Controller
         }
         $nbFiches = $data->count();
 
-        // foreach($this->form_rules as $rule)
-        // {
-        //     echo $rule; 
-        // }
         return view('medicalCards', compact('data', 'nbFiches'));
     }
 
@@ -143,8 +137,12 @@ class MedicalController extends Controller
                 AdditionalField::updateField(
                     $data['national_number'],
                     $field['name'],
-                    ['field_value' => $data[$field['name']],
-                ]);
+                    [
+                        'medical_card'  => $data['national_number'],
+                        'field_name'    => $field['name'], 
+                        'field_value'   => $data[$field['name']]
+                    ],
+                );
             }
         }
         return redirect('fiches/details/' . $data['national_number']);

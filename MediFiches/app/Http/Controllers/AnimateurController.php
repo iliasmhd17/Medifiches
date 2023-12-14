@@ -75,6 +75,13 @@ class AnimateurController extends Controller
         return redirect()->route('custom_form_view');
     }
 
+    public function editCustomField(Request $request)
+    {
+        $data = $request->all();
+        FormField::updateField($data['name'], $data);
+        return redirect()->route('custom_form_view');
+    }
+
     public function createAnimateur(Request $request){
         $validator = $request->validate([
             'email' => ['required', 'email', 'max:255'],
@@ -86,6 +93,5 @@ class AnimateurController extends Controller
         User::createAnimateur($validator);
         return redirect()->route('view_Animateur');
     }
-
 
 }

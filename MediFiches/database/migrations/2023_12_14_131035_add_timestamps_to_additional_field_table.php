@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('additional_field', function (Blueprint $table) {
             $table->timestamps();
+            $table->foreign('field_name')->references('name')->on('FormField')->cascadeOnDelete();
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('additional_field', function (Blueprint $table) {
             $table->dropTimestamps();
+            $table->dropForeign("field_name");
         });
     }
 };
