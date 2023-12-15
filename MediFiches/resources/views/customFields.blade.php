@@ -38,7 +38,7 @@
                             </div>
                             <div>
                                 <x-label for="placeholder" value="{{ __('Placeholder') }}" />
-                                <x-input id="placeholder" class="block mt-1 w-full" type="text" name="text" :value="old('text')" required autocomplete="placeholder" />
+                                <x-input id="placeholder" class="block mt-1 w-full" type="text" name="text" :value="old('text')" autocomplete="placeholder" />
                             </div>
                             <div class="block mt-4">
                                 <label for="isTextArea" class="flex items-center">
@@ -98,12 +98,12 @@
                                     </form>
                                 </div>
                                 <div>
-                                    <x-button class="ml-4" id="edit_modal_launch_btn">
+                                    <x-button class="ml-4 edit_modal_launch_btn">
                                         <i class="fa fa-edit" style="color: #00ff00;"></i>
                                     </x-button>
 
                                     <!-- Edit form modal -->
-                                    <div id="edit_modal" class="modal">
+                                    <div class="modal edit_modal">
                                         <!-- Modal content -->
                                         <div class="modal-content">
                                             <span class="modal_close_btn">&times;</span>
@@ -112,7 +112,7 @@
                                                 <x-input id="name" class="block mt-1 w-full" type="hidden" name="name" :value="old('name')" required autofocus autocomplete="name" value="{{$field['name']}}" readonly />
                                                 <x-input id="type" class="block mt-1 w-full" type="hidden" name="type" :value="old('type')" required autofocus autocomplete="type" value="{{$field['type']}}" readonly />
                                                 <x-input id="isTextArea" class="block mt-1 w-full" type="hidden" name="isTextArea" :value="old('isTextArea')" required autofocus autocomplete="isTextArea" value="{{$field['isTextArea']}}" readonly />
-                                                
+
                                                 <div>
                                                     <x-label for="name" value="{{ __('Nom du champ') }}" />
                                                     <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" value="{{$field['name']}}" readonly />
@@ -133,7 +133,7 @@
                                                 </div>
                                                 <div>
                                                     <x-label for="placeholder" value="{{ __('Placeholder') }}" />
-                                                    <x-input id="placeholder" class="block mt-1 w-full" type="text" name="text" :value="old('text')" required autocomplete="placeholder" value="{{$field['placeholder']}}" />
+                                                    <x-input id="placeholder" class="block mt-1 w-full" type="text" name="text" :value="old('text')" autocomplete="placeholder" value="{{$field['placeholder']}}" />
                                                 </div>
                                                 <div class="block mt-4">
                                                     <label for="isTextArea" class="flex items-center">
@@ -177,37 +177,23 @@
 
 
     <script>
-        // Get the modal
-        var modal = document.getElementById("form_modal");
-        var edit_modal = document.getElementById("edit_modal");
+        $(document).ready(function() {
+            var edit_modals = $(".edit_modal")
+            $(".edit_modal_launch_btn").each(function(index) {
+                $(this).on("click", function() {
+                    console.log("clicked on button " + index);
+                    var edit_modal = edit_modals[index];
+                    $(edit_modal).show();
+                });
+            });
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("modal_launch_btn");
-        var edit_btn = document.getElementById("edit_modal_launch_btn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("modal_close_btn")[0];
-
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        edit_btn.onclick = function() {
-            edit_modal.style.display = "block";
-        }
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-        // When the user clicks on <span> (x), close the modal
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+            $(".modal_close_btn").each(function() {
+                $(this).on("click", function() {
+                    var modal = $(this).closest(".modal");
+                    modal.hide();
+                });
+            });
+        })
     </script>
 
     <style>
