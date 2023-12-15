@@ -68,24 +68,6 @@
             </ul>
             <ul class="list-group list-group-flush editMode">
                 <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
-                    @csrf
-                    @foreach ($fields as $field)
-                        <li class="list-group-item">
-                            <strong>{{ $field['label'] }} : </strong>
-                            @if ($field['type'] == 'checkbox' && $row->{$field['name']} == 0)
-                            non
-                            @elseif ($field['type'] == 'checkbox' && $row->{$field['name']} == 1)
-                            oui
-                            @elseif(isset($row->{$field['name']}))
-                            {{ $row->{$field['name']} }}
-                            @else
-                            non specifié
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
-                <ul class="list-group list-group-flush editMode">
-                    <form action="{{ route('edit_record') }}" method="post" id="editRecordForm">
                         @csrf
                         @foreach ($fields as $field)
                             <x-label for="{{ $field['name'] }}" value="{{ __($field['label']) }}" />
