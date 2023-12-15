@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('medical_card', function (Blueprint $table) {
             $table->string('national_number', 11)->primary();
-            $table->string('first_name',255);
-            $table->string('last_name',255);
+            $table->string('first_name', 255);
+            $table->string('last_name', 255);
             $table->boolean('can_participate')->default(0);
             $table->string('doctor', 255)->nullable();
             $table->boolean('tetanos_protected')->default(0);
@@ -28,7 +28,6 @@ return new class extends Migration
             $table->integer('postal_code');
             $table->string('city', 255);
             $table->timestamps();
-            // Vous pouvez également ajouter d'autres contraintes si nécessaire
         });
     }
 

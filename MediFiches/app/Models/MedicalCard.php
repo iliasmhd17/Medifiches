@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 class MedicalCard extends Model
 {
     protected $table = 'medical_card';
+    
     protected $primaryKey = 'national_number';
+
     protected $fillable = [
         'national_number',
         'first_name',
@@ -25,7 +27,11 @@ class MedicalCard extends Model
         'mail_box',
         'postal_code',
         'city',
+        'tetanos_update',
+        'phone_number_doctor',
+        'emergency_contact_parent'
     ];
+
     protected $casts = [
         'can_participate' => 'boolean',
         'tetanos_protected' => 'boolean',
@@ -33,9 +39,18 @@ class MedicalCard extends Model
 
     public static function createMedicalCard($data)
     {
+        if (self::where('national_number', $data['national_number'])->exists()) {
+            // Vous pouvez personnaliser ce message d'erreur
+            throw new \Exception("Un enregistrement avec le numéro de registre national donné existe déjà.");
+        }
         $medicalCard = new self;
         $medicalCard->national_number = $data['national_number'];
         $medicalCard->fill($data);
+
+        // emergency contact of parent and doctor
+        $medicalCard->emergency_contact_parent = $data['emergency_contact_parent'];
+        // $medicalCard->emergency_contact_doctor = $data['emergency_contact_doctor'];
+
         $medicalCard->save();
         return $medicalCard;
         //return self::create($data);
@@ -63,7 +78,8 @@ class MedicalCard extends Model
 
     public static function getAllMedicalCards()
     {
-        return self::all();
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->get();
+        return $data;
     }
 
     public static function getMedicalCardById($id)
@@ -71,8 +87,14 @@ class MedicalCard extends Model
         return self::find($id);
     }
 
-    public static function getUserEmail($email){
-        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('parent_1',$email)->orWhere('parent_2',$email)->get();
+    public static function getUserEmail($email)
+    {
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt', 'pt.national_number', '=', 'Mc.national_number')->where('parent_1', $email)->orWhere('parent_2', $email)->get();
+        return $data;
+    }
+
+    public static function filterByGroup($group){
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('group',$group)->get();
         return $data;
     }
 }

@@ -27,6 +27,12 @@
                         <x-nav-link href="{{ route('view_Animateur') }}" :active="request()->routeIs('view_Animateur')">
                             {{ __('Ajouter un organisteur') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('custom_form_view') }}" :active="request()->routeIs('custom_form_view')">
+                            {{ __('Customiser le formulaire') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('groups') }}" :active="request()->routeIs('groups')">
+                            {{ __('Gestion des groupes') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -177,6 +183,12 @@
             @if (Auth::user()->role == 'Animator')
                 <x-responsive-nav-link href="{{ route('view_Animateur') }}" :active="request()->routeIs('view_Animateur')">
                     {{ __('Ajouter un organisteur') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('custom_form_view') }}" :active="request()->routeIs('custom_form_view')">
+                    {{ __('Customiser le formulaire') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('groups') }}" :active="request()->routeIs('groups')">
+                    {{ __('Gestion des groupes') }}
                 </x-responsive-nav-link>
             @endif
         </div>

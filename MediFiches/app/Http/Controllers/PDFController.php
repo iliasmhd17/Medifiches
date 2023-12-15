@@ -1,140 +1,82 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
-use App\Models\Infos_Pdf;
 use App\Models\MedicalCard;
-use App\Models\Person;
+use App\Models\Parents;
 use App\Models\User;
+use App\Models\Parental_Link;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Illuminate\Support\Facades\DB;
 
 class PDFController extends Controller
 {
-    public function generatePDFs()
-    {
-        // Récupérez les données de la table 'Infos_Pdf'
-        $data = Infos_Pdf::find(2);
-
-        // Récupérez les données de la table 'MedicalCard' en utilisant la méthode statique
-        $medical_card = MedicalCard::find(123456789);
-
-        if (!$medical_card) {
-            return redirect()->route('animateur/fiche_medicale')->with('error', 'Fiche médicale non trouvée.');
-        }
-
-        if ($data) {
-            $pdf = PDF::loadView('animateur/fiche_medicale', compact('data', 'medical_card'));
-            // Configuration des options Dompdf
-            $dompdf = $pdf->getDomPDF();
-            $options = $dompdf->getOptions();
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isPhpEnabled', true);
-            $options->set('debug', true);
-            // Chemin vers le répertoire public
-            $webRoot = public_path();
-            $html2 = view('animateur/pdf', compact('data', 'medical_card'))->render();
-            // HTML avec arrière-plan d'image
-            $html = '<html>
-                <head>
-                    <style>
-                        body {
-                            
-                    }
-                    .background {
-                        background-image: url(' . public_path('/images/scout.png') . ');
-                        background-size: 100px;
-                        background-position: top left;
-                        background-repeat: no-repeat;
-                        width: 100px;
-                        height: 100px; 
-                    }
-                    </style>
-                </head>
-                <body>
-                    <div class="background"></div>' . $html2 . '
-                </body>
-            </html>';
-            // Chargement de l'HTML dans Dompdf
-            $dompdf->loadHtml($html);
-            $dompdf->setBasePath($webRoot);
-            // Rendu du PDF
-            $dompdf->setPaper('A4', 'portrait');
-            $dompdf->render();
-            // Téléchargement du PDF
-            $filename = $data->nom . '_' . $data->prénom . '.pdf';
-            return $pdf->download($filename);
-        } else {
-            return redirect()->route('form')->with('error', 'Aucune donnée trouvée pour préremplir le formulaire.');
-        }
-    }
-
     public function generatePDF(Request $request)
-    {
-        $data = MedicalCard::find($request->national_number);
-        //devoir faire ca pour l'élève récupéré via l'url pour chaque table
-
-        if ($data) {
-            $pdf = PDF::loadView('pdf', compact('data'));
-
-            //accéder à l'instance Dompdf du PDF généré
-            $dompdf = $pdf->getDomPDF();
-
-            // Configuration des options Dompdf
-            $options = $dompdf->getOptions();
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isPhpEnabled', true);
-            $options->set('debug', true);
-
-            // Chemin vers le répertoire public
-            $webRoot = public_path();
-
-            $parent_infos = DB::table('parental_link')
-                ->join('medical_card', 'national_number', '=', 'national_number')
-                ->join('parent', 'parent_1', '=', 'user')
-                ->join('parent', 'parent_2', '=', 'user')
-                ->groupBy('national_number');
-
-            $html2 = view('pdf', compact('data', 'parent_infos'))->render();
-            $html = '<html>
-<head>
-    <style>
-        body {
-            
-        }
-        .background {
-            background-image: url(' . public_path('/images/scout.png') . ');
-            background-size: 100px;
-            background-position: top left;
-            background-repeat: no-repeat;
-            width: 100px;
-            height: 100px; 
-            
-        }
-    </style>
-</head>
-<body>
-    <div class="background"></div>' . $html2 . '
-</body>
-</html>';
-
-
-            // Chargement de l'HTML dans Dompdf
-            $dompdf->loadHtml($html);
-            $dompdf->setBasePath($webRoot);
-
-            // Rendu du PDF
-            $dompdf->setPaper('A4', 'portrait');
-            $dompdf->render();
-
-            // Téléchargement du PDF
-            $filename = $request->national_number . '.pdf';
-            return $pdf->download($filename);
+{
+    $data = MedicalCard::find($request->national_number);
+    if ($data) {
+        $parentalLink = Parental_Link::where('national_number', $request->national_number)->first();
+        if ($parentalLink) {
+            $parent1Details = User::where('email', $parentalLink->parent_1)->first();
+            $parent2Details = User::where('email', $parentalLink->parent_2)->first();
         } else {
-            return redirect()->route('records')->with('error', 'Aucune donnée trouvée pour préremplir le formulaire.');
+            $parent1Details = $parent2Details = null;
         }
+
+        // Chemin vers l'image
+        $imagePath = public_path('/images/scout.png');
+        $imagePath2 = public_path('/images/pbtpdf.png');
+
+        // Styles CSS pour les images de fond
+        $style = '
+        <style>
+            .background-top {
+                background-image: url(' . $imagePath . ');
+                background-size: 100px;
+                background-position: top left;
+                background-repeat: no-repeat;
+                width: 100px;
+                height: 100px; 
+                background-color: #white; /
+
+                
+            }
+            .background-bottom {
+                background-image: url(' . $imagePath2 . ');
+                background-size: 100px;
+                background-position: center bottom;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+            }
+            
+        </style>';
+
+        // Génération du contenu HTML
+        $html2 = view('animateur/pdf', compact('data', 'parent1Details', 'parent2Details'))->render();
+        $html = '<html>
+        <head>' . $style . '</head>
+        <body>
+            <div class="background-top"></div>' . $html2 . '
+            <div class="background-bottom"></div>
+        </body>
+        </html>';
+
+        // Configuration de Dompdf
+        $pdf = PDF::loadHtml($html);
+        $pdf->setPaper('A4', 'portrait');
+
+        // Rendu du PDF
+        $pdf->render();
+        
+        // Téléchargement du PDF
+        $filename = $data->first_name . '_' . $data->last_name . '.pdf';
+        return $pdf->download($filename);
+    } else {
+        return redirect()->route('records')->with('error', 'Aucune donnée trouvée pour préremplir le formulaire.');
     }
+}
+
 }
