@@ -4,6 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Liste de toutes les fiches medicales') }}
             </h2>
+            @if (Auth::user()->role == 'Animator')
             <form action="{{ route('filter_group') }}" method="post">
                 @csrf
                 <select name="group">
@@ -14,6 +15,7 @@
                 </select>
                 <x-button type="submit" class="save">Appliquer</x-button>
             </form>
+            @endif
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Total : ') . $nbFiches }}
             </h2>
