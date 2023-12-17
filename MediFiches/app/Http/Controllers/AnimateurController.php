@@ -43,7 +43,12 @@ class AnimateurController extends Controller
 
     public function addCustomField(Request $request)
     {
-        FormField::createField($request->all());
+        $validator = $request->validate([
+            'name' => ['required','string', 'max:50', 'unique:FormField'],
+            'label' => ['required', 'string', 'max:50'],
+            'type' => ['required', 'string'],
+        ]);
+        FormField::createField($validator);
         return redirect()->route('custom_form_view');
     }
 
@@ -75,14 +80,19 @@ class AnimateurController extends Controller
 
     public function editCustomField(Request $request)
     {
-        $data = $request->all();
+        $validator = $request->validate([
+            'name' => ['required','string', 'max:50', 'unique:FormField'],
+            'label' => ['required', 'string', 'max:50'],
+            'type' => ['required', 'string'],
+        ]);
+        $data = $validator;
         FormField::updateField($data['name'], $data);
         return redirect()->route('custom_form_view');
     }
 
     public function createAnimateur(Request $request){
         $validator = $request->validate([
-            'email' => ['required', 'email', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
             'last_name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
         ]);

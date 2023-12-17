@@ -8,6 +8,7 @@
     <div class="py-12 flex items-start justify-center h-screen overflow-hidden bg-gray-100">
         <div class="flex w-full justify-center absolute b-0 overflow-y-scroll">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lgoverflow-y-scroll h-3/5">
+                <x-validation-errors class="mb-4" />    
                 <x-button id="modal_launch_btn">Ajouter Un Champ</x-button>
                 <!-- The Modal -->
                 <div id="form_modal" class="modal">
@@ -227,6 +228,11 @@
             /* Fallback color */
             background-color: rgba(0, 0, 0, 0.4);
             /* Black w/ opacity */
+            overflow: scroll;
+        }
+
+        table {
+            overflow: scroll;
         }
 
         /* Modal Content */
