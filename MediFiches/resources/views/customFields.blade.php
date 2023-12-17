@@ -179,6 +179,10 @@
     <script>
         $(document).ready(function() {
             var edit_modals = $(".edit_modal")
+            var create_modal_btn = $("#modal_launch_btn");
+            create_modal_btn.on('click', ()=> {
+                $("#form_modal").show()
+            })
             $(".edit_modal_launch_btn").each(function(index) {
                 $(this).on("click", function() {
                     console.log("clicked on button " + index);

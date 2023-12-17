@@ -26,12 +26,16 @@
                 @foreach ($fields as $field)
                 <li class="list-group-item">
                     <strong>{{ $field['label'] }} : </strong>
-                    @if ($row->{$field['name']} == 0)
-                    non
-                    @elseif ($row->{$field['name']} == 1)
-                    oui
+                    @if(isset($row->{$field['name']}))
+                        @if ($row->{$field['name']} == 0)
+                        non
+                        @elseif ($row->{$field['name']} == 1)
+                        oui
+                        @else
+                        {{ $row->{$field['name']} }}
+                        @endif
                     @else
-                    {{ $row->{$field['name']} }}
+                        Non specifie
                     @endif
                 </li>
                 @endforeach
