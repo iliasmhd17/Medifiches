@@ -47,6 +47,7 @@ class AnimateurController extends Controller
             'name' => ['required','string', 'max:50', 'unique:FormField'],
             'label' => ['required', 'string', 'max:50'],
             'type' => ['required', 'string'],
+            'order' => ['required', 'integer'],
         ]);
         FormField::createField($validator);
         return redirect()->route('custom_form_view');
