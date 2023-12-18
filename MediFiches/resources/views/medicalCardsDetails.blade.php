@@ -84,7 +84,7 @@
                             
                             @elseif ($field['type'] === 'checkbox')
                                 <x-input name="{{ $field['name'] }}" type="hidden" value="0"/>
-                                @if ($row->{$field['name']})
+                                @if (isset($row->{$field['name']}) && $row->{$field['name']})
                                     <x-input id="{{ $field['name'] }}" class="block mt-1" type="{{ $field['type'] }}"
                                         name="{{ $field['name'] }}" checked value="1" />
                                 @else
@@ -93,7 +93,7 @@
                                 @endif
                             @elseif($field['isTextArea'])
                                 <textarea id="{{ $field['name'] }}" class="block mt-1 w-full" type="{{ $field['type'] }}" name="{{ $field['name'] }}"
-                                    :value="old(''.$field['name'])">{{ $row->{$field['name']} }}</textarea>
+                                    :value="old(''.$field['name'])">{{ isset($row->{$field['name']}) ? $row->{$field['name']} : '' }}</textarea>
                             @elseif(isset($row->{$field['name']}))
                                 <x-input id="{{ $field['name'] }}" class="block mt-1 w-full"
                                     type="{{ $field['type'] }}" name="{{ $field['name'] }}" :value="old('' . $field['name'])"
