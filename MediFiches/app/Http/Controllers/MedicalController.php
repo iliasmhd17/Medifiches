@@ -42,8 +42,9 @@ class MedicalController extends Controller
         $nbFiches = $data->count();
 
         $groups = Group::allGroups();
+        $filter = false;
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();
-        return view('medicalCards', compact('data', 'nbFiches','groups'));
+        return view('medicalCards', compact('data', 'nbFiches','groups', 'filter'));
     }
 
     public function getCardDetails($id)
@@ -176,15 +177,34 @@ class MedicalController extends Controller
 
     public function filterGroup(Request $request){
         $group = $request->input('group');
-        if($group == "allGroups"){
-            return redirect()->route("records");
+        $allergies = $request->input('allergies');
+        if($group == "allGroups") {
+            if($allergies) {
+                return redirect()->route("filter_allergies");
+            } else {
+                return redirect()->route("records");
+            }
         }
         $user = Auth::user();
         $userEmail = $user->email;
-        $data = MedicalCard::filterByGroup($group);
+        $data;
+        if($allergies) {
+            $data = MedicalCard::filterByGroupAndAllergies($group);
+        } else {
+            $data = MedicalCard::filterByGroup($group);
+        }
         $nbFiches = $data->count();
         $groups = Group::allGroups();
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();
+        return view('medicalCards', compact('data', 'nbFiches','groups'));
+    }
+
+    public function filterAllergies(){
+        $user = Auth::user();
+        $userEmail = $user->email;
+        $data = MedicalCard::getAllergies();
+        $nbFiches = $data->count();
+        $groups = Group::allGroups();
         return view('medicalCards', compact('data', 'nbFiches','groups'));
     }
 }
