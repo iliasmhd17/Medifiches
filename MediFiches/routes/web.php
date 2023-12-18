@@ -58,6 +58,8 @@ Route::get('/', function () {
      Route::post('/group/editGroup',[GroupController::class,'editGroup'])->name('edit_group');
      Route::post('/fiches/details/addGroup',[MedicalController::class,'addGroup'])->name('add_group');
      Route::post('/fiches/changeGroup',[MedicalController::class,'filterGroup'])->name('filter_group');
+     Route::get('/fiches/allergies',[MedicalController::class,'filterAllergies'])->name('filter_allergies');
+
 
  });
  

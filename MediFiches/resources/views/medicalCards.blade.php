@@ -7,11 +7,25 @@
             @if (Auth::user()->role == 'Animator')
             <form action="{{ route('filter_group') }}" method="post">
                 @csrf
+                <label for="allergies">Allergies</label>
+                @if($allergies)
+                    <input type="checkbox" name="allergies" id="allergies" checked>
+                @else   
+                    <input type="checkbox" name="allergies" id="allergies">
+                @endif
                 <select name="group">
                     @foreach ($groups as $group)
-                        <option value="{{ $group->name }}">{{ $group->name }}</option>
+                        @if($group->name == $chosenGroup)
+                            <option value="{{ $group->name }}" selected="selected">{{ $group->name }}</option>
+                        @else
+                            <option value="{{ $group->name }}">{{ $group->name }}</option>
+                        @endif
                     @endforeach
+                    @if($chosenGroup == "allGroups" or $chosenGroup == "allGroup")
+                        <option value="allGroups"  selected="selected">Tous les groupes<option>
+                    @else
                         <option value="allGroups">Tous les groupes<option>
+                    @endif
                 </select>
                 <x-button type="submit" class="save">Appliquer</x-button>
             </form>

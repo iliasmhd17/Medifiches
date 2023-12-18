@@ -97,4 +97,14 @@ class MedicalCard extends Model
         $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('group',$group)->get();
         return $data;
     }
+
+    public static function getAllergies(){
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->whereNotNull('allergies')->get();
+        return $data;
+    }
+
+    public static function filterByGroupAndAllergies($group){
+        $data = DB::table('medical_card as Mc')->join('parental_link as pt','pt.national_number','=','Mc.national_number')->where('group',$group)->whereNotNull('allergies')->get();
+        return $data;
+    }
 }

@@ -42,8 +42,10 @@ class MedicalController extends Controller
         $nbFiches = $data->count();
 
         $groups = Group::allGroups();
+        $chosenGroup = "allGroup";
+        $allergies = false;
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();
-        return view('medicalCards', compact('data', 'nbFiches','groups'));
+        return view('medicalCards', compact('data', 'nbFiches','groups','chosenGroup', 'allergies'));
     }
 
     public function getCardDetails($id)
@@ -175,16 +177,37 @@ class MedicalController extends Controller
     }
 
     public function filterGroup(Request $request){
-        $group = $request->input('group');
-        if($group == "allGroups"){
-            return redirect()->route("records");
+        $chosenGroup = $request->input('group');
+        $allergies = $request->input('allergies');
+        if($chosenGroup == "allGroups") {
+            if($allergies) {
+                return redirect()->route("filter_allergies");
+            } else {
+                return redirect()->route("records");
+            }
         }
         $user = Auth::user();
         $userEmail = $user->email;
-        $data = MedicalCard::filterByGroup($group);
+        $data;
+        if($allergies) {
+            $data = MedicalCard::filterByGroupAndAllergies($chosenGroup);
+        } else {
+            $data = MedicalCard::filterByGroup($chosenGroup);
+        }
         $nbFiches = $data->count();
         $groups = Group::allGroups();
         // $data = DB::table('medical_card')->where('email', $userEmail)->get();
-        return view('medicalCards', compact('data', 'nbFiches','groups'));
+        return view('medicalCards', compact('data', 'nbFiches','groups','chosenGroup', 'allergies'));
+    }
+
+    public function filterAllergies(){
+        $chosenGroup = "allGroups";
+        $user = Auth::user();
+        $userEmail = $user->email;
+        $data = MedicalCard::getAllergies();
+        $nbFiches = $data->count();
+        $groups = Group::allGroups();
+        $allergies = true;
+        return view('medicalCards', compact('data', 'nbFiches','groups', 'chosenGroup', 'allergies'));
     }
 }
